@@ -1,0 +1,97 @@
+{
+    "default_card_type": "default",
+    "w": 750,
+    "h": 1050,
+    "card_specs": {
+        "default": [
+            {
+                "type": "static_image",
+                "image": "front_background.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            },
+            {
+                "type": "image",
+                "prop": "art_name",
+                "place": {
+                    "x": 0,
+                    "y": 115,
+                    "w": 750,
+                    "h": 410
+                }
+            },
+            {
+                "type": "text",
+                "prop": "name",
+                "place": {
+                    "x": 50,
+                    "y": 40,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 48,
+                "h_alignment": "center",
+                "color": "#91232e"
+            },
+            {
+                "type": "embedded_text",
+                "prop": "body",
+                "place": {
+                    "x": 50,
+                    "y": 600,
+                    "w": 650,
+                    "h": 350
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "max_font_size": 40
+            },
+            {
+                "type": "static_image",
+                "image": "front_art_frame.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            },
+            {
+                "type": "static_image",
+                "image": "front_frame.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            }
+        ]
+    },
+    "symbols": {
+        "id_map": {
+            "M": "energy-magical.png",
+            "P": "energy-physical.png",
+            "S": "energy-spiritual.png",
+            "G": "energy-generic.png"
+        }
+    },
+    "text": {
+        "embed_symbol_id_map": {
+            "{{M}}": "energy-magical.png",
+            "{{P}}": "energy-physical.png",
+            "{{S}}": "energy-spiritual.png",
+            "{{G}}": "energy-generic.png"
+        },
+        "embed_v_offset_ratio": -0.05,
+        "embed_size_ratio": 1.0,
+        "color": "#000000",
+        "max_font_size": 50,
+        "spacing_ratio": 1.0
+    },
+    "back_image": "back.png"
+}
