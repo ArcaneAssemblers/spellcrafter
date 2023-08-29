@@ -7,7 +7,7 @@
         "type": "local",
         "folder": "./cards-output/",
         "image_layout": "sheet",
-        "sheet_max_width": 10,
+        "sheet_max_width": 4,
         "padding": [
             0,
             0

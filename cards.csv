@@ -1,3 +1,34 @@
-name,count,power,chaos,hot_cold,light_dark,body,skip,card_type
-Rat Bone,5,2,10,-1,0,A crunchy little rat bone,,
-Death Cap,1,3,20,-3,-1,A dark mushroom,,
+name,count,power,chaos,volatility,elemental,flavour,skip,card_type
+Bone,1,2,10,,2,A crunchy little rat bone,,forest
+Rat Heart,1,3,20,1,3,The still-beating heart of a rat,,forest
+Quartz,1,,,-2,,A chunk of quartz. It feels stabilising in some way,,forest
+Pine Resin,1,-1,-10,,,Sticky sap from a pine tree,,forest
+Moss,1,,,-1,,Soft green moss,,forest
+Acorn,1,,-10,,,This holds great potential,,forest
+Cedar Wood,1,2,,1,,A branch of sweet smelling cedar,,forest
+Pine Cone,1,1,,,,It rattles. There are nuts inside,,forest
+Nettle,1,,20,,3,Be careful not to get stung,,forest
+Rat Foot,1,2,,1,,I wonder what happened to the rest of the rat,,forest
+Pine Sprig,1,1,,,2,Smells like Christmas,,forest
+Herb,1,1,,,1,Could be used in a nice stew,,forest
+Pumice,1,,5,,1,A rock that is light as foam,,volcano
+Sulphur,1,3,,2,1,Smells like? something,,volcano
+Obsidian,1,,-10,,,"Soothing, shiny and black",,volcano
+Scorpion,1,2,20,,2,A fiery arachnid,,volcano
+Ashes,1,,,-1,,Soft grey ashes of something once alive,,volcano
+Salt,1,,-10,,,Said to dispel evil spirits,,volcano
+Volcanic Water,1,,10,-1,2,Imbued with the power of the volcano,,volcano
+Charcoal,1,1,5,,1,The charred remains of a tree,,volcano
+Cricket,,,,,,A green little bug,,meadow
+Daisy,,,,,,,,meadow
+Butterfly,,,,,,,,meadow
+Bee Sting,,,,,,,,meadow
+Honey,,,,,,,,meadow
+Wheat,,,,,,,,meadow
+Bat Wing,,,,,,,,cave
+Lichen,,,,,,,,cave
+Spider Silk,,,,,,,,cave
+Glow Worm,,,,,,,,cave
+Eyeless Fish,,,,,,,,cave
+Geode,,,,,,,,cave
+Stalactite ,,,,,,,,cave

@@ -3,7 +3,8 @@
     "w": 750,
     "h": 1050,
     "card_specs": {
-        "default": [
+        "default": [],
+        "forest": [
             {
                 "type": "static_image",
                 "image": "front_background.png",
@@ -28,11 +29,571 @@
                 "color": "#91232e"
             },
             {
+                "type": "static_text",
+                "text": "POWER:",
+                "place": {
+                    "x": 20,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "power",
+                "place": {
+                    "x": 350,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "CHAOS:",
+                "place": {
+                    "x": 20,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "chaos",
+                "place": {
+                    "x": 350,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "VOLATILITY:",
+                "place": {
+                    "x": 20,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "volatility",
+                "place": {
+                    "x": 350,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "COLD:",
+                "place": {
+                    "x": 20,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "elemental",
+                "place": {
+                    "x": 350,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
                 "type": "embedded_text",
-                "prop": "body",
+                "prop": "flavour",
+                "place": {
+                    "x": 100,
+                    "y": 500,
+                    "w": 650,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "max_font_size": 40
+            },
+            {
+                "type": "static_image",
+                "image": "front_frame.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            }
+        ],
+        "volcano": [
+            {
+                "type": "static_image",
+                "image": "front_background.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            },
+            {
+                "type": "text",
+                "prop": "name",
                 "place": {
                     "x": 50,
-                    "y": 150,
+                    "y": 40,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 48,
+                "h_alignment": "center",
+                "color": "#91232e"
+            },
+            {
+                "type": "static_text",
+                "text": "POWER:",
+                "place": {
+                    "x": 20,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "power",
+                "place": {
+                    "x": 350,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "CHAOS:",
+                "place": {
+                    "x": 20,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "chaos",
+                "place": {
+                    "x": 350,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "VOLATILITY:",
+                "place": {
+                    "x": 20,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "volatility",
+                "place": {
+                    "x": 350,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "HOT:",
+                "place": {
+                    "x": 20,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "elemental",
+                "place": {
+                    "x": 350,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "embedded_text",
+                "prop": "flavour",
+                "place": {
+                    "x": 100,
+                    "y": 500,
+                    "w": 650,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "max_font_size": 40
+            },
+            {
+                "type": "static_image",
+                "image": "front_frame.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            }
+        ],
+        "meadow": [
+            {
+                "type": "static_image",
+                "image": "front_background.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            },
+            {
+                "type": "text",
+                "prop": "name",
+                "place": {
+                    "x": 50,
+                    "y": 40,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 48,
+                "h_alignment": "center",
+                "color": "#91232e"
+            },
+            {
+                "type": "static_text",
+                "text": "POWER:",
+                "place": {
+                    "x": 20,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "power",
+                "place": {
+                    "x": 350,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "CHAOS:",
+                "place": {
+                    "x": 20,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "chaos",
+                "place": {
+                    "x": 350,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "VOLATILITY:",
+                "place": {
+                    "x": 20,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "volatility",
+                "place": {
+                    "x": 350,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "HOT:",
+                "place": {
+                    "x": 20,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "elemental",
+                "place": {
+                    "x": 350,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "embedded_text",
+                "prop": "flavour",
+                "place": {
+                    "x": 100,
+                    "y": 500,
+                    "w": 650,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "max_font_size": 40
+            },
+            {
+                "type": "static_image",
+                "image": "front_frame.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            }
+        ],
+        "cave": [
+            {
+                "type": "static_image",
+                "image": "front_background.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            },
+            {
+                "type": "text",
+                "prop": "name",
+                "place": {
+                    "x": 50,
+                    "y": 40,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 48,
+                "h_alignment": "center",
+                "color": "#91232e"
+            },
+            {
+                "type": "static_text",
+                "text": "POWER:",
+                "place": {
+                    "x": 20,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "power",
+                "place": {
+                    "x": 350,
+                    "y": 250,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "CHAOS:",
+                "place": {
+                    "x": 20,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "chaos",
+                "place": {
+                    "x": 350,
+                    "y": 330,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "VOLATILITY:",
+                "place": {
+                    "x": 20,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "volatility",
+                "place": {
+                    "x": 350,
+                    "y": 410,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "static_text",
+                "text": "HOT:",
+                "place": {
+                    "x": 20,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "right",
+                "color": "#000000"
+            },
+            {
+                "type": "text",
+                "prop": "elemental",
+                "place": {
+                    "x": 350,
+                    "y": 490,
+                    "w": 325,
+                    "h": 100
+                },
+                "max_font_size": 54,
+                "h_alignment": "left",
+                "color": "#000000"
+            },
+            {
+                "type": "embedded_text",
+                "prop": "flavour",
+                "place": {
+                    "x": 100,
+                    "y": 500,
                     "w": 650,
                     "h": 750
                 },
