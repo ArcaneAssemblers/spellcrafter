@@ -1,2 +1,3 @@
-name,count,cost,body,art_name,art_id,skip,card_type
-Hi mom,1,,This card has a different format. {{M}} {{P}} {{S}} {{G}},,,,no_art
+name,count,power,chaos,hot_cold,light_dark,body,skip,card_type
+Rat Bone,5,2,10,-1,0,A crunchy little rat bone,,
+Death Cap,1,3,20,-3,-1,A dark mushroom,,
