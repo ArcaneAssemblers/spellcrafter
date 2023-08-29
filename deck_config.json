@@ -69,6 +69,67 @@
                     "w": 750,
                     "h": 1050
                 }
+            },
+            {
+                "type": "symbol_row",
+                "prop": "cost",
+                "place": {
+                    "x": 50,
+                    "y": 500,
+                    "w": 80,
+                    "h": 80
+                },
+                "spacing": 5,
+                "orientation": "horizontal",
+                "alignment": "left"
+            }
+        ],
+        "no_art": [
+            {
+                "type": "static_image",
+                "image": "front_background.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
+            },
+            {
+                "type": "text",
+                "prop": "name",
+                "place": {
+                    "x": 50,
+                    "y": 40,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 48,
+                "h_alignment": "center",
+                "color": "#91232e"
+            },
+            {
+                "type": "embedded_text",
+                "prop": "body",
+                "place": {
+                    "x": 50,
+                    "y": 150,
+                    "w": 650,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "max_font_size": 40
+            },
+            {
+                "type": "static_image",
+                "image": "front_frame.png",
+                "place": {
+                    "x": 0,
+                    "y": 0,
+                    "w": 750,
+                    "h": 1050
+                }
             }
         ]
     },

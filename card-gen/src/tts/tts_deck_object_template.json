@@ -1,0 +1,49 @@
+{
+    "SaveName": "",
+    "GameMode": "",
+    "Date": "",
+    "Gravity": 0.5,
+    "PlayArea": 0.5,
+    "GameType": "",
+    "GameComplexity": "",
+    "Tags": [],
+    "Table": "",
+    "Sky": "",
+    "Note": "",
+    "Rules": "",
+    "TabStates": {},
+    "ObjectStates": [
+        {
+            "Name": "DeckCustom",
+            "Transform": {
+                "posX": 0,
+                "posY": 0,
+                "posZ": 0,
+                "rotX": 0,
+                "rotY": 180.0,
+                "rotZ": 0,
+                "scaleX": 1.0,
+                "scaleY": 1.0,
+                "scaleZ": 1.0
+            },
+            "Nickname": "",
+            "Description": "",
+            "GMNotes": "",
+            "Locked": false,
+            "Grid": true,
+            "Snap": false,
+            "IgnoreFoW": false,
+            "MeasureMovement": false,
+            "DragSelectable": true,
+            "Autoraise": true,
+            "Sticky": true,
+            "Tooltip": true,
+            "GridProjection": false,
+            "HideWhenFaceDown": true,
+            "Hands": false,
+            "SidewaysCard": false,
+            "DeckIDs": [],
+            "CustomDeck": {}
+        }
+    ]
+}

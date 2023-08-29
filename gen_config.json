@@ -1,7 +1,7 @@
 {
     "input": {
         "type": "local",
-        "folder": "./card-gen/local_assets/"
+        "folder": "./card-assets/"
     },
     "output": {
         "type": "local",
