@@ -82,32 +82,6 @@
             },
             {
                 "type": "static_text",
-                "text": "VOLATILITY:",
-                "place": {
-                    "x": 20,
-                    "y": 410,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "right",
-                "color": "#000000"
-            },
-            {
-                "type": "text",
-                "prop": "volatility",
-                "place": {
-                    "x": 350,
-                    "y": 410,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "left",
-                "color": "#000000"
-            },
-            {
-                "type": "static_text",
                 "text": "COLD:",
                 "place": {
                     "x": 20,
@@ -225,32 +199,6 @@
                 "place": {
                     "x": 350,
                     "y": 330,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "left",
-                "color": "#000000"
-            },
-            {
-                "type": "static_text",
-                "text": "VOLATILITY:",
-                "place": {
-                    "x": 20,
-                    "y": 410,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "right",
-                "color": "#000000"
-            },
-            {
-                "type": "text",
-                "prop": "volatility",
-                "place": {
-                    "x": 350,
-                    "y": 410,
                     "w": 325,
                     "h": 100
                 },
@@ -386,32 +334,6 @@
             },
             {
                 "type": "static_text",
-                "text": "VOLATILITY:",
-                "place": {
-                    "x": 20,
-                    "y": 410,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "right",
-                "color": "#000000"
-            },
-            {
-                "type": "text",
-                "prop": "volatility",
-                "place": {
-                    "x": 350,
-                    "y": 410,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "left",
-                "color": "#000000"
-            },
-            {
-                "type": "static_text",
                 "text": "HOT:",
                 "place": {
                     "x": 20,
@@ -529,32 +451,6 @@
                 "place": {
                     "x": 350,
                     "y": 330,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "left",
-                "color": "#000000"
-            },
-            {
-                "type": "static_text",
-                "text": "VOLATILITY:",
-                "place": {
-                    "x": 20,
-                    "y": 410,
-                    "w": 325,
-                    "h": 100
-                },
-                "max_font_size": 54,
-                "h_alignment": "right",
-                "color": "#000000"
-            },
-            {
-                "type": "text",
-                "prop": "volatility",
-                "place": {
-                    "x": 350,
-                    "y": 410,
                     "w": 325,
                     "h": 100
                 },
