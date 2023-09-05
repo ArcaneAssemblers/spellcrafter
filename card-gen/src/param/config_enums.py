@@ -1,12 +1,11 @@
 #!/usr/bin/python
-from enum import StrEnum
+from enum import Enum
 
-
-class CardBuilderType(StrEnum):
+class CardBuilderType(str, Enum):
     BASIC = "basic"
 
 
-class CardLayerType(StrEnum):
+class CardLayerType(str, Enum):
     STATIC_TEXT = "static_text"
     TEXT = "text"
     EMBEDDED_TEXT = "embedded_text"
@@ -15,33 +14,33 @@ class CardLayerType(StrEnum):
     SYMBOL_ROW = "symbol_row"
 
 
-class InputProviderType(StrEnum):
+class InputProviderType(str, Enum):
     LOCAL = "local"
     GOOGLE = "google"
 
 
-class OutputProviderType(StrEnum):
+class OutputProviderType(str, Enum):
     LOCAL = "local"
     GOOGLE = "google"
 
 
-class Orientation(StrEnum):
+class Orientation(str, Enum):
     HORIZONTAL = "horizontal"
     VERTICAL = "vertical"
 
 
-class VerticalAlignment(StrEnum):
+class VerticalAlignment(str, Enum):
     TOP = "top"
     MIDDLE = "middle"
     BOTTOM = "bottom"
 
 
-class HorizontalAlignment(StrEnum):
+class HorizontalAlignment(str, Enum):
     LEFT = "left"
     CENTER = "center"
     RIGHT = "right"
 
 
-class ImageLayout(StrEnum):
+class ImageLayout(str, Enum):
     SHEET = "sheet"
     SINGLETON = "singleton"
