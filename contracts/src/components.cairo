@@ -1,8 +1,9 @@
 mod spell;
 mod owner;
-mod quantity;
+mod ingredient;
+mod occupied;
 
 use spell::Spell;
 use owner::Owner;
-use quantity::Quantity;
-
+use ingredient::Ingredient;
+use occupied::Occupied;

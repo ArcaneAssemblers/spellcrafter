@@ -1,12 +1,12 @@
 #[system]
-mod init {
+mod Init {
     use traits::Into;
     use dojo::world::Context;
 
     use spellcrafter::constants::INITIAL_BARRIERS;
     use spellcrafter::components::{Owner, Spell};
 
-    fn execute(ctx: Context) {
+    fn execute(ctx: Context) -> u128 {
         let entity_id: u128 = ctx.world.uuid().into();
         set!(
             ctx.world,
@@ -22,6 +22,6 @@ mod init {
                 },
             )
         );
-        return ();
+        entity_id
     }
 }
