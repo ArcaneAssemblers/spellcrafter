@@ -1,18 +1,25 @@
 #[system]
 mod init {
-    use array::ArrayTrait;
-    use box::BoxTrait;
-    use traits::{Into, TryInto};
-    use option::OptionTrait;
+    use traits::Into;
     use dojo::world::Context;
 
-    use spellcrafter::components::spell;
+    use spellcrafter::constants::INITIAL_BARRIERS;
+    use spellcrafter::components::{Owner, Spell};
 
     fn execute(ctx: Context) {
+        let entity_id: u128 = ctx.world.uuid().into();
         set!(
             ctx.world,
             (
-                spell::initialize(ctx.origin, ctx.world.uuid())
+                Owner { entity_id, address: ctx.origin },
+                Spell {
+                    entity_id,
+                    barriers: INITIAL_BARRIERS,
+                    power: 0,
+                    chaos: 0,
+                    hot_cold: 0,
+                    light_dark: 0,
+                },
             )
         );
         return ();

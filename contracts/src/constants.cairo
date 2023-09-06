@@ -1,1 +1,1 @@
-const OFFSET: felt252 = 1000;
+const INITIAL_BARRIERS: u8 = 3;
