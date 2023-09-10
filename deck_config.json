@@ -33,9 +33,23 @@
                     "w": 650,
                     "h": 100
                 },
-                "max_font_size": 48,
+                "max_font_size": 64,
                 "h_alignment": "center",
                 "color": "#91232e"
+            },
+            {
+                "type": "text",
+                "prop": "flavour",
+                "place": {
+                    "x": 100,
+                    "y": 100,
+                    "w": 550,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "h_alignment": "left",
+                "max_font_size": 50
             },
             {
                 "type": "embedded_text",
