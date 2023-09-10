@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os
+import subprocess
 from abc import ABC
 from typing import Optional
 
@@ -86,6 +87,36 @@ class CardLayerFactory(ABC):
                         or h.dont_require(config, "text/color"),
                     )
                 )
+
+            elif layer_type == CardLayerType.GENERATED_TEXT:
+                cmd = h.require(layer_config, "cmd")
+                try:
+                    text = subprocess.check_output(cmd, shell=True, text=True)
+                except subprocess.CalledProcessError as e:
+                    print(f"Error running the command {cmd}: {e}")
+                layers.append(
+                    EmbeddedImageTextCardLayer(
+                        text,
+                        parse_placement(h.require(layer_config, "place")),
+                        input_provider,
+                        # optional params
+                        embedding_map=h.require(config, "text/embed_symbol_id_map"),
+                        max_font_size=layer_config.get("max_font_size")
+                        or h.dont_require(config, "text/max_font_size"),
+                        font_file=CardLayerFactory._get_font_file(config, layer_config),
+                        spacing_ratio=layer_config.get("spacing_ratio")
+                        or h.dont_require(config, "text/spacing_ratio"),
+                        v_alignment=layer_config.get("v_alignment"),
+                        h_alignment=None,  # alignment not compatible with embedded image placement
+                        embed_v_offset_ratio=layer_config.get("embed_v_offset_ratio")
+                        or h.dont_require(config, "text/embed_v_offset_ratio"),
+                        embed_size_ratio=layer_config.get("embed_size_ratio")
+                        or h.dont_require(config, "text/embed_size_ratio"),
+                        color=layer_config.get("color")
+                        or h.dont_require(config, "text/color"),
+                    )
+                )
+
 
             elif layer_type == CardLayerType.STATIC_IMAGE:
                 layers.append(

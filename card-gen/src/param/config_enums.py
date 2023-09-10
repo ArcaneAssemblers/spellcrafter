@@ -9,6 +9,7 @@ class CardLayerType(str, Enum):
     STATIC_TEXT = "static_text"
     TEXT = "text"
     EMBEDDED_TEXT = "embedded_text"
+    GENERATED_TEXT = "generated_text"
     STATIC_IMAGE = "static_image"
     IMAGE = "image"
     SYMBOL_ROW = "symbol_row"

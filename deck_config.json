@@ -38,8 +38,8 @@
                 "color": "#91232e"
             },
             {
-                "type": "text",
-                "prop": "flavour",
+                "type": "generated_text",
+                "cmd": "./make_card_description.py",
                 "place": {
                     "x": 100,
                     "y": 100,
