@@ -48,20 +48,6 @@
                 "max_font_size": 64,
                 "h_alignment": "center",
                 "color": "#8D9093"
-            },
-            {
-                "type": "static_text",
-                "text": "Once per turn you can send this familiar to retrieve a trinket from the Cave",
-                "place": {
-                    "x": 150,
-                    "y": 100,
-                    "w": 500,
-                    "h": 750
-                },
-                "spacing_ratio": 0.3,
-                "v_alignment": "middle",
-                "h_alignment": "left",
-                "max_font_size": 50
             }
         ],
         "forest_familiar": [
@@ -77,20 +63,6 @@
                 "max_font_size": 64,
                 "h_alignment": "center",
                 "color": "#228b22"
-            },
-            {
-                "type": "static_text",
-                "text": "Once per turn you can send this familiar to retrieve a trinket from the Forest",
-                "place": {
-                    "x": 150,
-                    "y": 100,
-                    "w": 500,
-                    "h": 750
-                },
-                "spacing_ratio": 0.3,
-                "v_alignment": "middle",
-                "h_alignment": "left",
-                "max_font_size": 50
             }
         ],
         "meadow_familiar": [
@@ -106,20 +78,6 @@
                 "max_font_size": 64,
                 "h_alignment": "center",
                 "color": "#F9D73D"
-            },
-            {
-                "type": "static_text",
-                "text": "Once per turn you can send this familiar to retrieve a trinket from the Meadow",
-                "place": {
-                    "x": 150,
-                    "y": 100,
-                    "w": 500,
-                    "h": 750
-                },
-                "spacing_ratio": 0.3,
-                "v_alignment": "middle",
-                "h_alignment": "left",
-                "max_font_size": 50
             }
         ],
         "volcano_familiar": [
@@ -135,20 +93,6 @@
                 "max_font_size": 64,
                 "h_alignment": "center",
                 "color": "#e97451"
-            },
-            {
-                "type": "static_text",
-                "text": "Once per turn you can send this familiar to retrieve a trinket from the Volcano",
-                "place": {
-                    "x": 150,
-                    "y": 100,
-                    "w": 500,
-                    "h": 750
-                },
-                "spacing_ratio": 0.3,
-                "v_alignment": "middle",
-                "h_alignment": "left",
-                "max_font_size": 50
             }
         ],
         "volcano": [
@@ -209,10 +153,10 @@
                 "type": "generated_text",
                 "cmd": "./make_card_description.py",
                 "place": {
-                    "x": 150,
-                    "y": 100,
+                    "x": 170,
+                    "y": 250,
                     "w": 500,
-                    "h": 750
+                    "h": 500
                 },
                 "spacing_ratio": 0.3,
                 "v_alignment": "middle",

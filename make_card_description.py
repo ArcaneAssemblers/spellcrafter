@@ -9,6 +9,10 @@ card = json.loads(sys.argv[1])
 
 prefix = "";
 
+if "familiar" in card['card_type']:
+    print("Sacrifice Action:")
+    prefix = "  "
+
 # Conditionals
 if card["requires_hot_gt"]:
     print(f"If HOT > {card['requires_hot_gt']}:")
@@ -23,24 +27,29 @@ if card["requires_dark_gt"]:
     print(f"If DARK > {card['requires_dark_gt']}:")
     prefix = "  "
 
-# Power and Chaos deltas
+# Power, Chaos, barriers deltas
 if card["power_delta"]:
     print(prefix+"{0:+} POWER".format(int(card["power_delta"])))
 if card["chaos_delta"]:
     print(prefix+"{0:+} CHAOS".format(int(card["chaos_delta"])))
 
+if card["barriers_delta"]:
+    if int(card["barriers_delta"]) > 0:
+        print(prefix+f"Rebuild {card['barriers_delta']} barrier up to a maximum of 3")
+    else:
+        print(prefix+f"Destroy {card['barriers_delta']} barrier")
 # elemental deltas    
 if card["hotcold_delta"]:
     if int(card["hotcold_delta"]) > 0:
         print(prefix+f"+{card['hotcold_delta']} HOT")
     else:
-        print(prefix+f"+{card['hotcold_delta']} COLD")
+        print(prefix+f"+{abs(int(card['hotcold_delta']))} COLD")
 
 if card["lightdark_delta"]:
     if int(card["lightdark_delta"]) > 0:
         print(prefix+f"+{card['lightdark_delta']} LIGHT")
     else:
-        print(prefix+f"+{card['lightdark_delta']} DARK")
+        print(prefix+f"+{abs(int(card['lightdark_delta']))} DARK")
 
 # elemental swaps
 if card["swaps_lightdark"]:
@@ -64,10 +73,10 @@ if card["hotcold_delta_fallback"]:
     if int(card["hotcold_delta_fallback"]) > 0:
         print(prefix+f"+{card['hotcold_delta_fallback']} HOT")
     else:
-        print(prefix+f"+{card['hotcold_delta_fallback']} COLD")
+        print(prefix+f"+{abs(int(card['hotcold_delta_fallback']))} COLD")
 
 if card["lightdark_delta_fallback"]:
     if int(card["lightdark_delta_fallback"]) > 0:
         print(prefix+f"+{card['lightdark_delta_fallback']} LIGHT")
     else:
-        print(prefix+f"+{card['lightdark_delta_fallback']} DARK")
+        print(prefix+f"+{abs(int(card['lightdark_delta_fallback']))} DARK")
