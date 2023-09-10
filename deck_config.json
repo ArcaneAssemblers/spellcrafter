@@ -5,14 +5,182 @@
     "h": 1050,
     "card_specs": {
         "default": [],
-        "forest": [],
-        "cave": [],
-        "cave_familiar": [],
-        "forest_familiar": [],
-        "meadow_familiar": [],
-        "volcano_familiar": [],
-        "volcano": [],
-        "meadow": [],
+        "forest": [
+            {
+                "type": "static_text",
+                "text": "Forest",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#228b22"
+            }
+        ],
+        "cave": [
+            {
+                "type": "static_text",
+                "text": "Cave",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#8D9093"
+            }
+        ],
+        "cave_familiar": [
+            {
+                "type": "static_text",
+                "text": "Cave Familiar",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#8D9093"
+            },
+            {
+                "type": "static_text",
+                "text": "Once per turn you can send this familiar to retrieve a trinket from the Cave",
+                "place": {
+                    "x": 150,
+                    "y": 100,
+                    "w": 500,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "h_alignment": "left",
+                "max_font_size": 50
+            }
+        ],
+        "forest_familiar": [
+            {
+                "type": "static_text",
+                "text": "Forest Familiar",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#228b22"
+            },
+            {
+                "type": "static_text",
+                "text": "Once per turn you can send this familiar to retrieve a trinket from the Forest",
+                "place": {
+                    "x": 150,
+                    "y": 100,
+                    "w": 500,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "h_alignment": "left",
+                "max_font_size": 50
+            }
+        ],
+        "meadow_familiar": [
+            {
+                "type": "static_text",
+                "text": "Meadow Familiar",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#F9D73D"
+            },
+            {
+                "type": "static_text",
+                "text": "Once per turn you can send this familiar to retrieve a trinket from the Meadow",
+                "place": {
+                    "x": 150,
+                    "y": 100,
+                    "w": 500,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "h_alignment": "left",
+                "max_font_size": 50
+            }
+        ],
+        "volcano_familiar": [
+            {
+                "type": "static_text",
+                "text": "Volcano Familiar",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#e97451"
+            },
+            {
+                "type": "static_text",
+                "text": "Once per turn you can send this familiar to retrieve a trinket from the Volcano",
+                "place": {
+                    "x": 150,
+                    "y": 100,
+                    "w": 500,
+                    "h": 750
+                },
+                "spacing_ratio": 0.3,
+                "v_alignment": "middle",
+                "h_alignment": "left",
+                "max_font_size": 50
+            }
+        ],
+        "volcano": [
+            {
+                "type": "static_text",
+                "text": "Volcano",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#e97451"
+            }
+        ],
+        "meadow": [
+            {
+                "type": "static_text",
+                "text": "Meadow",
+                "place": {
+                    "x": 50,
+                    "y": 30,
+                    "w": 650,
+                    "h": 100
+                },
+                "max_font_size": 64,
+                "h_alignment": "center",
+                "color": "#F9D73D"
+            }
+        ],
         "base": [
             {
                 "type": "static_image",
@@ -29,11 +197,11 @@
                 "prop": "name",
                 "place": {
                     "x": 50,
-                    "y": 40,
+                    "y": 120,
                     "w": 650,
                     "h": 100
                 },
-                "max_font_size": 64,
+                "max_font_size": 86,
                 "h_alignment": "center",
                 "color": "#91232e"
             },
@@ -77,20 +245,10 @@
         ]
     },
     "symbols": {
-        "id_map": {
-            "M": "energy-magical.png",
-            "P": "energy-physical.png",
-            "S": "energy-spiritual.png",
-            "G": "energy-generic.png"
-        }
+        "id_map": {}
     },
     "text": {
-        "embed_symbol_id_map": {
-            "{{M}}": "energy-magical.png",
-            "{{P}}": "energy-physical.png",
-            "{{S}}": "energy-spiritual.png",
-            "{{G}}": "energy-generic.png"
-        },
+        "embed_symbol_id_map": {},
         "embed_v_offset_ratio": -0.05,
         "embed_size_ratio": 1.0,
         "color": "#000000",

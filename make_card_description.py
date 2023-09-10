@@ -7,26 +7,67 @@ import json
 
 card = json.loads(sys.argv[1])
 
+prefix = "";
+
+# Conditionals
+if card["requires_hot_gt"]:
+    print(f"If HOT > {card['requires_hot_gt']}:")
+    prefix = "  "
+if card["requires_light_gt"]:
+    print(f"If LIGHT > {card['requires_light_gt']}:")
+    prefix = "  "
+if card["requires_cold_gt"]:
+    print(f"If COLD > {card['requires_cold_gt']}:")
+    prefix = "  "
+if card["requires_dark_gt"]:
+    print(f"If DARK > {card['requires_dark_gt']}:")
+    prefix = "  "
+
+# Power and Chaos deltas
 if card["power_delta"]:
-    print(f"+{card['power_delta']} POWER")
+    print(prefix+"{0:+} POWER".format(int(card["power_delta"])))
 if card["chaos_delta"]:
-    print(f"+{card['power_delta']} CHAOS")
+    print(prefix+"{0:+} CHAOS".format(int(card["chaos_delta"])))
 
 # elemental deltas    
 if card["hotcold_delta"]:
     if int(card["hotcold_delta"]) > 0:
-        print(f"+{card['hotcold_delta']} HOT")
+        print(prefix+f"+{card['hotcold_delta']} HOT")
     else:
-        print(f"+{card['hotcold_delta']} COLD")
+        print(prefix+f"+{card['hotcold_delta']} COLD")
 
 if card["lightdark_delta"]:
     if int(card["lightdark_delta"]) > 0:
-        print(f"+{card['lightdark_delta']} LIGHT")
+        print(prefix+f"+{card['lightdark_delta']} LIGHT")
     else:
-        print(f"+{card['lightdark_delta']} DARK")
+        print(prefix+f"+{card['lightdark_delta']} DARK")
 
 # elemental swaps
 if card["swaps_lightdark"]:
-    print("Swap light and dark stats")
+    print(prefix+"Swap LIGHT and DARK stats")
 if card["swaps_hotcold"]:
-    print("Swap hot and cold stats")
+    print(prefix+"Swap HOT and COLD stats")
+
+# fallbacks (e.g. else arms for conditionals)
+
+if card["power_delta_fallback"] or card["chaos_delta_fallback"] or card["hotcold_delta_fallback"] or card["lightdark_delta_fallback"]:
+    print("Else:")
+    prefix = "  "
+
+if card["power_delta_fallback"]:
+    print(prefix+"{0:+} POWER".format(int(card["power_delta_fallback"])))
+if card["chaos_delta_fallback"]:
+    print(prefix+"{0:+} CHAOS".format(int(card["chaos_delta_fallback"])))
+
+# elemental delta_fallbacks    
+if card["hotcold_delta_fallback"]:
+    if int(card["hotcold_delta_fallback"]) > 0:
+        print(prefix+f"+{card['hotcold_delta_fallback']} HOT")
+    else:
+        print(prefix+f"+{card['hotcold_delta_fallback']} COLD")
+
+if card["lightdark_delta_fallback"]:
+    if int(card["lightdark_delta_fallback"]) > 0:
+        print(prefix+f"+{card['lightdark_delta_fallback']} LIGHT")
+    else:
+        print(prefix+f"+{card['lightdark_delta_fallback']} DARK")

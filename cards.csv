@@ -1,86 +1,86 @@
-card_id,name,count,power_delta,chaos_delta,hotcold_delta,lightdark_delta,swaps_hotcold,swaps_lightdark,conditional_hot_geq,conditional_light_geq,flavour,card_type,consumable
-1,Bat Wing,1,,,,,,,,,A torn and bloodied wing membrane,cave,TRUE
-2,Lichen,1,,,,,,,,,It is pale and spongy ,cave,TRUE
-3,Spider Silk,1,,,,,,,,,"Stringy sticky strands, gathered in your hair",cave,TRUE
-4,Glow Worm,1,,,,,,,,,"A maggot that wiggles slightly, faking sunshine",cave,TRUE
-5,Eyeless Fish,1,,,,,,,,,Only flesh where its eyes once were,cave,TRUE
-6,Geode,1,,,,,,,,,When cracked open the crystals are very sharp,cave,TRUE
-7,Stalactite,1,,,,,,,,,"A melted spike, heavier than it looks.",cave,TRUE
-8,Lump of Coal,1,,,,,,,,,A dark chunk that blackens your hand,cave,TRUE
-9,Deep Crystal,1,,,,,,,,,Strange vibrations can be felt when held.,cave,TRUE
-10,Twilight Quartz,1,,,,,,,,,An elegant jewel that will devour your flesh,cave,TRUE
-11,Adamantine,1,,,,,,,,,It contains the supernatural strength to contain planetary terrors.,cave,TRUE
-12,Dragonhide,1,,,,,,,,,"If you find one of these scales, flee. ",cave,TRUE
-13,Cricket,1,,,,,,,,,It's missing a leg,cave,TRUE
-14,Beetle,1,,,,,,,,,It has a shiny brown carapace,cave,TRUE
-15,Lost Doll,1,,,,,,,,,The paint has worn off its porcelain face,cave,TRUE
-16,Old Glass Bottle,1,,,,,,,,,Did someone drop their rubbish in the cave??,cave,TRUE
-17,Petrified Wood,1,,,,,,,,,Not heavy at all- you can still see the grain.,cave,TRUE
-18,Shell Fossil,1,,,,,,,,,A calcified imprint of a sea creature,cave,TRUE
-19,Fossilised bone,1,,,,,,,,,An ancient piece of skeleton,cave,TRUE
-20,Gypsum Flower,1,,,,,,,,,A delicate curved and coiled crystal.,cave,TRUE
-21,Wolf Spider,1,,,,,,,,,,cave_familiar,FALSE
-22,Bone,1,2,1,2,,,,,,A crunchy little rat bone,forest,TRUE
-23,Rat Heart,1,3,2,3,,,,,,The still-beating heart of a rat,forest,TRUE
-24,Quartz,1,,,,,,,,,A chunk of quartz. It feels stabilising in some way,forest,TRUE
-25,Pine Resin,1,-1,-1,,,,,,,Sticky sap from a pine tree,forest,TRUE
-26,Moss,1,,,,,,,,,Soft green moss,forest,TRUE
-27,Acorn,1,,-1,,,,,,,This holds great potential,forest,TRUE
-28,Cedar Wood,1,2,,,,,,,,A branch of sweet smelling cedar,forest,TRUE
-29,Pine Cone,1,1,,,,,,,,It rattles. There are nuts inside,forest,TRUE
-30,Nettle,1,,2,3,,,,,,Be careful not to get stung,forest,TRUE
-31,Rat Foot,1,2,,,,,,,,I wonder what happened to the rest of the rat,forest,TRUE
-32,Pine Sprig,1,1,,2,,,,,,Smells like Christmas,forest,TRUE
-33,Faerie,1,,,,,TRUE,,,,Could be a friend.. or a powerful sacrifice!,forest,TRUE
-34,Herb,1,1,,1,,,,,,Could be used in a nice stew,forest,TRUE
-35,Wood,1,,,,,,,,,"A chunk of wood, great for fires!",forest,TRUE
-36,Cold Iron,1,,,,,,,,,It feels dangerous and sucks the heat from your hand.,forest,TRUE
-37,Hartwood ,1,,,,,,,,,This branch bleeds bright red blood,forest,TRUE
-38,True Ice,1,,,,,,,,,It stays cold in your hand and doesn't melt.,forest,TRUE
-39,Blue Berries,,,,,,,,,,Are these the poisonous ones?,forest,TRUE
-40,Red Berries,,,,,,,,,,They look delicious,forest,TRUE
-41,Thorny Vine,,,,,,,,,,It pricks you every time you touch it,forest,FALSE
-42,Raven,1,,,,,,,,,,forest_familiar,TRUE
-43,Grasshopper,1,,,,,,,,,A green little bug,meadow,TRUE
-44,Daisy,1,,,,,,,,,Pull off the petals one at a time and chant,meadow,TRUE
-45,Butterfly,1,,,,,,,,,"It spasms, one of the wings was torn off.",meadow,TRUE
-46,Bee Sting,1,,,,,,,,,"The stinger twitches, ready to inject poison",meadow,TRUE
-47,Honey,1,,,,,,,,,Sickly sweet droplets catch the light.,meadow,TRUE
-48,Snake skin,1,,,,,,,,,A nearly-perfect scaly molt,meadow,TRUE
-49,Shekel,1,,,,,,,,,An ancient looking coin,meadow,TRUE
-50,Copper Chunk,1,,,,,,,,,"A nugget of copper, feels warm.",meadow,TRUE
-51,Silver Nugget,1,,,,,,,,,This nugget shines brightly.,meadow,TRUE
-52,Gold flakes,1,,,,,,,,,They twinkle and make you wish for more,meadow,TRUE
-53,Ethereal Silica,1,,,,,,,,,It bends light against physics. You feel mesmerised.,meadow,TRUE
-54,Alchemical Silver,1,,,,,,,,,"A liquid from below a battlefield, full of potential energy.",meadow,TRUE
-55,Mithral,1,,,,,,,,,"It floats slightly, and gives delusions of a rapturous apocalypse.",meadow,TRUE
-56,Wheat,1,,,,,,,,,It crackles nicely and feels dry.,meadow,TRUE
-57,Lavender sprig,1,,,,,,,,,The purple flowers have a strong scent.,meadow,TRUE
-58,Milkweed,1,,,,,,,,,The sap is milky and toxic,meadow,TRUE
-59,Mouse Tail,1,,,,,,,,,Torn off at the base,meadow,TRUE
-60,Spiky Seeds,1,,,,,,,,,They snag on your clothing,meadow,TRUE
-61,Bird Egg,1,,,,,,,,,A speckled light blue egg.,meadow,TRUE
-62,Rabbit tail,1,,,,,,,,,"A strip of fluff, no tailbone inside.",meadow,TRUE
-63,Cat,1,,,,,,,,,,meadow_familiar,FALSE
-64,Pumice,1,,1,1,,,,,,A rock that is light as foam,volcano,TRUE
-65,Sulphur,1,3,,1,,,,,,Smells like? something,volcano,TRUE
-66,Obsidian,1,,-1,,,,,,,"Soothing, shiny and black",volcano,TRUE
-67,Scorpion,1,2,2,2,,,,,,A fiery arachnid,volcano,TRUE
-68,Ashes,1,,,,,,,,,Soft grey ashes of something once alive,volcano,TRUE
-69,Salt,1,,-1,,,,,,,Said to dispel evil spirits,volcano,TRUE
-70,Volcanic Water,1,,1,2,,,,,,Imbued with the power of the volcano,volcano,TRUE
-71,Charcoal,1,1,1,1,,,,,,The charred remains of a tree,volcano,TRUE
-72,Simple stone,1,,,,,,,,,This stone feels smooth in your hand.,volcano,TRUE
-73,Ironwood Twig,1,,,,,,,,,This twig seems somehow imbued with metal,volcano,TRUE
-74,Sapphire,1,,,,,,,,,A gemstone accustomed to both pain and beauty.,volcano,TRUE
-75,Ruby,1,,,,,,,,,A chimeric fusion of metal alloys and oxygen.,volcano,TRUE
-76,Ignium,1,,,,,,,,,Handle carefully! Its infernal radiation evaporates water.,volcano,TRUE
-77,Acidic Slime,1,,,,,,,,,Its unclear if this is alive or dead,volcano,TRUE
-78,Burrowing Worm,1,,,,,,,,,"Very wriggly and tough, resistant to heat",volcano,TRUE
-79,Crab Shell,1,,,,,,,,,It is scorched on the inside,volcano,TRUE
-80,Broken Claw,1,,,,,,,,,Found lodged between the rocks,volcano,TRUE
-81,Volcanic Sand,1,,,,,,,,,"Grainy, black, and still warm in your hand.",volcano,TRUE
-82,Algae Blob,1,,,,,,,,,Slimy and adapted to extreme temperatures,volcano,TRUE
-83,Tuff Chunk,1,,,,,,,,,A porous limestone ejected by the volcano.,volcano,TRUE
-84,Salamander,1,,,,,,,,,,volcano_familiar,FALSE
-85,Diamond Dust,1,,,,,,,,,Hard and soulless ,volcano,FALSE
+card_id,name,count,requires_hot_gt,requires_cold_gt,requires_light_gt,requires_dark_gt,power_delta,chaos_delta,hotcold_delta,lightdark_delta,power_delta_fallback,chaos_delta_fallback,hotcold_delta_fallback,lightdark_delta_fallback,swaps_hotcold,swaps_lightdark,flavour,card_type,consumable
+1,Bat Wing,1,,,,3,3,,,,1,,,,,,A torn and bloodied wing membrane,cave,TRUE
+2,Lichen,1,3,,,,,,,,,,,,,,It is pale and spongy ,cave,TRUE
+3,Spider Silk,1,,,,,,,,,,,,,,,"Stringy sticky strands, gathered in your hair",cave,TRUE
+4,Glow Worm,1,,,,,,,,,,,,,,,"A maggot that wiggles slightly, faking sunshine",cave,TRUE
+5,Eyeless Fish,1,,,,,,,,,,,,,,,Only flesh where its eyes once were,cave,TRUE
+6,Geode,1,4,,,,,,,,,,,,,,When cracked open the crystals are very sharp,cave,TRUE
+7,Stalactite,1,,,,,,,,,,,,,,,"A melted spike, heavier than it looks.",cave,TRUE
+8,Lump of Coal,1,,,,,,,,,,,,,,,A dark chunk that blackens your hand,cave,TRUE
+9,Deep Crystal,1,,,,,,,,,,,,,,,Strange vibrations can be felt when held.,cave,TRUE
+10,Twilight Quartz,1,,,,,,,,,,,,,,TRUE,An elegant jewel that will devour your flesh,cave,TRUE
+11,Adamantine,1,,,,,,,,,,,,,,,It contains the supernatural strength to contain planetary terrors.,cave,TRUE
+12,Dragonhide,1,,,,,,,,,,,,,,,"If you find one of these scales, flee. ",cave,TRUE
+13,Cricket,1,,,,,,,,,,,,,,,It's missing a leg,cave,TRUE
+14,Beetle,1,,,,,,,,,,,,,,,It has a shiny brown carapace,cave,TRUE
+15,Lost Doll,1,,,,,,,,,,,,,,,The paint has worn off its porcelain face,cave,TRUE
+16,Old Glass Bottle,1,,,,,,,,,,,,,,,Did someone drop their rubbish in the cave??,cave,TRUE
+17,Petrified Wood,1,,,,,,,,,,,,,,,Not heavy at all- you can still see the grain.,cave,TRUE
+18,Shell Fossil,1,,,,,,,,,,,,,,,A calcified imprint of a sea creature,cave,TRUE
+19,Fossilised bone,1,,,,,,,,,,,,,,,An ancient piece of skeleton,cave,TRUE
+20,Gypsum Flower,1,,,,,,,,,,,,,,,A delicate curved and coiled crystal.,cave,TRUE
+21,Wolf Spider,1,,,,,,,,,,,,,,,,cave_familiar,FALSE
+22,Bone,1,,,,,2,1,2,,,,,,,,A crunchy little rat bone,forest,TRUE
+23,Rat Heart,1,,,,,3,2,3,,,,,,,,The still-beating heart of a rat,forest,TRUE
+24,Quartz,1,,,,,,,,,,,,,,,A chunk of quartz. It feels stabilising in some way,forest,TRUE
+25,Pine Resin,1,,,,,-1,-1,,,,,,,,,Sticky sap from a pine tree,forest,TRUE
+26,Moss,1,,,,,,,,,,,,,,,Soft green moss,forest,TRUE
+27,Acorn,1,,,,,,-1,,,,,,,,,This holds great potential,forest,TRUE
+28,Cedar Wood,1,,,,,2,,,,,,,,,,A branch of sweet smelling cedar,forest,TRUE
+29,Pine Cone,1,,,,,1,,,,,,,,,,It rattles. There are nuts inside,forest,TRUE
+30,Nettle,1,,,,,,2,3,,,,,,,,Be careful not to get stung,forest,TRUE
+31,Rat Foot,1,,,,,2,,,,,,,,,,I wonder what happened to the rest of the rat,forest,TRUE
+32,Pine Sprig,1,,,,,1,,2,,,,,,,,Smells like Christmas,forest,TRUE
+33,Faerie,1,,,,,,,,,,,,,TRUE,,Could be a friend.. or a powerful sacrifice!,forest,TRUE
+34,Herb,1,,,,,1,,1,,,,,,,,Could be used in a nice stew,forest,TRUE
+35,Wood,1,,,,,,,,,,,,,,,"A chunk of wood, great for fires!",forest,TRUE
+36,Cold Iron,1,,,,,,,,,,,,,,,It feels dangerous and sucks the heat from your hand.,forest,TRUE
+37,Hartwood ,1,,,,,,,,,,,,,,,This branch bleeds bright red blood,forest,TRUE
+38,True Ice,1,,,,,,,,,,,,,,,It stays cold in your hand and doesn't melt.,forest,TRUE
+39,Blue Berries,,,,,,,,,,,,,,,,Are these the poisonous ones?,forest,TRUE
+40,Red Berries,,,,,,,,,,,,,,,,They look delicious,forest,TRUE
+41,Thorny Vine,,,,,,,,,,,,,,,,It pricks you every time you touch it,forest,FALSE
+42,Raven,1,,,,,,,,,,,,,,,,forest_familiar,TRUE
+43,Grasshopper,1,,,,,,,,,,,,,,,A green little bug,meadow,TRUE
+44,Daisy,1,,,,,,,,,,,,,,,Pull off the petals one at a time and chant,meadow,TRUE
+45,Butterfly,1,,,,,,,,,,,,,,,"It spasms, one of the wings was torn off.",meadow,TRUE
+46,Bee Sting,1,,,,,,,,,,,,,,,"The stinger twitches, ready to inject poison",meadow,TRUE
+47,Honey,1,,,,,,,,,,,,,,,Sickly sweet droplets catch the light.,meadow,TRUE
+48,Snake skin,1,,,,,,,,,,,,,,,A nearly-perfect scaly molt,meadow,TRUE
+49,Shekel,1,,,,,,,,,,,,,,,An ancient looking coin,meadow,TRUE
+50,Copper Chunk,1,,,,,,,,,,,,,,,"A nugget of copper, feels warm.",meadow,TRUE
+51,Silver Nugget,1,,,,,,,,,,,,,,TRUE,This nugget shines brightly.,meadow,TRUE
+52,Gold flakes,1,,,,,,,,,,,,,,,They twinkle and make you wish for more,meadow,TRUE
+53,Ethereal Silica,1,,,,,,,,,,,,,,,It bends light against physics. You feel mesmerised.,meadow,TRUE
+54,Alchemical Silver,1,,,,,,,,,,,,,,,"A liquid from below a battlefield, full of potential energy.",meadow,TRUE
+55,Mithral,1,,,,,,,,,,,,,,,"It floats slightly, and gives delusions of a rapturous apocalypse.",meadow,TRUE
+56,Wheat,1,,,,,,,,,,,,,,,It crackles nicely and feels dry.,meadow,TRUE
+57,Lavender sprig,1,,,,,,,,,,,,,,,The purple flowers have a strong scent.,meadow,TRUE
+58,Milkweed,1,,,,,,,,,,,,,,,The sap is milky and toxic,meadow,TRUE
+59,Mouse Tail,1,,,,,,,,,,,,,,,Torn off at the base,meadow,TRUE
+60,Spiky Seeds,1,,,,,,,,,,,,,,,They snag on your clothing,meadow,TRUE
+61,Bird Egg,1,,,,,,,,,,,,,,,A speckled light blue egg.,meadow,TRUE
+62,Rabbit tail,1,,,,,,,,,,,,,,,"A strip of fluff, no tailbone inside.",meadow,TRUE
+63,Cat,1,,,,,,,,,,,,,,,,meadow_familiar,FALSE
+64,Pumice,1,,,,,,1,1,,,,,,,,A rock that is light as foam,volcano,TRUE
+65,Sulphur,1,,,,,3,,1,,,,,,,,Smells like? something,volcano,TRUE
+66,Obsidian,1,,,,,,-1,,,,,,,,,"Soothing, shiny and black",volcano,TRUE
+67,Scorpion,1,,,,,2,2,2,,,,,,,,A fiery arachnid,volcano,TRUE
+68,Ashes,1,,,,,,,,,,,,,,,Soft grey ashes of something once alive,volcano,TRUE
+69,Salt,1,,,,,,-1,,,,,,,,,Said to dispel evil spirits,volcano,TRUE
+70,Volcanic Water,1,,,,,,1,2,,,,,,,,Imbued with the power of the volcano,volcano,TRUE
+71,Charcoal,1,,,,,1,1,1,,,,,,,,The charred remains of a tree,volcano,TRUE
+72,Simple stone,1,,,,,,,,,,,,,,,This stone feels smooth in your hand.,volcano,TRUE
+73,Ironwood Twig,1,,,,,,,,,,,,,,,This twig seems somehow imbued with metal,volcano,TRUE
+74,Sapphire,1,,,,,,,,,,,,,,,A gemstone accustomed to both pain and beauty.,volcano,TRUE
+75,Ruby,1,,,,,,,,,,,,,,,A chimeric fusion of metal alloys and oxygen.,volcano,TRUE
+76,Ignium,1,,,,,,,,,,,,,,,Handle carefully! Its infernal radiation evaporates water.,volcano,TRUE
+77,Acidic Slime,1,,,,,,,,,,,,,,,Its unclear if this is alive or dead,volcano,TRUE
+78,Burrowing Worm,1,,,,,,,,,,,,,,,"Very wriggly and tough, resistant to heat",volcano,TRUE
+79,Crab Shell,1,,,,,,,,,,,,,,,It is scorched on the inside,volcano,TRUE
+80,Broken Claw,1,,,,,,,,,,,,,,,Found lodged between the rocks,volcano,TRUE
+81,Volcanic Sand,1,,,,,,,,,,,,,,,"Grainy, black, and still warm in your hand.",volcano,TRUE
+82,Algae Blob,1,,,,,,,,,,,,,,,Slimy and adapted to extreme temperatures,volcano,TRUE
+83,Tuff Chunk,1,,,,,,,,,,,,,,,A porous limestone ejected by the volcano.,volcano,TRUE
+84,Salamander,1,,,,,,,,,,,,,,,,volcano_familiar,FALSE
+85,Diamond Dust,1,,,,,,,,,,,,,TRUE,,Hard and soulless ,volcano,FALSE
