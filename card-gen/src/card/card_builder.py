@@ -13,9 +13,18 @@ class CardBuilder:
         self._input_provider = InputProviderFactory.build(config)
 
         self._default_type = h.require(config, "default_card_type")
+        self._base_layers = h.require(config, "card_base")
+
+
         self._specs = h.require(config, "card_specs")
+
         if self._specs.get(self._default_type) == None:
             raise Exception("Invalid card_specs missing default type")
+
+        if self._specs.get(self._base_layers) == None:
+            raise Exception("No base card layers provided")
+        else:
+            self._base_layers = self._specs.get(self._base_layers)
 
         self._w = h.require(config, "w")
         self._h = h.require(config, "h")
@@ -25,7 +34,9 @@ class CardBuilder:
     def build(self, card_info: dict[str, str]) -> Card:
         card = Card(self._w, self._h)
         card_type = card_info.get("card_type") or self._default_type
-        layers = h.require(self._specs, card_type)
+        
+        layers = self._base_layers + h.require(self._specs, card_type)
+
         card.add_layers(
             CardLayerFactory.build(
                 layers, self._config, card_info, self._input_provider
