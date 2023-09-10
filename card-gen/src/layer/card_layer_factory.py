@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import os
 import subprocess
+import json
 from abc import ABC
 from typing import Optional
 
@@ -90,6 +91,8 @@ class CardLayerFactory(ABC):
 
             elif layer_type == CardLayerType.GENERATED_TEXT:
                 cmd = h.require(layer_config, "cmd")
+                params = json.dumps(card).replace('"', '\\"')
+                cmd = f"{cmd} \"{params}\""
                 try:
                     text = subprocess.check_output(cmd, shell=True, text=True)
                 except subprocess.CalledProcessError as e:
