@@ -1,9 +1,7 @@
-mod spell;
 mod owner;
-mod ingredient;
+mod value_in_game;
 mod occupied;
 
-use spell::Spell;
 use owner::Owner;
-use ingredient::Ingredient;
+use value_in_game::ValueInGame;
 use occupied::Occupied;

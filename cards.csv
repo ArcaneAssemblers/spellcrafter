@@ -1,34 +1,37 @@
-name,count,power,chaos,elemental,flavour,skip,card_type
-Bone,1,2,10,2,A crunchy little rat bone,,forest
-Rat Heart,1,3,20,3,The still-beating heart of a rat,,forest
-Quartz,1,,,,A chunk of quartz. It feels stabilising in some way,,forest
-Pine Resin,1,-1,-10,,Sticky sap from a pine tree,,forest
-Moss,1,,,,Soft green moss,,forest
-Acorn,1,,-10,,This holds great potential,,forest
-Cedar Wood,1,2,,,A branch of sweet smelling cedar,,forest
-Pine Cone,1,1,,,It rattles. There are nuts inside,,forest
-Nettle,1,,20,3,Be careful not to get stung,,forest
-Rat Foot,1,2,,,I wonder what happened to the rest of the rat,,forest
-Pine Sprig,1,1,,2,Smells like Christmas,,forest
-Herb,1,1,,1,Could be used in a nice stew,,forest
-Pumice,1,,5,1,A rock that is light as foam,,volcano
-Sulphur,1,3,,1,Smells like? something,,volcano
-Obsidian,1,,-10,,"Soothing, shiny and black",,volcano
-Scorpion,1,2,20,2,A fiery arachnid,,volcano
-Ashes,1,,,,Soft grey ashes of something once alive,,volcano
-Salt,1,,-10,,Said to dispel evil spirits,,volcano
-Volcanic Water,1,,10,2,Imbued with the power of the volcano,,volcano
-Charcoal,1,1,5,1,The charred remains of a tree,,volcano
-Cricket,,,,,A green little bug,,meadow
-Daisy,,,,,,,meadow
-Butterfly,,,,,,,meadow
-Bee Sting,,,,,,,meadow
-Honey,,,,,,,meadow
-Wheat,,,,,,,meadow
-Bat Wing,,,,,,,cave
-Lichen,,,,,,,cave
-Spider Silk,,,,,,,cave
-Glow Worm,,,,,,,cave
-Eyeless Fish,,,,,,,cave
-Geode,,,,,,,cave
-"Stalactite ",,,,,,,cave
+name,count,power,chaos,elemental,description,flavour,skip,card_type,action_type,action_points
+Bone,1,2,10,2,,A crunchy little rat bone,,forest,alter_stats,0
+Rat Heart,1,3,20,3,,The still-beating heart of a rat,,forest,alter_stats,0
+Quartz,1,,,,,A chunk of quartz. It feels stabilising in some way,,forest,,0
+Pine Resin,1,-1,-10,,,Sticky sap from a pine tree,,forest,alter_stats,0
+Moss,1,,,,,Soft green moss,,forest,,0
+Acorn,1,,-10,,,This holds great potential,,forest,alter_stats,0
+Cedar Wood,1,2,,,,A branch of sweet smelling cedar,,forest,alter_stats,0
+Pine Cone,1,1,,,,It rattles. There are nuts inside,,forest,alter_stats,0
+Nettle,1,,20,3,,Be careful not to get stung,,forest,alter_stats,0
+Rat Foot,1,2,,,,I wonder what happened to the rest of the rat,,forest,,0
+Pine Sprig,1,1,,2,,Smells like Christmas,,forest,alter_stats,0
+Faerie,1,,,,Swap HOT and COLD stats,Could be a friend.. or a powerful sacrifice!,,forest,swap_elemental,
+Herb,1,1,,1,,Could be used in a nice stew,,forest,alter_stats,0
+Pumice,1,,5,1,,A rock that is light as foam,,volcano,alter_stats,0
+Sulphur,1,3,,1,,Smells like? something,,volcano,alter_stats,0
+Obsidian,1,,-10,,,"Soothing, shiny and black",,volcano,alter_stats,0
+Scorpion,1,2,20,2,,A fiery arachnid,,volcano,,0
+Ashes,1,,,,,Soft grey ashes of something once alive,,volcano,,0
+Salt,1,,-10,,,Said to dispel evil spirits,,volcano,alter_stats,0
+Volcanic Water,1,,10,2,,Imbued with the power of the volcano,,volcano,alter_stats,0
+Charcoal,1,1,5,1,,The charred remains of a tree,,volcano,alter_stats,0
+Cricket,,,,,,A green little bug,,meadow,alter_stats,0
+Daisy,,,,,,,,meadow,,0
+Butterfly,,,,,,,,meadow,,0
+Bee Sting,,,,,,,,meadow,,0
+Honey,,,,,,,,meadow,,0
+Wheat,,,,,,,,meadow,,0
+Bat Wing,,,,,,,,cave,,0
+Lichen,,,,,,,,cave,,0
+Spider Silk,,,,,,,,cave,,0
+Glow Worm,,,,,,,,cave,,0
+Eyeless Fish,,,,,,,,cave,,0
+Geode,,,,,,,,cave,,0
+Stalactite ,,,,,,,,cave,,0
+Raven,1,,,,Take 5 AP to summon this familiar. Once per turn it can be sent to retrieve a small item from the forest,,,forest_familiar,forest_familiar,
+Salamander,1,,,,,,,volcano_familiar,volcano_familiar,
