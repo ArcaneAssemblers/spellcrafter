@@ -6,3 +6,6 @@ code:
 
 contracts:
 	cd contracts && sozo build
+
+test:
+	cd contracts && sozo test
