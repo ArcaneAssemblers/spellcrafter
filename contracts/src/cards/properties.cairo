@@ -1,4 +1,3 @@
-mod card_type;
 mod requires_hot_gt;
 mod requires_cold_gt;
 mod requires_light_gt;

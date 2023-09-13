@@ -4,8 +4,9 @@
 
 use array::ArrayTrait;
 use option::OptionTrait;
-fn get(card_id: u32) -> Option<felt252> {
-    let a = array![
+use traits::TryInto;
+fn get(card_id: u128) -> Option<bool> {
+    let a: Array<Option<bool>> = array![
         Option::None,
         Option::None,
         Option::None,
@@ -56,7 +57,7 @@ fn get(card_id: u32) -> Option<felt252> {
         Option::None,
         Option::None,
         Option::None,
-        Option::Some('TRUE'),
+        Option::Some(true),
         Option::None,
         Option::None,
         Option::None,
@@ -93,5 +94,6 @@ fn get(card_id: u32) -> Option<felt252> {
         Option::None,
 
     ];
-    a.get(card_id)
+    // card indices should never exceed u32 size
+    *a.at(card_id.try_into().unwrap())
 }

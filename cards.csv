@@ -12,7 +12,7 @@ card_id,name,card_type,count,requires_hot_gt,requires_cold_gt,requires_light_gt,
 11,Adamantine,cave,1,,,,8,4,,,,,1,,,,,,It contains the supernatural strength to contain planetary terrors.,TRUE
 12,Dragonhide,cave,1,,,,5,,,,-2,-2,,,,,,,"If you find one of these scales, flee. ",TRUE
 13,Cricket,cave,1,,,,,-1,,,,,,,,,,,It's missing a leg,TRUE
-14,Beetle,cave,1,,,,,1,1,,,,,,,,,,It has a shiny brown carapace,TRUE
+14,Beetle,cave,1,,,,,1,1,,,,,,1,,,,It has a shiny brown carapace,TRUE
 15,Lost Doll,cave,1,,,,4,3,3,,,,1,2,,,,,The paint has worn off its porcelain face,TRUE
 16,Old Glass Bottle,cave,1,,,,,-1,-1,,,,,,,,,,Did someone drop their rubbish in the cave??,TRUE
 17,Petrified Wood,cave,1,,,,,2,,,,-1,,,,,,,Not heavy at all- you can still see the grain.,TRUE

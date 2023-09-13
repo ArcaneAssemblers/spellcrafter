@@ -3,3 +3,6 @@ cards:
 
 code:
 	sh ./scripts/gen-code.sh
+
+contracts:
+	cd contracts && sozo build

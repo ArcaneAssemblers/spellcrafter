@@ -8,14 +8,30 @@ HEAD = """
 
 use array::ArrayTrait;
 use option::OptionTrait;
-fn get(card_id: u32) -> Option<felt252> {
-    let a = array![
+use traits::TryInto;
+fn get(card_id: u128) -> Option<{0}> {{
+    let a: Array<Option<{0}>> = array![
 """
 FOOT =  """
     ];
-    a.get(card_id)
+    // card indices should never exceed u32 size
+    *a.at(card_id.try_into().unwrap())
 }
 """
+
+def parse_type(val: str):
+    try:
+        return abs(int(val)), 'u32'
+    except ValueError:
+        if not val:
+            return None, "unknown"
+        elif val == "TRUE":
+            return 'true', 'bool'
+        elif val == "FALSE":
+            return 'false', 'bool'
+        else: 
+            raise ValueError("cannot convert to u32 or bool")
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
@@ -48,15 +64,21 @@ if __name__ == "__main__":
                     continue
                 module_file.write(f"mod {field};\n")
                 with open(args.outdir + "/" + field + ".cairo", "w") as f:
-                    f.write(HEAD)
+                    
+                    # scan through and find the type
+                    for row in rows:
+                        _, typ = parse_type(row[field])
+                        if typ != "unknown":
+                            break
+                    f.write(HEAD.format(typ))
+                    
                     for row in rows:
                         if row[field]:
-                            try:
-                                f.write(f"        Option::Some({int(row[field])}),\n")
-                            except ValueError:
-                                f.write(f"        Option::Some('{row[field]}'),\n")
+                            v, _ = parse_type(row[field])
+                            f.write("        Option::Some({}),\n".format(v))
                         else:
                             f.write("        Option::None,\n")
                     f.write(FOOT)
                     f.close()
+
 
