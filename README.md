@@ -11,7 +11,7 @@ If you want to play test the physical version you can produce all the cards from
 
 Requires:
 - python3
-- make 
+- just 
 
 Run the command
 
