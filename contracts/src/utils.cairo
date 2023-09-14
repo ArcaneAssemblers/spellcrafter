@@ -1,5 +1,5 @@
 #[cfg(test)]
 mod testing;
-mod caller_is_owner;
+mod assertions;
 
-use caller_is_owner::assert_caller_is_owner;
+use assertions::assert_caller_is_owner;

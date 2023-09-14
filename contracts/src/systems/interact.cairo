@@ -2,19 +2,16 @@
 mod Interact {
     use traits::Into;
     use dojo::world::Context;
-    use spellcrafter::components::{Owner};
+    use spellcrafter::components::{ValueInGame};
     use spellcrafter::utils::assert_caller_is_owner;
+    use spellcrafter::cards::actions::enact_card;
 
-    fn execute(ctx: Context, game_id: u128) -> u128 {
+    fn execute(ctx: Context, game_id: u128, item_id: u128) {
         assert_caller_is_owner(ctx, game_id);
+        
+        let owned = get!(ctx.world, (item_id, game_id), ValueInGame).value;
+        assert(owned > 0, 'Item is not owned');
 
-        let entity_id: u128 = ctx.world.uuid().into();
-        set!(
-            ctx.world,
-            (
-                Owner { entity_id, address: ctx.origin }
-            )
-        );
-        entity_id
+        enact_card(ctx, game_id, item_id);
     }
 }
