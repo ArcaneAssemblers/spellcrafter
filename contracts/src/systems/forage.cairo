@@ -4,16 +4,15 @@ mod Forage {
     use dojo::world::Context;
 
     use spellcrafter::components::{Owner, ValueInGame};
+    use spellcrafter::utils::assert_caller_is_owner;
     use spellcrafter::types::Region;
 
     // In the context of a particular game, forage in a given region
     // This will add a random spell component to the players hand
     fn execute(ctx: Context, game_id: u128, region: Region) {
+        assert_caller_is_owner(ctx, game_id);
         // currently adds 1 of card type 1 to the hand
         let CARD_ID: u32 = 1;
-
-        let owner = get!(ctx.world, game_id, Owner);
-        assert(owner.address == ctx.origin, 'Only the owner can interact');
 
         let card = get!(ctx.world, (CARD_ID, game_id), ValueInGame);
 
