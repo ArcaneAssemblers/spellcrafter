@@ -1,3 +1,4 @@
+use option::OptionTrait;
 use dojo::world::Context;
 use dojo::world::IWorldDispatcherTrait;
 
@@ -8,14 +9,17 @@ const CHAOS_STAT: u128 = 0;
 
 // modify the game state as demanded by this card
 fn enact_card(ctx: Context, game_id: u128, card_id: u128) {
-    // iterate through each of the actionns that a card can have and apply the if relevent
+    // iterate through each of the actions that a card can have and apply the if relevent
     match chaos_delta::get(card_id) {
         Option::Some(delta) => { increase_stat(ctx, game_id, CHAOS_STAT, 1); },
         Option::None => {},
     }
 
-    if consumable::get(card_id) {
-        consume(ctx, game_id, card_id);
+    match consumable::get(card_id) {
+        Option::Some(b) => {
+            if b { consume(ctx, game_id, card_id); }
+        },
+        Option::None(_) => {},
     }
 }
 
