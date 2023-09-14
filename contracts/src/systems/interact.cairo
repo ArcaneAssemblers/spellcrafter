@@ -1,19 +1,18 @@
 #[system]
-mod Init {
+mod Interact {
     use traits::Into;
     use dojo::world::Context;
 
-    use spellcrafter::constants::INITIAL_BARRIERS;
     use spellcrafter::components::{Owner};
 
     fn execute(ctx: Context) -> u128 {
-        let game_id: u128 = ctx.world.uuid().into();
+        let entity_id: u128 = ctx.world.uuid().into();
         set!(
             ctx.world,
             (
-                Owner { entity_id: game_id, address: ctx.origin }
+                Owner { entity_id, address: ctx.origin }
             )
         );
-        game_id
+        entity_id
     }
 }
