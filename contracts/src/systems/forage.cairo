@@ -43,9 +43,9 @@ mod tests {
     #[test]
     #[available_gas(300000000000)]
     fn forage() {
-        let CARD_ID: u32 = 1;
+        let CARD_ID: u128 = 1;
 
-        let world = initialize_world();
+        let world = initialize_world();        
         let result = world.execute('Init', array![]);
         let game_id: u128 = (*result[0]).try_into().unwrap();
 
@@ -61,9 +61,9 @@ mod tests {
     }
 
     fn build_calldata(game_id: u128, region: Region) -> Array<felt252> {
-        let mut forage_calldata = array![];
-        Serde::serialize(@0x0, ref forage_calldata);
-        Serde::serialize(@Region::Forest, ref forage_calldata);
-        forage_calldata
+        let mut calldata = array![];
+        Serde::serialize(@game_id, ref calldata);
+        Serde::serialize(@Region::Forest, ref calldata);
+        calldata
     }
 }

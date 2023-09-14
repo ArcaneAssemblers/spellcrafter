@@ -9,10 +9,11 @@ use spellcrafter::cards::properties::{
     power_delta_fallback, hotcold_delta_fallback, lightdark_delta_fallback
 };
 
-const CHAOS_STAT: u128 = 0;
-const POWER_STAT: u128 = 1;
-const HOTCOLD_STAT: u128 = 2;
-const LIGHTDARK_STAT: u128 = 3;
+// ensure these dont collide with card ids
+const CHAOS_STAT: u128 = 10000;
+const POWER_STAT: u128 = 10001;
+const HOTCOLD_STAT: u128 = 10002;
+const LIGHTDARK_STAT: u128 = 10003;
 
 // modify the game state as demanded by this card
 fn enact_card(ctx: Context, game_id: u128, card_id: u128) {
