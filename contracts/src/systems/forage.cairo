@@ -5,7 +5,7 @@ mod Forage {
     use dojo::world::Context;
 
     use spellcrafter::components::{Owner, ValueInGame};
-    use spellcrafter::utils::assert_caller_is_owner;
+    use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive};
     use spellcrafter::cards::selection::random_card_from_region;
     use spellcrafter::types::Region;
 
@@ -13,6 +13,7 @@ mod Forage {
     // This will add a random spell component to the players hand
     fn execute(ctx: Context, game_id: u128, region: Region) -> u128 {
         assert_caller_is_owner(ctx, game_id);
+        assert_is_alive(ctx, game_id);
         
         // TODO This is not simulation safe. Ok for quick protyping only
         let tx_info = starknet::get_tx_info().unbox();

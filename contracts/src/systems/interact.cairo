@@ -3,16 +3,31 @@ mod Interact {
     use traits::Into;
     use dojo::world::Context;
     use spellcrafter::components::{ValueInGame};
-    use spellcrafter::utils::assert_caller_is_owner;
-    use spellcrafter::cards::actions::enact_card;
+    use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive};
+    use spellcrafter::utils::random::pass_check;
+    use spellcrafter::cards::actions::{enact_card, bust_barrier, is_dead};
+    use spellcrafter::constants::{CHAOS_STAT};
+
 
     fn execute(ctx: Context, game_id: u128, item_id: u128) {
         assert_caller_is_owner(ctx, game_id);
-        
+        assert_is_alive(ctx, game_id);
+
+        let tx_info = starknet::get_tx_info().unbox();
+        let seed = tx_info.transaction_hash;
+
         let owned = get!(ctx.world, (item_id, game_id), ValueInGame).value;
         assert(owned > 0, 'Item is not owned');
+        
+        let chaos = get!(ctx.world, (CHAOS_STAT, game_id), ValueInGame).value;
 
-        enact_card(ctx, game_id, item_id);
+        if !pass_check(seed, chaos) {
+            bust_barrier(ctx, game_id);
+        }
+
+        if !is_dead(ctx, game_id) {
+            enact_card(ctx, game_id, item_id);
+        }
     }
 }
 

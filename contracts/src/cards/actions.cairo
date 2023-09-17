@@ -8,12 +8,8 @@ use spellcrafter::cards::properties::{
     requires_hot_gt, requires_light_gt, requires_dark_gt, chaos_delta_fallback,
     power_delta_fallback, hotcold_delta_fallback, lightdark_delta_fallback
 };
+use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT};
 
-// ensure these dont collide with card ids
-const CHAOS_STAT: u128 = 10000;
-const POWER_STAT: u128 = 10001;
-const HOTCOLD_STAT: u128 = 10002;
-const LIGHTDARK_STAT: u128 = 10003;
 
 // modify the game state as demanded by this card
 fn enact_card(ctx: Context, game_id: u128, card_id: u128) {
@@ -91,12 +87,30 @@ fn make_fallback_stat_changes(ctx: Context, game_id: u128, card_id: u128) {
     }
 }
 
+fn bust_barrier(ctx: Context, game_id: u128) {
+    decrease_stat(ctx, game_id, BARRIERS_STAT, 1);
+}
+
+fn is_dead(ctx: Context, game_id: u128) -> bool {
+    let value = get!(ctx.world, (BARRIERS_STAT, game_id), ValueInGame).value;
+    value == 0
+}
+
 // increase the value of the stat given by stat_id by delta
 fn increase_stat(ctx: Context, game_id: u128, stat_id: u128, delta: u32) {
     let value = get!(ctx.world, (stat_id, game_id), ValueInGame);
     set!(
         ctx.world,
         ValueInGame { entity_id: stat_id, game_id: value.game_id, value: value.value + delta }
+    );
+}
+
+// decrease the value of the stat given by stat_id by delta
+fn decrease_stat(ctx: Context, game_id: u128, stat_id: u128, delta: u32) {
+    let value = get!(ctx.world, (stat_id, game_id), ValueInGame);
+    set!(
+        ctx.world,
+        ValueInGame { entity_id: stat_id, game_id: value.game_id, value: value.value - delta }
     );
 }
 
