@@ -92,6 +92,22 @@ fn get(card_id: u128) -> Option<bool> {
         Option::None,
         Option::None,
         Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
+        Option::None,
 
     ];
     // card indices should never exceed u32 size

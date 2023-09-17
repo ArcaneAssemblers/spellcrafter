@@ -8,6 +8,7 @@ use traits::TryInto;
 
 fn forest() -> Array<u128> {
     array![
+        21,
         22,
         23,
         24,
@@ -27,13 +28,13 @@ fn forest() -> Array<u128> {
         38,
         39,
         40,
-        41,
 
     ]
 }
 
 fn cave() -> Array<u128> {
     array![
+        0,
         1,
         2,
         3,
@@ -53,13 +54,13 @@ fn cave() -> Array<u128> {
         17,
         18,
         19,
-        20,
 
     ]
 }
 
 fn meadow() -> Array<u128> {
     array![
+        42,
         43,
         44,
         45,
@@ -79,13 +80,13 @@ fn meadow() -> Array<u128> {
         59,
         60,
         61,
-        62,
 
     ]
 }
 
 fn volcano() -> Array<u128> {
     array![
+        63,
         64,
         65,
         66,
@@ -106,7 +107,6 @@ fn volcano() -> Array<u128> {
         81,
         82,
         83,
-        84,
 
     ]
 }

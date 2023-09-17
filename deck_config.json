@@ -5,6 +5,7 @@
     "h": 1050,
     "card_specs": {
         "default": [],
+        "skill": [],
         "forest": [
             {
                 "type": "static_text",

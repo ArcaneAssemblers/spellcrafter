@@ -13,6 +13,7 @@ mod Interact {
         assert_caller_is_owner(ctx, game_id);
         assert_is_alive(ctx, game_id);
 
+        // TODO This is not simulation safe. Ok for quick protyping only
         let tx_info = starknet::get_tx_info().unbox();
         let seed = tx_info.transaction_hash;
 
