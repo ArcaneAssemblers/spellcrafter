@@ -1,21 +1,26 @@
 #[system]
 mod Forage {
     use traits::Into;
+    use box::BoxTrait;
     use dojo::world::Context;
 
     use spellcrafter::components::{Owner, ValueInGame};
     use spellcrafter::utils::assert_caller_is_owner;
+    use spellcrafter::cards::selection::random_card_from_region;
     use spellcrafter::types::Region;
 
     // In the context of a particular game, forage in a given region
     // This will add a random spell component to the players hand
     fn execute(ctx: Context, game_id: u128, region: Region) {
         assert_caller_is_owner(ctx, game_id);
-        // currently adds 1 of card type 1 to the hand
-        let CARD_ID: u32 = 1;
+        
+        // TODO This is not simulation safe. Ok for quick protyping only
+        let tx_info = starknet::get_tx_info().unbox();
+        let seed = tx_info.transaction_hash;
 
-        let card = get!(ctx.world, (CARD_ID, game_id), ValueInGame);
+        let card_id = random_card_from_region(seed, region);
 
+        let card = get!(ctx.world, (card_id, game_id), ValueInGame);
         set!(ctx.world, ValueInGame {
             entity_id: card.entity_id,
             game_id: card.game_id,
