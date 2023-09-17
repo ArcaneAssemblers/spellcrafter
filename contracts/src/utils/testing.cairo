@@ -18,7 +18,7 @@ use spellcrafter::components::{
     occupied::occupied
 };
 use spellcrafter::systems::{
-    Init,
+    NewGame,
     Forage,
     Interact,
 };
@@ -33,7 +33,7 @@ fn initialize_world() -> IWorldDispatcher {
     ];
 
     let mut systems = array![
-        Init::TEST_CLASS_HASH,
+        NewGame::TEST_CLASS_HASH,
         Forage::TEST_CLASS_HASH,
         Interact::TEST_CLASS_HASH,
     ];

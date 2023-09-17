@@ -9,3 +9,8 @@ contracts:
 
 test:
 	cd contracts && sozo test
+
+migrate:
+	cd contracts && sozo migrate
+
+

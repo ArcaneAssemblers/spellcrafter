@@ -1,5 +1,5 @@
 #[system]
-mod Init {
+mod NewGame {
     use traits::Into;
     use dojo::world::Context;
 
