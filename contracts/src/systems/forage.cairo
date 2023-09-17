@@ -11,7 +11,7 @@ mod Forage {
 
     // In the context of a particular game, forage in a given region
     // This will add a random spell component to the players hand
-    fn execute(ctx: Context, game_id: u128, region: Region) {
+    fn execute(ctx: Context, game_id: u128, region: Region) -> u128 {
         assert_caller_is_owner(ctx, game_id);
         
         // TODO This is not simulation safe. Ok for quick protyping only
@@ -27,7 +27,7 @@ mod Forage {
             value: card.value + 1
         });
 
-        return ();
+        return card_id;
     }
 }
 
@@ -48,20 +48,15 @@ mod tests {
     #[test]
     #[available_gas(300000000000)]
     fn forage() {
-        let CARD_ID: u128 = 1;
-
         let world = initialize_world();        
-        let result = world.execute('Init', array![]);
+        let result = world.execute('NewGame', array![]);
         let game_id: u128 = (*result[0]).try_into().unwrap();
 
-        // pre conditions
-        let card = get!(world, (CARD_ID, game_id), ValueInGame);
-        assert(card.value == 0, 'count not initially 0');
-
         let result = world.execute('Forage', build_calldata(game_id, Region::Forest));
+        let card_id: u128 = (*result[0]).try_into().unwrap();
 
         // post conditions
-        let card = get!(world, (CARD_ID, game_id), ValueInGame);
+        let card = get!(world, (card_id, game_id), ValueInGame);
         assert(card.value == 1, 'failed to add ingredient');
     }
 

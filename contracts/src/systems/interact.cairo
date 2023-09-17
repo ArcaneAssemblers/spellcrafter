@@ -36,7 +36,7 @@ mod tests {
     //     let CARD_ID: u128 = 1;
 
     //     let world = initialize_world();
-    //     let result = world.execute('Init', array![]);
+    //     let result = world.execute('NewGame', array![]);
     //     let game_id: u128 = (*result[0]).try_into().unwrap();
 
     //     // pre conditions
@@ -54,7 +54,7 @@ mod tests {
 
         let CARD_ID: u128 = 1;
 
-        let result = world.execute('Init', array![]);
+        let result = world.execute('NewGame', array![]);
         let game_id: u128 = (*result[0]).try_into().unwrap();
 
         // pre conditions
