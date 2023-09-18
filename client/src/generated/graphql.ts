@@ -16,14 +16,41 @@ export type Scalars = {
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
   Float: { input: number; output: number; }
+  ContractAddress: { input: any; output: any; }
   Cursor: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   felt252: { input: any; output: any; }
-  u8: { input: any; output: any; }
   u32: { input: any; output: any; }
+  u128: { input: any; output: any; }
 };
 
-export type ComponentUnion = Moves | Position;
+export type Component = {
+  __typename?: 'Component';
+  classHash?: Maybe<Scalars['felt252']['output']>;
+  createdAt?: Maybe<Scalars['DateTime']['output']>;
+  id?: Maybe<Scalars['ID']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  transactionHash?: Maybe<Scalars['felt252']['output']>;
+};
+
+export type ComponentConnection = {
+  __typename?: 'ComponentConnection';
+  edges?: Maybe<Array<Maybe<ComponentEdge>>>;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type ComponentEdge = {
+  __typename?: 'ComponentEdge';
+  cursor: Scalars['Cursor']['output'];
+  node?: Maybe<Component>;
+};
+
+export type ComponentUnion = Occupied | Owner | ValueInGame;
+
+export enum Direction {
+  Asc = 'ASC',
+  Desc = 'DESC'
+}
 
 export type Entity = {
   __typename?: 'Entity';
@@ -31,7 +58,7 @@ export type Entity = {
   components?: Maybe<Array<Maybe<ComponentUnion>>>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   id?: Maybe<Scalars['ID']['output']>;
-  keys?: Maybe<Scalars['String']['output']>;
+  keys?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -69,55 +96,114 @@ export type EventEdge = {
   node?: Maybe<Event>;
 };
 
-export type Moves = {
-  __typename?: 'Moves';
+export type Occupied = {
+  __typename?: 'Occupied';
   entity?: Maybe<Entity>;
-  remaining?: Maybe<Scalars['u8']['output']>;
+  entity_id?: Maybe<Scalars['u128']['output']>;
+  until?: Maybe<Scalars['u128']['output']>;
 };
 
-export type MovesConnection = {
-  __typename?: 'MovesConnection';
-  edges?: Maybe<Array<Maybe<MovesEdge>>>;
+export type OccupiedConnection = {
+  __typename?: 'OccupiedConnection';
+  edges?: Maybe<Array<Maybe<OccupiedEdge>>>;
   totalCount: Scalars['Int']['output'];
 };
 
-export type MovesEdge = {
-  __typename?: 'MovesEdge';
+export type OccupiedEdge = {
+  __typename?: 'OccupiedEdge';
   cursor: Scalars['Cursor']['output'];
-  node?: Maybe<Moves>;
+  node?: Maybe<Occupied>;
 };
 
-export type Position = {
-  __typename?: 'Position';
+export type OccupiedOrder = {
+  direction: Direction;
+  field: OccupiedOrderOrderField;
+};
+
+export enum OccupiedOrderOrderField {
+  EntityId = 'ENTITY_ID',
+  Until = 'UNTIL'
+}
+
+export type OccupiedWhereInput = {
+  entity_id?: InputMaybe<Scalars['String']['input']>;
+  entity_idGT?: InputMaybe<Scalars['String']['input']>;
+  entity_idGTE?: InputMaybe<Scalars['String']['input']>;
+  entity_idLT?: InputMaybe<Scalars['String']['input']>;
+  entity_idLTE?: InputMaybe<Scalars['String']['input']>;
+  entity_idNEQ?: InputMaybe<Scalars['String']['input']>;
+  until?: InputMaybe<Scalars['String']['input']>;
+  untilGT?: InputMaybe<Scalars['String']['input']>;
+  untilGTE?: InputMaybe<Scalars['String']['input']>;
+  untilLT?: InputMaybe<Scalars['String']['input']>;
+  untilLTE?: InputMaybe<Scalars['String']['input']>;
+  untilNEQ?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Owner = {
+  __typename?: 'Owner';
+  address?: Maybe<Scalars['ContractAddress']['output']>;
   entity?: Maybe<Entity>;
-  x?: Maybe<Scalars['u32']['output']>;
-  y?: Maybe<Scalars['u32']['output']>;
+  entity_id?: Maybe<Scalars['u128']['output']>;
 };
 
-export type PositionConnection = {
-  __typename?: 'PositionConnection';
-  edges?: Maybe<Array<Maybe<PositionEdge>>>;
+export type OwnerConnection = {
+  __typename?: 'OwnerConnection';
+  edges?: Maybe<Array<Maybe<OwnerEdge>>>;
   totalCount: Scalars['Int']['output'];
 };
 
-export type PositionEdge = {
-  __typename?: 'PositionEdge';
+export type OwnerEdge = {
+  __typename?: 'OwnerEdge';
   cursor: Scalars['Cursor']['output'];
-  node?: Maybe<Position>;
+  node?: Maybe<Owner>;
+};
+
+export type OwnerOrder = {
+  direction: Direction;
+  field: OwnerOrderOrderField;
+};
+
+export enum OwnerOrderOrderField {
+  Address = 'ADDRESS',
+  EntityId = 'ENTITY_ID'
+}
+
+export type OwnerWhereInput = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  addressGT?: InputMaybe<Scalars['String']['input']>;
+  addressGTE?: InputMaybe<Scalars['String']['input']>;
+  addressLT?: InputMaybe<Scalars['String']['input']>;
+  addressLTE?: InputMaybe<Scalars['String']['input']>;
+  addressNEQ?: InputMaybe<Scalars['String']['input']>;
+  entity_id?: InputMaybe<Scalars['String']['input']>;
+  entity_idGT?: InputMaybe<Scalars['String']['input']>;
+  entity_idGTE?: InputMaybe<Scalars['String']['input']>;
+  entity_idLT?: InputMaybe<Scalars['String']['input']>;
+  entity_idLTE?: InputMaybe<Scalars['String']['input']>;
+  entity_idNEQ?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Query = {
   __typename?: 'Query';
+  component: Component;
+  components?: Maybe<ComponentConnection>;
   entities?: Maybe<EntityConnection>;
   entity: Entity;
   event: Event;
   events?: Maybe<EventConnection>;
-  movesComponents?: Maybe<MovesConnection>;
-  positionComponents?: Maybe<PositionConnection>;
+  occupiedComponents?: Maybe<OccupiedConnection>;
+  ownerComponents?: Maybe<OwnerConnection>;
   system: System;
   systemCall: SystemCall;
   systemCalls?: Maybe<SystemCallConnection>;
   systems?: Maybe<SystemConnection>;
+  valueingameComponents?: Maybe<ValueInGameConnection>;
+};
+
+
+export type QueryComponentArgs = {
+  id: Scalars['ID']['input'];
 };
 
 
@@ -125,7 +211,7 @@ export type QueryEntitiesArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
-  keys: Array<Scalars['String']['input']>;
+  keys?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   last?: InputMaybe<Scalars['Int']['input']>;
 };
 
@@ -140,19 +226,23 @@ export type QueryEventArgs = {
 };
 
 
-export type QueryMovesComponentsArgs = {
+export type QueryOccupiedComponentsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<OccupiedOrder>;
+  where?: InputMaybe<OccupiedWhereInput>;
 };
 
 
-export type QueryPositionComponentsArgs = {
+export type QueryOwnerComponentsArgs = {
   after?: InputMaybe<Scalars['Cursor']['input']>;
   before?: InputMaybe<Scalars['Cursor']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;
   last?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<OwnerOrder>;
+  where?: InputMaybe<OwnerWhereInput>;
 };
 
 
@@ -163,6 +253,22 @@ export type QuerySystemArgs = {
 
 export type QuerySystemCallArgs = {
   id: Scalars['Int']['input'];
+};
+
+
+export type QueryValueingameComponentsArgs = {
+  after?: InputMaybe<Scalars['Cursor']['input']>;
+  before?: InputMaybe<Scalars['Cursor']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  order?: InputMaybe<ValueInGameOrder>;
+  where?: InputMaybe<ValueInGameWhereInput>;
+};
+
+export type Subscription = {
+  __typename?: 'Subscription';
+  componentRegistered: Component;
+  entityUpdated: Entity;
 };
 
 export type System = {
@@ -209,10 +315,62 @@ export type SystemEdge = {
   node?: Maybe<System>;
 };
 
+export type ValueInGame = {
+  __typename?: 'ValueInGame';
+  entity?: Maybe<Entity>;
+  entity_id?: Maybe<Scalars['u128']['output']>;
+  game_id?: Maybe<Scalars['u128']['output']>;
+  value?: Maybe<Scalars['u32']['output']>;
+};
+
+export type ValueInGameConnection = {
+  __typename?: 'ValueInGameConnection';
+  edges?: Maybe<Array<Maybe<ValueInGameEdge>>>;
+  totalCount: Scalars['Int']['output'];
+};
+
+export type ValueInGameEdge = {
+  __typename?: 'ValueInGameEdge';
+  cursor: Scalars['Cursor']['output'];
+  node?: Maybe<ValueInGame>;
+};
+
+export type ValueInGameOrder = {
+  direction: Direction;
+  field: ValueInGameOrderOrderField;
+};
+
+export enum ValueInGameOrderOrderField {
+  EntityId = 'ENTITY_ID',
+  GameId = 'GAME_ID',
+  Value = 'VALUE'
+}
+
+export type ValueInGameWhereInput = {
+  entity_id?: InputMaybe<Scalars['String']['input']>;
+  entity_idGT?: InputMaybe<Scalars['String']['input']>;
+  entity_idGTE?: InputMaybe<Scalars['String']['input']>;
+  entity_idLT?: InputMaybe<Scalars['String']['input']>;
+  entity_idLTE?: InputMaybe<Scalars['String']['input']>;
+  entity_idNEQ?: InputMaybe<Scalars['String']['input']>;
+  game_id?: InputMaybe<Scalars['String']['input']>;
+  game_idGT?: InputMaybe<Scalars['String']['input']>;
+  game_idGTE?: InputMaybe<Scalars['String']['input']>;
+  game_idLT?: InputMaybe<Scalars['String']['input']>;
+  game_idLTE?: InputMaybe<Scalars['String']['input']>;
+  game_idNEQ?: InputMaybe<Scalars['String']['input']>;
+  value?: InputMaybe<Scalars['Int']['input']>;
+  valueGT?: InputMaybe<Scalars['Int']['input']>;
+  valueGTE?: InputMaybe<Scalars['Int']['input']>;
+  valueLT?: InputMaybe<Scalars['Int']['input']>;
+  valueLTE?: InputMaybe<Scalars['Int']['input']>;
+  valueNEQ?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type GetEntitiesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: string | null, components?: Array<{ __typename: 'Moves', remaining?: any | null } | { __typename: 'Position', x?: any | null, y?: any | null } | null> | null } | null } | null> | null } | null };
+export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, components?: Array<{ __typename: 'Occupied' } | { __typename: 'Owner', address?: any | null } | { __typename: 'ValueInGame' } | null> | null } | null } | null> | null } | null };
 
 
 export const GetEntitiesDocument = gql`
@@ -223,12 +381,8 @@ export const GetEntitiesDocument = gql`
         keys
         components {
           __typename
-          ... on Moves {
-            remaining
-          }
-          ... on Position {
-            x
-            y
+          ... on Owner {
+            address
           }
         }
       }
