@@ -45,22 +45,18 @@ mod tests {
     use spellcrafter::utils::testing::initialize_world;
     use spellcrafter::components::{Owner, ValueInGame};
 
-    // not sure how to write test that are meant to revert..
-    // #[test]
-    // #[available_gas(300000000000)]
-    // fn reverts_if_card_not_owned() {
-    //     let CARD_ID: u128 = 1;
+    #[test]
+    #[should_panic(expected: ('Item is not owned', 'ENTRYPOINT_FAILED', 'ENTRYPOINT_FAILED', 'ENTRYPOINT_FAILED') )]
+    #[available_gas(300000000000)]
+    fn reverts_if_card_not_owned() {
+        let CARD_ID: u128 = 1;
 
-    //     let world = initialize_world();
-    //     let result = world.execute('NewGame', array![]);
-    //     let game_id: u128 = (*result[0]).try_into().unwrap();
+        let world = initialize_world();
+        let result = world.execute('NewGame', array![]);
+        let game_id: u128 = (*result[0]).try_into().unwrap();
 
-    //     // pre conditions
-    //     let card = get!(world, (CARD_ID, game_id), ValueInGame);
-    //     assert(card.value == 0, 'count not initially 0');
-
-    //     let result = world.execute('Interact', build_calldata(game_id, CARD_ID));
-    // }
+        world.execute('Interact', build_calldata(game_id, CARD_ID));
+    }
 
     #[test]
     #[available_gas(300000000000)]
@@ -73,9 +69,8 @@ mod tests {
         let result = world.execute('NewGame', array![]);
         let game_id: u128 = (*result[0]).try_into().unwrap();
 
-        // pre conditions
         set!(world, ValueInGame{ entity_id: CARD_ID, game_id: game_id, value: 1 });
-        let result = world.execute('Interact', build_calldata(game_id, CARD_ID));
+        world.execute('Interact', build_calldata(game_id, CARD_ID));
     }
 
     fn build_calldata(game_id: u128, item_id: u128) -> Array<felt252> {
