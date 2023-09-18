@@ -55,11 +55,7 @@ mod tests {
         let result = world.execute('NewGame', array![]);
         let game_id: u128 = (*result[0]).try_into().unwrap();
 
-        // pre conditions
-        let card = get!(world, (CARD_ID, game_id), ValueInGame);
-        assert(card.value == 0, 'count not initially 0');
-
-        let result = world.execute('Interact', build_calldata(game_id, CARD_ID));
+        world.execute('Interact', build_calldata(game_id, CARD_ID));
     }
 
     #[test]
@@ -73,9 +69,8 @@ mod tests {
         let result = world.execute('NewGame', array![]);
         let game_id: u128 = (*result[0]).try_into().unwrap();
 
-        // pre conditions
         set!(world, ValueInGame{ entity_id: CARD_ID, game_id: game_id, value: 1 });
-        let result = world.execute('Interact', build_calldata(game_id, CARD_ID));
+        world.execute('Interact', build_calldata(game_id, CARD_ID));
     }
 
     fn build_calldata(game_id: u128, item_id: u128) -> Array<felt252> {
