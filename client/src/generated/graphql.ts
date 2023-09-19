@@ -367,24 +367,39 @@ export type ValueInGameWhereInput = {
   valueNEQ?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type GetEntitiesQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetGameValuesQueryVariables = Exact<{
+  game_id: Scalars['String']['input'];
+}>;
 
 
-export type GetEntitiesQuery = { __typename?: 'Query', entities?: { __typename?: 'EntityConnection', edges?: Array<{ __typename?: 'EntityEdge', node?: { __typename?: 'Entity', keys?: Array<string | null> | null, components?: Array<{ __typename: 'Occupied' } | { __typename: 'Owner', address?: any | null } | { __typename: 'ValueInGame' } | null> | null } | null } | null> | null } | null };
+export type GetGameValuesQuery = { __typename?: 'Query', valueingameComponents?: { __typename?: 'ValueInGameConnection', edges?: Array<{ __typename?: 'ValueInGameEdge', node?: { __typename?: 'ValueInGame', entity_id?: any | null, value?: any | null } | null } | null> | null } | null };
+
+export type GetPlayersGamesQueryVariables = Exact<{
+  address: Scalars['String']['input'];
+}>;
 
 
-export const GetEntitiesDocument = gql`
-    query getEntities {
-  entities(keys: ["%"]) {
+export type GetPlayersGamesQuery = { __typename?: 'Query', ownerComponents?: { __typename?: 'OwnerConnection', edges?: Array<{ __typename?: 'OwnerEdge', node?: { __typename?: 'Owner', entity_id?: any | null } | null } | null> | null } | null };
+
+
+export const GetGameValuesDocument = gql`
+    query getGameValues($game_id: String!) {
+  valueingameComponents(where: {game_id: $game_id}) {
     edges {
       node {
-        keys
-        components {
-          __typename
-          ... on Owner {
-            address
-          }
-        }
+        entity_id
+        value
+      }
+    }
+  }
+}
+    `;
+export const GetPlayersGamesDocument = gql`
+    query getPlayersGames($address: String!) {
+  ownerComponents(where: {address: $address}) {
+    edges {
+      node {
+        entity_id
       }
     }
   }
@@ -395,11 +410,15 @@ export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, str
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
-const GetEntitiesDocumentString = print(GetEntitiesDocument);
+const GetGameValuesDocumentString = print(GetGameValuesDocument);
+const GetPlayersGamesDocumentString = print(GetPlayersGamesDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    getEntities(variables?: GetEntitiesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetEntitiesQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetEntitiesQuery>(GetEntitiesDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getEntities', 'query');
+    getGameValues(variables: GetGameValuesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetGameValuesQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetGameValuesQuery>(GetGameValuesDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getGameValues', 'query');
+    },
+    getPlayersGames(variables: GetPlayersGamesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetPlayersGamesQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetPlayersGamesQuery>(GetPlayersGamesDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPlayersGames', 'query');
     }
   };
 }
