@@ -1,50 +1,49 @@
+import { useState } from 'react';
 import { useDojo } from './DojoContext';
 import { useComponentValue } from "@dojoengine/react";
 import { Direction, } from './dojo/createSystemCalls'
 import { EntityIndex, setComponent } from '@latticexyz/recs';
 import { useEffect } from 'react';
 import { getFirstComponentByType } from './utils';
-import { Moves, Position } from './generated/graphql';
+import { ValueInGame, Owner } from './generated/graphql';
 
 function App() {
   const {
     setup: {
-      systemCalls: { spawn, move },
-      components: { Moves, Position },
+      systemCalls: { newGame },
+      components: { ValueInGame, Owner },
       network: { graphSdk, call }
     },
     account: { create, list, select, account, isDeploying }
   } = useDojo();
 
-  // entity id - this example uses the account address as the entity id
-  const entityId = account.address;
+  let [games, setGames] = useState<Array<string>>([]);
+  let [game, setGame] = useState<string>("");
+  let [values, setValues] = useState<Array<[string, Number]>>([]);
 
-  // get current component values
-  const position = useComponentValue(Position, parseInt(entityId.toString()) as EntityIndex);
-  const moves = useComponentValue(Moves, parseInt(entityId.toString()) as EntityIndex);
 
   useEffect(() => {
-
-    if (!entityId) return;
-
-    const fetchData = async () => {
-      const { data } = await graphSdk.getEntities();
-
-      if (data) {
-        const remaining = getFirstComponentByType(data.entities?.edges, 'Moves') as Moves;
-        const position = getFirstComponentByType(data.entities?.edges, 'Position') as Position;
-
-        setComponent(Moves, parseInt(entityId.toString()) as EntityIndex, { remaining: remaining.remaining })
-        setComponent(Position, parseInt(entityId.toString()) as EntityIndex, { x: position.x, y: position.y })
-      }
+    if (!account.address) return;
+    const fetchGames = async () => {
+      const { data } = await graphSdk.getPlayersGames({ address: account.address });
+      setGames(data.ownerComponents?.edges?.map((edge) => edge?.node?.entity_id) || []);
     }
-    fetchData();
+    fetchGames();
   }, [account.address]);
 
+  useEffect(() => {
+    if (!game) return;
+    const fetchValues = async () => {
+      const { data } = await graphSdk.getGameValues({ game_id: game! });
+      console.log(data)
+    }
+    fetchValues();
+  }, [game]);  
 
   return (
     <>
       <button onClick={create}>{isDeploying ? "deploying burner" : "create burner"}</button>
+
       <div className="card">
         select signer:{" "}
         <select onChange={e => select(e.target.value)}>
@@ -53,17 +52,19 @@ function App() {
           })}
         </select>
       </div>
+
+      <button onClick={() => newGame(account)}>New Game</button>
+
       <div className="card">
-        <button onClick={() => spawn(account)}>Spawn</button>
-        <div>Moves Left: {moves ? `${moves['remaining']}` : 'Need to Spawn'}</div>
-        <div>Position: {position ? `${position['x']}, ${position['y']}` : 'Need to Spawn'}</div>
+        select game:{" "}
+        <select onChange={e => setGame(e.target.value)}>
+          {games.map((game_id, index) => {
+            return <option value={game_id} key={index}>{game_id}</option>
+          })}
+        </select>
       </div>
-      <div className="card">
-        <button onClick={() => move(account, Direction.Up)}>Move Up</button> <br />
-        <button onClick={() => move(account, Direction.Left)}>Move Left</button>
-        <button onClick={() => move(account, Direction.Right)}>Move Right</button> <br />
-        <button onClick={() => move(account, Direction.Down)}>Move Down</button>
-      </div>
+
+
     </>
   );
 }

@@ -3,7 +3,7 @@ import { SetupResult } from "./dojo/setup";
 import { Account, RpcProvider } from "starknet";
 import { useBurner } from "@dojoengine/create-burner";
 
-type EternumContext = {
+type DojoContext = {
     setup: SetupResult;
     account: {
         create: () => void;
@@ -17,7 +17,7 @@ type EternumContext = {
     };
 }
 
-const DojoContext = createContext<EternumContext | null>(null);
+const DojoContext = createContext<DojoContext | null>(null);
 
 type Props = {
     children: ReactNode;
@@ -54,7 +54,7 @@ export const DojoProvider = ({ children, value }: Props) => {
         return account || masterAccount;
     }, [account])
 
-    const contextValue: EternumContext = {
+    const contextValue: DojoContext = {
         setup: value,    // the provided setup
         account: {
             create,        // create a new account
