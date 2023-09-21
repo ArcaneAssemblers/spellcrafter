@@ -15,16 +15,15 @@ function App() {
     account: { create, list, select, account, isDeploying }
   } = useDojo();
 
-  let [games, setGames] = useState<Array<string>>([]);
+  let [games, setGames] = useState<any[]>([]);
   let [game, setGame] = useState<string>("");
-  let [values, setValues] = useState<Array<[string, Number]>>([]);
 
 
   useEffect(() => {
     if (!account.address) return;
     const fetchGames = async () => {
-      const { data } = await graphSdk.getPlayersGames({ address: account.address });
-      setGames(data.ownerComponents?.edges?.map((edge) => edge?.node?.entity_id) || []);
+      const { data: { ownerComponents } } = await graphSdk.getPlayersGames({ address: account.address });
+      return setGames(ownerComponents?.edges!);
     }
     fetchGames();
   }, [account.address]);
@@ -56,8 +55,8 @@ function App() {
       <div className="card">
         select game:{" "}
         <select onChange={e => setGame(e.target.value)}>
-          {games.map((game_id, index) => {
-            return <option value={game_id} key={index}>{game_id}</option>
+          {games.map((game, index) => {
+            return <option value={game.node!} key={index}>{index}</option>
           })}
         </select>
       </div>
