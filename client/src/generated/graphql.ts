@@ -372,14 +372,14 @@ export type GetGameValuesQueryVariables = Exact<{
 }>;
 
 
-export type GetGameValuesQuery = { __typename?: 'Query', valueingameComponents?: { __typename?: 'ValueInGameConnection', edges?: Array<{ __typename?: 'ValueInGameEdge', node?: { __typename?: 'ValueInGame', entity_id?: any | null, value?: any | null } | null } | null> | null } | null };
+export type GetGameValuesQuery = { __typename?: 'Query', valueingameComponents?: { __typename?: 'ValueInGameConnection', edges?: Array<{ __typename?: 'ValueInGameEdge', node?: { __typename?: 'ValueInGame', entity?: { __typename?: 'Entity', keys?: Array<string | null> | null, components?: Array<{ __typename: 'Occupied' } | { __typename: 'Owner' } | { __typename: 'ValueInGame', entity_id?: any | null, value?: any | null } | null> | null } | null } | null } | null> | null } | null };
 
 export type GetPlayersGamesQueryVariables = Exact<{
   address: Scalars['String']['input'];
 }>;
 
 
-export type GetPlayersGamesQuery = { __typename?: 'Query', ownerComponents?: { __typename?: 'OwnerConnection', edges?: Array<{ __typename?: 'OwnerEdge', node?: { __typename?: 'Owner', entity_id?: any | null } | null } | null> | null } | null };
+export type GetPlayersGamesQuery = { __typename?: 'Query', ownerComponents?: { __typename?: 'OwnerConnection', edges?: Array<{ __typename?: 'OwnerEdge', node?: { __typename?: 'Owner', entity?: { __typename?: 'Entity', keys?: Array<string | null> | null, components?: Array<{ __typename: 'Occupied' } | { __typename: 'Owner', entity_id?: any | null } | { __typename: 'ValueInGame' } | null> | null } | null } | null } | null> | null } | null };
 
 
 export const GetGameValuesDocument = gql`
@@ -387,8 +387,16 @@ export const GetGameValuesDocument = gql`
   valueingameComponents(where: {game_id: $game_id}) {
     edges {
       node {
-        entity_id
-        value
+        entity {
+          keys
+          components {
+            __typename
+            ... on ValueInGame {
+              entity_id
+              value
+            }
+          }
+        }
       }
     }
   }
@@ -399,7 +407,15 @@ export const GetPlayersGamesDocument = gql`
   ownerComponents(where: {address: $address}) {
     edges {
       node {
-        entity_id
+        entity {
+          keys
+          components {
+            __typename
+            ... on Owner {
+              entity_id
+            }
+          }
+        }
       }
     }
   }

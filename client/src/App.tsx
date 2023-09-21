@@ -1,7 +1,5 @@
 import { useState } from 'react';
 import { useDojo } from './DojoContext';
-import { useComponentValue } from "@dojoengine/react";
-import { Direction, } from './dojo/createSystemCalls'
 import { EntityIndex, setComponent } from '@latticexyz/recs';
 import { useEffect } from 'react';
 import { getFirstComponentByType } from './utils';
