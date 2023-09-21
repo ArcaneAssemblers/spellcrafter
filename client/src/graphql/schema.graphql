@@ -2,18 +2,34 @@ query getGameValues($game_id: String!) {
   valueingameComponents(where: {game_id: $game_id}) {
     edges {
       node {
-        entity_id
-        value
+        entity {
+          keys
+          components {
+            __typename
+            ... on ValueInGame {
+              entity_id
+              value
+            }
+          }
+        }
       }
     }
   }
 }
 
 query getPlayersGames($address: String!) {
-  ownerComponents(where: {address: $address}) {
+  ownerComponents({address: $address}) {
     edges {
       node {
-        entity_id
+        entity {
+          keys
+          components {
+            __typename
+            ... on Owner {
+              entity_id
+            }
+          }
+        }
       }
     }
   }
