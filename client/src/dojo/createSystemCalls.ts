@@ -19,7 +19,15 @@ export function createSystemCalls(
         setComponentsFromEvents(contractComponents, getEvents(receipt));
     }
 
+    const interact = async (signer: Account, gameId, EntityIndex, cardId: EntityIndex) => {
+        const tx = await execute(signer, "Interact", [gameId, cardId]);
+        console.log(tx)
+        const receipt = await signer.waitForTransaction(tx.transaction_hash, { retryInterval: 100 })
+        setComponentsFromEvents(contractComponents, getEvents(receipt));
+    }
+
     return {
         newGame,
+        interact
     };
 }

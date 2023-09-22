@@ -4,6 +4,7 @@ import App from './App.tsx';
 import './index.css';
 import { setup } from './dojo/setup';
 import { DojoProvider } from './DojoContext';
+import { SpellcrafterProvider } from './SpellcrafterContext.tsx';
 
 async function init() {
   const rootElement = document.getElementById('root');
@@ -14,7 +15,9 @@ async function init() {
   root.render(
     <React.StrictMode>
       <DojoProvider value={setupResult}>
-        <App />
+        <SpellcrafterProvider>
+          <App />
+        </SpellcrafterProvider>
       </DojoProvider>
     </React.StrictMode>
   );
