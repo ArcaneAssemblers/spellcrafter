@@ -27,6 +27,7 @@ query getPlayersGames($address: String!) {
             __typename
             ... on Owner {
               entity_id
+              address
             }
           }
         }

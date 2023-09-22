@@ -32,33 +32,5 @@ export function defineContractComponents(world: World) {
         }
       );
     })(),
-    AuthStatus: (() => {
-      const name = "AuthStatus";
-      return defineComponent(
-        world,
-        {
-          is_authorized: RecsType.Boolean,
-        },
-        {
-          metadata: {
-            name: name,
-          },
-        }
-      );
-    })(),
-    AuthRole: (() => {
-      const name = "AuthRole";
-      return defineComponent(
-        world,
-        {
-          id: RecsType.Number,
-        },
-        {
-          metadata: {
-            name: name,
-          },
-        }
-      );
-    })(),
   };
 }

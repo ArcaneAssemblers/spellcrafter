@@ -379,7 +379,7 @@ export type GetPlayersGamesQueryVariables = Exact<{
 }>;
 
 
-export type GetPlayersGamesQuery = { __typename?: 'Query', ownerComponents?: { __typename?: 'OwnerConnection', edges?: Array<{ __typename?: 'OwnerEdge', node?: { __typename?: 'Owner', entity?: { __typename?: 'Entity', keys?: Array<string | null> | null, components?: Array<{ __typename: 'Occupied' } | { __typename: 'Owner', entity_id?: any | null } | { __typename: 'ValueInGame' } | null> | null } | null } | null } | null> | null } | null };
+export type GetPlayersGamesQuery = { __typename?: 'Query', ownerComponents?: { __typename?: 'OwnerConnection', edges?: Array<{ __typename?: 'OwnerEdge', node?: { __typename?: 'Owner', entity?: { __typename?: 'Entity', keys?: Array<string | null> | null, components?: Array<{ __typename: 'Occupied' } | { __typename: 'Owner', entity_id?: any | null, address?: any | null } | { __typename: 'ValueInGame' } | null> | null } | null } | null } | null> | null } | null };
 
 
 export const GetGameValuesDocument = gql`
@@ -413,6 +413,7 @@ export const GetPlayersGamesDocument = gql`
             __typename
             ... on Owner {
               entity_id
+              address
             }
           }
         }
