@@ -1,5 +1,6 @@
 import { useDojo } from './DojoContext';
 import { useSpellcrafter } from './SpellcrafterContext';
+import { Region } from './dojo/gameConfig';
 
 function App() {
   const {
@@ -11,10 +12,11 @@ function App() {
   } = useDojo();
 
   const {
-    actions: { newGame },
+    actions: { newGame, forage },
     games,
     setActiveGame,
     stats,
+    cards,
   } = useSpellcrafter();
 
   return (
@@ -44,6 +46,24 @@ function App() {
       <div className="card">
         <p>{JSON.stringify(stats)}</p>
       </div>
+
+      <div className="card">
+        <p>{JSON.stringify(cards)}</p>
+      </div>
+
+      <div className="card">
+        <select>
+          {Object.keys(Region).filter(e => isNaN(Number(e))).map((value, index) => {
+            return <option value={value} key={index}>{value}</option>
+          })}
+        </select>
+        <button onClick={() => forage(Region.Cave)}>Forage</button>
+      </div>
+
+      {/* <div className="card">
+        <button onClick={() => newGame()}>Interact</button>
+      </div> */}
+
     </>
   );
 }

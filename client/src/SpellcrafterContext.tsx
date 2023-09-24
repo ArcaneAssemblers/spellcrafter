@@ -4,7 +4,8 @@ import { useDojo } from './DojoContext';
 import { useEntityQuery, useComponentValue } from '@dojoengine/react';
 import { getEntityIdFromKeys } from '@dojoengine/utils';
 import { setComponent, HasValue, getComponentValue } from '@latticexyz/recs';
-import { SpellStats } from './dojo/gameConfig';
+import { SpellStats, Region } from './dojo/gameConfig';
+import { count } from 'console';
 
 type GameActions = {
     // create a new game and set it to be active
@@ -32,8 +33,8 @@ type SpellcrafterContext = {
     setActiveGame: (gameId: EntityIndex) => void,
     // the game stats for this current game
     stats: GameStats | null,
-    // The cards that the player is holding in this game
-    cards: Array<number>,
+    // The cards that the player is holding in this game [card_id, number_owned]
+    cards: Array<[number, number]>,
     // call these functions to perform actions in the current game
     actions: GameActions,
 }
@@ -59,7 +60,6 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
 
     // state held in this context
     const [activeGame, setActiveGame] = useState<EntityIndex | null>(null);
-    const [cards, setCards] = useState<Array<number>>([]);
 
     // repopulate the games list when the account changes
     // this makes a graphql query and processes the response into the local entity store
@@ -113,12 +113,18 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
             // set the new game as the active one..
         },
         interact: async (cardId: number) => {
-            await interact(account, cardId)
+            if (!activeGame) throw new Error("No active game");
+            await interact(account, activeGame, cardId as EntityIndex)
         },
-        forage: async (region: number) => {
-            // todo
+        forage: async (region: Region) => {
+            if (!activeGame) throw new Error("No active game");
+            await forage(account, activeGame, region as EntityIndex)        
         }
     }
+
+    const cards = [...Array(80).keys()].map((card_id): [number, number] => {
+        return [card_id, useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(card_id), BigInt(parseInt((activeGame || 999).toString()!))]))?.value || 0]
+    }).filter(([_, count]) => count)
 
     const contextValue: SpellcrafterContext = {
         games: useEntityQuery([HasValue(Owner, { address: account.address })]),

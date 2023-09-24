@@ -7,6 +7,13 @@ export enum SpellStats {
     Barriers = 10004,
 };
 
+export enum Region {
+    Forest = 0,
+    Meadow = 1,
+    Volcano = 2,
+    Cave = 3,
+}
+
 export const SpellStatsDisplay: { [key in SpellStats]: string } = {
     [SpellStats.Chaos]: "Chaos",
     [SpellStats.Power]: "Power",

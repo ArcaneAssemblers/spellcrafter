@@ -1,15 +1,13 @@
 import { SetupNetworkResult } from "./setupNetwork";
 import { Account } from "starknet";
-import { EntityIndex, getComponentValue } from "@latticexyz/recs";
-import { uuid } from "@latticexyz/utils";
-import { ClientComponents } from "./createClientComponents";
+import { EntityIndex } from "@latticexyz/recs";
 import { getEvents, setComponentsFromEvents } from "@dojoengine/utils";
+import { Region } from "../dojo/gameConfig";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
     { execute, contractComponents }: SetupNetworkResult,
-    { ValueInGame, Owner }: ClientComponents
 ) {
 
     const newGame = async (signer: Account) => {
@@ -19,8 +17,15 @@ export function createSystemCalls(
         setComponentsFromEvents(contractComponents, getEvents(receipt));
     }
 
-    const interact = async (signer: Account, gameId, EntityIndex, cardId: EntityIndex) => {
+    const interact = async (signer: Account, gameId: EntityIndex, cardId: EntityIndex) => {
         const tx = await execute(signer, "Interact", [gameId, cardId]);
+        console.log(tx)
+        const receipt = await signer.waitForTransaction(tx.transaction_hash, { retryInterval: 100 })
+        setComponentsFromEvents(contractComponents, getEvents(receipt));
+    }
+
+    const forage = async (signer: Account, gameId: EntityIndex, region: Region) => {
+        const tx = await execute(signer, "Forage", [gameId, region]);
         console.log(tx)
         const receipt = await signer.waitForTransaction(tx.transaction_hash, { retryInterval: 100 })
         setComponentsFromEvents(contractComponents, getEvents(receipt));
@@ -28,6 +33,7 @@ export function createSystemCalls(
 
     return {
         newGame,
-        interact
+        interact,
+        forage,
     };
 }
