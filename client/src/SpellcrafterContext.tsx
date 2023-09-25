@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect } from 'react';
 import { EntityIndex } from "@latticexyz/recs";
 import { useDojo } from './DojoContext';
-import { useEntityQuery, useComponentValue } from '@dojoengine/react';
+import { useEntityQuery, useComponentValue } from '@latticexyz/react';
 import { getEntityIdFromKeys } from '@dojoengine/utils';
 import { setComponent, HasValue } from '@latticexyz/recs';
 import { SpellStats, Region } from './dojo/gameConfig';
@@ -62,6 +62,23 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
     const [activeGame, setActiveGame] = useState<EntityIndex | undefined>(undefined);
     const games = useEntityQuery([HasValue(Owner, { address: account.address })])
 
+    const fetchGames = async (address: string) => {
+        const { data: { ownerComponents } } = await graphSdk.getPlayersGames({ address: address });
+        ownerComponents?.edges?.forEach((entity) => {
+            let keys = entity?.node?.entity?.keys
+            const entityIndex = getEntityIdFromKeys(keys);
+            entity?.node?.entity?.components?.forEach((component) => {
+                switch (component?.__typename) {
+                    case "Owner":
+                        setComponent(Owner, entityIndex, { address: component?.address })
+                        break;
+                    default:
+                        break;
+                }
+            })
+        })
+    }
+
     // repopulate the games list when the account changes
     // this makes a graphql query and processes the response into the local entity store
     useEffect(() => {
@@ -69,28 +86,12 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
             setActiveGame(undefined);
             return;
         }
-        const fetchGames = async () => {
-            const { data: { ownerComponents } } = await graphSdk.getPlayersGames({ address: account.address });
-            ownerComponents?.edges?.forEach((entity) => {
-                let keys = entity?.node?.entity?.keys
-                const entityIndex = getEntityIdFromKeys(keys);
-                entity?.node?.entity?.components?.forEach((component) => {
-                    switch (component?.__typename) {
-                        case "Owner":
-                            setComponent(Owner, entityIndex, { address: component?.address })
-                            break;
-                        default:
-                            break;
-                    }
-                })
-            })
-        }
-        fetchGames();
+        fetchGames(account.address);
     }, [account.address]);
 
     // update when the games list changes
     useEffect(() => {
-        setActiveGame(games[0]);
+        setActiveGame(games[games.length - 1]);
     }, [games])
 
     // use a graphql query to bootstrap the game data store when the active game changes
@@ -118,7 +119,6 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
     const actions = {
         newGame: async () => {
             await newGame(account);
-            // set the new game as the active one..
         },
         interact: async (cardId: number) => {
             if (!activeGame) throw new Error("No active game");
