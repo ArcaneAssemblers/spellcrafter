@@ -17,6 +17,7 @@ function App() {
     actions: { newGame, forage, interact },
     games,
     setActiveGame,
+    activeGame,
     stats,
     cards,
   } = useSpellcrafter();
@@ -32,11 +33,11 @@ function App() {
 
   return (
     <>
-      <button onClick={create}>{isDeploying ? "deploying burner" : "create burner"}</button>
+      <button onClick={create}>{isDeploying ? "deploying account contract..." : "create arcade account"}</button>
 
       <div className="card">
         select signer:{" "}
-        <select onChange={e => select(e.target.value)}>
+        <select value={account.address} onChange={e => select(e.target.value)}>
           {list().map((account, index) => {
             return <option value={account.address} key={index}>{account.address}</option>
           })}
@@ -47,7 +48,7 @@ function App() {
 
       <div className="card">
         select game:{" "}
-        <select onChange={e => setActiveGame(e.target.value as any)}>
+        <select value={activeGame as any as string} onChange={e => setActiveGame(e.target.value as any)}>
           {games.map((game, index) => {
             return <option value={game} key={index}>{game}</option>
           })}

@@ -3,7 +3,7 @@ import { EntityIndex } from "@latticexyz/recs";
 import { useDojo } from './DojoContext';
 import { useEntityQuery, useComponentValue } from '@dojoengine/react';
 import { getEntityIdFromKeys } from '@dojoengine/utils';
-import { setComponent, HasValue, getComponentValue } from '@latticexyz/recs';
+import { setComponent, HasValue } from '@latticexyz/recs';
 import { SpellStats, Region } from './dojo/gameConfig';
 import cardDefs from './generated/cards.json';
 
@@ -28,7 +28,7 @@ type SpellcrafterContext = {
     // All games that belong to the current account as set by the dojo context
     games: Array<EntityIndex>,
     // currently selected game
-    activeGame: EntityIndex | null,
+    activeGame: EntityIndex | undefined,
     // change which came is currently active
     setActiveGame: (gameId: EntityIndex) => void,
     // the game stats for this current game
@@ -59,12 +59,16 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
     } = dojo;
 
     // state held in this context
-    const [activeGame, setActiveGame] = useState<EntityIndex | null>(null);
+    const [activeGame, setActiveGame] = useState<EntityIndex | undefined>(undefined);
+    const games = useEntityQuery([HasValue(Owner, { address: account.address })])
 
     // repopulate the games list when the account changes
     // this makes a graphql query and processes the response into the local entity store
     useEffect(() => {
-        if (!account.address) return;
+        if (!account.address) {
+            setActiveGame(undefined);
+            return;
+        }
         const fetchGames = async () => {
             const { data: { ownerComponents } } = await graphSdk.getPlayersGames({ address: account.address });
             ownerComponents?.edges?.forEach((entity) => {
@@ -80,12 +84,16 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
                     }
                 })
             })
-
         }
         fetchGames();
-    }, [account]);
+    }, [account.address]);
 
-    // use a graphql query to boostrap the game data store when the active game changes
+    // update when the games list changes
+    useEffect(() => {
+        setActiveGame(games[0]);
+    }, [games])
+
+    // use a graphql query to bootstrap the game data store when the active game changes
     useEffect(() => {
         if (!activeGame) return;
         const fetchStats = async () => {
@@ -118,24 +126,24 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         },
         forage: async (region: Region) => {
             if (!activeGame) throw new Error("No active game");
-            await forage(account, activeGame, region as EntityIndex)        
+            await forage(account, activeGame, region as EntityIndex)
         }
     }
 
     const cards = cardDefs.map((def): [number, number] => {
-        return [parseInt(def.card_id), useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(def.card_id), BigInt(parseInt((activeGame || 999).toString()!))]))?.value || 0]
+        return [parseInt(def.card_id), useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(def.card_id), BigInt(parseInt((activeGame || -1).toString()!))]))?.value || 0]
     }).filter(([_, count]) => count)
 
     const contextValue: SpellcrafterContext = {
-        games: useEntityQuery([HasValue(Owner, { address: account.address })]),
+        games,
         activeGame,
         setActiveGame,
         stats: {
-            chaos: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Chaos), BigInt(parseInt((activeGame || 999).toString()!))]))?.value,
-            power: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Power), BigInt(parseInt((activeGame || 999).toString()!))]))?.value,
-            hotCold: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.HotCold), BigInt(parseInt((activeGame || 999).toString()!))]))?.value,
-            lightDark: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.LightDark), BigInt(parseInt((activeGame || 999).toString()!))]))?.value,
-            barriers: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Barriers), BigInt(parseInt((activeGame || 999).toString()!))]))?.value,
+            chaos: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Chaos), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
+            power: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Power), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
+            hotCold: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.HotCold), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
+            lightDark: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.LightDark), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
+            barriers: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Barriers), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
         },
         cards,
         actions
