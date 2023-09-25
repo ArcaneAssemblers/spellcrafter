@@ -8,15 +8,15 @@ use spellcrafter::cards::properties::{
     requires_hot_gt, requires_light_gt, requires_dark_gt, chaos_delta_fallback,
     power_delta_fallback, hotcold_delta_fallback, lightdark_delta_fallback
 };
-use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT};
+use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT, POLAR_STAT_MIDPOINT};
 
 
 // modify the game state as demanded by this card
 fn enact_card(ctx: Context, game_id: u128, card_id: u128) {
-    if (stat_meets_threshold(ctx, game_id, HOTCOLD_STAT, requires_hot_gt::get(card_id))
-        && stat_meets_threshold(ctx, game_id, HOTCOLD_STAT, requires_cold_gt::get(card_id))
-        && stat_meets_threshold(ctx, game_id, LIGHTDARK_STAT, requires_light_gt::get(card_id))
-        && stat_meets_threshold(ctx, game_id, LIGHTDARK_STAT, requires_dark_gt::get(card_id))) {
+    if (polar_stat_meets_threshold(ctx, game_id, HOTCOLD_STAT, requires_hot_gt::get(card_id), false)
+        && polar_stat_meets_threshold(ctx, game_id, HOTCOLD_STAT, requires_cold_gt::get(card_id), true)
+        && polar_stat_meets_threshold(ctx, game_id, LIGHTDARK_STAT, requires_light_gt::get(card_id), false)
+        && polar_stat_meets_threshold(ctx, game_id, LIGHTDARK_STAT, requires_dark_gt::get(card_id), true)) {
         make_primary_stat_changes(ctx, game_id, card_id);
     } else {
         make_fallback_stat_changes(ctx, game_id, card_id);
@@ -108,19 +108,25 @@ fn alter_stat(ctx: Context, game_id: u128, stat_id: u128, delta: (u32, bool)) {
 
 // increase the value of the stat given by stat_id by delta
 fn increase_stat(ctx: Context, game_id: u128, stat_id: u128, delta: u32) {
-    let value = get!(ctx.world, (stat_id, game_id), ValueInGame);
+    let value = get!(ctx.world, (stat_id, game_id), ValueInGame).value;
+    // TODO: guard for overflows
     set!(
         ctx.world,
-        ValueInGame { entity_id: stat_id, game_id: value.game_id, value: value.value + delta }
+        ValueInGame { entity_id: stat_id, game_id, value: value + delta }
     );
 }
 
 // decrease the value of the stat given by stat_id by delta
 fn decrease_stat(ctx: Context, game_id: u128, stat_id: u128, delta: u32) {
-    let value = get!(ctx.world, (stat_id, game_id), ValueInGame);
+    let value = get!(ctx.world, (stat_id, game_id), ValueInGame).value;
+    let result_value = if delta >= value {
+        0 // clamp at zero to avoid underflow panics
+    } else {
+        value - delta
+    };
     set!(
         ctx.world,
-        ValueInGame { entity_id: stat_id, game_id: value.game_id, value: value.value - delta }
+        ValueInGame { entity_id: stat_id, game_id, value: result_value }
     );
 }
 
@@ -129,9 +135,32 @@ fn stat_meets_threshold(
     ctx: Context, game_id: u128, stat_id: u128, threshold: Option<(u32, bool)>
 ) -> bool {
     match threshold {
-        Option::Some((threshold, _is_negative)) => { // TODO: implement negative thresholds
-            let value = get!(ctx.world, (HOTCOLD_STAT, game_id), ValueInGame);
-            value.value > threshold
+        Option::Some((threshold, is_negative)) => {
+            if is_negative {
+                // this can never be met and is as bug
+                return false;
+            }
+            let value = get!(ctx.world, (stat_id, game_id), ValueInGame).value;
+            value > threshold
+        },
+        Option::None => {
+            true
+        },
+    }
+}
+
+// increase the value of the stat given by stat_id by delta
+fn polar_stat_meets_threshold(
+    ctx: Context, game_id: u128, stat_id: u128, threshold: Option<(u32, bool)>, reverse: bool
+) -> bool {
+    match threshold {
+        Option::Some((threshold, is_negative)) => {
+            let value = get!(ctx.world, (stat_id, game_id), ValueInGame).value;
+            if is_negative && !reverse || !is_negative && reverse {
+                value < POLAR_STAT_MIDPOINT - threshold
+            } else {
+                value > POLAR_STAT_MIDPOINT + threshold
+            }
         },
         Option::None => {
             true

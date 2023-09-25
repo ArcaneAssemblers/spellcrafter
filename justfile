@@ -46,7 +46,7 @@ start_devnet:
 start_indexer:
 	#!/usr/bin/env bash
 	set -euxo pipefail
-
+	just build_contracts
 	WORLD_ADDRESS=$(just migrate | grep "at address" | grep -oE9 '(0x[a-fA-F0-9]{63})')
 	just set_auth
 	cd contracts && torii --world ${WORLD_ADDRESS}

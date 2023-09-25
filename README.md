@@ -14,6 +14,12 @@ This repo uses [just](https://github.com/casey/just) for running commands. It is
 
 ### Steps
 
+First build the contracts
+
+```shell
+just build_contracts
+```
+
 It is best to run 3 separate shells to run the game locally. Run each of the below commands in a new terminal
 
 - Katana local devnet:  

@@ -3,7 +3,7 @@ mod NewGame {
     use traits::Into;
     use dojo::world::Context;
 
-    use spellcrafter::constants::{INITIAL_BARRIERS, BARRIERS_STAT};
+    use spellcrafter::constants::{INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT};
     use spellcrafter::components::{Owner, ValueInGame};
 
     fn execute(ctx: Context) -> u128 {
@@ -18,6 +18,18 @@ mod NewGame {
             ctx.world,
             (
                 ValueInGame { entity_id: BARRIERS_STAT, game_id, value: INITIAL_BARRIERS }
+            )
+        );
+        set!(
+            ctx.world,
+            (
+                ValueInGame { entity_id: HOTCOLD_STAT, game_id, value: POLAR_STAT_MIDPOINT }
+            )
+        );
+        set!(
+            ctx.world,
+            (
+                ValueInGame { entity_id: LIGHTDARK_STAT, game_id, value: POLAR_STAT_MIDPOINT }
             )
         );
         game_id
