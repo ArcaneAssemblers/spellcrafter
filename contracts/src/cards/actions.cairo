@@ -36,25 +36,25 @@ fn enact_card(ctx: Context, game_id: u128, card_id: u128) {
 fn make_primary_stat_changes(ctx: Context, game_id: u128, card_id: u128) {
     match chaos_delta::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, CHAOS_STAT, 1);
+            alter_stat(ctx, game_id, CHAOS_STAT, delta);
         },
         Option::None => {},
     }
     match power_delta::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, POWER_STAT, 1);
+            alter_stat(ctx, game_id, POWER_STAT, delta);
         },
         Option::None => {},
     }
     match hotcold_delta::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, HOTCOLD_STAT, 1);
+            alter_stat(ctx, game_id, HOTCOLD_STAT, delta);
         },
         Option::None => {},
     }
     match lightdark_delta::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, LIGHTDARK_STAT, 1);
+            alter_stat(ctx, game_id, LIGHTDARK_STAT, delta);
         },
         Option::None => {},
     }
@@ -63,25 +63,25 @@ fn make_primary_stat_changes(ctx: Context, game_id: u128, card_id: u128) {
 fn make_fallback_stat_changes(ctx: Context, game_id: u128, card_id: u128) {
     match chaos_delta_fallback::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, CHAOS_STAT, 1);
+            alter_stat(ctx, game_id, CHAOS_STAT, delta);
         },
         Option::None => {},
     }
     match power_delta_fallback::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, POWER_STAT, 1);
+            alter_stat(ctx, game_id, POWER_STAT, delta);
         },
         Option::None => {},
     }
     match hotcold_delta_fallback::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, HOTCOLD_STAT, 1);
+            alter_stat(ctx, game_id, HOTCOLD_STAT, delta);
         },
         Option::None => {},
     }
     match lightdark_delta_fallback::get(card_id) {
         Option::Some(delta) => {
-            increase_stat(ctx, game_id, LIGHTDARK_STAT, 1);
+            alter_stat(ctx, game_id, LIGHTDARK_STAT, delta);
         },
         Option::None => {},
     }
@@ -94,6 +94,16 @@ fn bust_barrier(ctx: Context, game_id: u128) {
 fn is_dead(ctx: Context, game_id: u128) -> bool {
     let value = get!(ctx.world, (BARRIERS_STAT, game_id), ValueInGame).value;
     value == 0
+}
+
+// increase the value of the stat given by stat_id by delta
+fn alter_stat(ctx: Context, game_id: u128, stat_id: u128, delta: (u32, bool)) {
+    let (delta, is_negative) = delta;
+    if is_negative {
+        decrease_stat(ctx, game_id, stat_id, delta);
+    } else {
+        increase_stat(ctx, game_id, stat_id, delta);
+    }
 }
 
 // increase the value of the stat given by stat_id by delta
@@ -116,10 +126,10 @@ fn decrease_stat(ctx: Context, game_id: u128, stat_id: u128, delta: u32) {
 
 // increase the value of the stat given by stat_id by delta
 fn stat_meets_threshold(
-    ctx: Context, game_id: u128, stat_id: u128, threshold: Option<u32>
+    ctx: Context, game_id: u128, stat_id: u128, threshold: Option<(u32, bool)>
 ) -> bool {
     match threshold {
-        Option::Some(threshold) => {
+        Option::Some((threshold, _is_negative)) => { // TODO: implement negative thresholds
             let value = get!(ctx.world, (HOTCOLD_STAT, game_id), ValueInGame);
             value.value > threshold
         },

@@ -50,7 +50,7 @@ def writeCardsRegionMapping(regionMap):
 
 def parse_type(val: str):
     try:
-        return abs(int(val)), 'u32'
+        return "({}, true)".format(abs(int(val))) if int(val) < 0 else "({}, false)".format(abs(int(val))), '(u32, bool)'
     except ValueError:
         if not val:
             return None, "unknown"

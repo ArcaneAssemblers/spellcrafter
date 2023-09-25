@@ -5,14 +5,14 @@
 use array::ArrayTrait;
 use option::OptionTrait;
 use traits::TryInto;
-fn get(card_id: u128) -> Option<u32> {
-    let a: Array<Option<u32>> = array![
+fn get(card_id: u128) -> Option<(u32, bool)> {
+    let a: Array<Option<(u32, bool)>> = array![
         Option::None,
         Option::None,
         Option::None,
         Option::None,
         Option::None,
-        Option::Some(4),
+        Option::Some((4, false)),
         Option::None,
         Option::None,
         Option::None,
@@ -60,7 +60,7 @@ fn get(card_id: u128) -> Option<u32> {
         Option::None,
         Option::None,
         Option::None,
-        Option::Some(4),
+        Option::Some((4, false)),
         Option::None,
         Option::None,
         Option::None,
@@ -73,7 +73,7 @@ fn get(card_id: u128) -> Option<u32> {
         Option::None,
         Option::None,
         Option::None,
-        Option::Some(3),
+        Option::Some((3, false)),
         Option::None,
         Option::None,
         Option::None,
@@ -81,13 +81,13 @@ fn get(card_id: u128) -> Option<u32> {
         Option::None,
         Option::None,
         Option::None,
-        Option::Some(4),
+        Option::Some((4, false)),
         Option::None,
         Option::None,
         Option::None,
         Option::None,
         Option::None,
-        Option::Some(6),
+        Option::Some((6, false)),
         Option::None,
         Option::None,
         Option::None,
@@ -104,7 +104,7 @@ fn get(card_id: u128) -> Option<u32> {
         Option::None,
         Option::None,
         Option::None,
-        Option::Some(1),
+        Option::Some((1, false)),
         Option::None,
         Option::None,
         Option::None,

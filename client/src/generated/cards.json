@@ -20,8 +20,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A torn and bloodied wing membrane",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "1",
@@ -44,8 +43,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It is pale and spongy ",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "2",
@@ -68,8 +66,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Stringy sticky strands, gathered in your hair",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "3",
@@ -92,8 +89,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A maggot that wiggles slightly, faking sunshine",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "4",
@@ -116,8 +112,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Only flesh where its eyes once were",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "5",
@@ -140,8 +135,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "When cracked open the crystals are very sharp",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "6",
@@ -164,8 +158,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A melted spike, heavier than it looks.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "7",
@@ -188,8 +181,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A dark chunk that blackens your hand",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "8",
@@ -212,8 +204,7 @@
     "swaps_hotcold": "TRUE",
     "swaps_lightdark": "",
     "flavour": "Strange vibrations can be felt when held.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "9",
@@ -236,8 +227,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "An elegant jewel that will devour your flesh",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "10",
@@ -260,8 +250,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It contains the supernatural strength to contain planetary terrors.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "11",
@@ -284,8 +273,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "If you find one of these scales, flee. ",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "12",
@@ -308,8 +296,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It's missing a leg",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "13",
@@ -332,8 +319,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It has a shiny brown carapace",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "14",
@@ -356,8 +342,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The paint has worn off its porcelain face",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "15",
@@ -380,8 +365,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Did someone drop their rubbish in the cave??",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "16",
@@ -404,8 +388,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Not heavy at all- you can still see the grain.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "17",
@@ -428,8 +411,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A calcified imprint of a sea creature",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "18",
@@ -452,8 +434,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "An ancient piece of skeleton",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "19",
@@ -476,8 +457,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A delicate curved and coiled crystal.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "20",
@@ -500,8 +480,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Once per turn you can send the Wolf Spider to collect 1 trinket from the Cave",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "21",
@@ -524,8 +503,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A crunchy little rat bone",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "22",
@@ -543,13 +521,12 @@
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
-    "hotcold_delta_fallback": "",
+    "hotcold_delta_fallback": "-1",
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The still-beating heart of a rat",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "23",
@@ -572,8 +549,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A chunk of quartz. It feels stabilising in some way",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "24",
@@ -596,8 +572,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Sticky sap from a pine tree",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "25",
@@ -620,8 +595,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Soft green moss",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "26",
@@ -644,8 +618,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "This holds great potential",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "27",
@@ -668,8 +641,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A branch of sweet smelling cedar",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "28",
@@ -692,8 +664,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It rattles. There are nuts inside",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "29",
@@ -716,8 +687,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Be careful not to get stung",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "30",
@@ -740,8 +710,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "I wonder what happened to the rest of the rat",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "31",
@@ -764,8 +733,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Smells like Christmas",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "32",
@@ -788,8 +756,7 @@
     "swaps_hotcold": "TRUE",
     "swaps_lightdark": "",
     "flavour": "Could be a friend.. or a powerful sacrifice!",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "33",
@@ -812,8 +779,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Could be used in a nice stew",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "34",
@@ -836,8 +802,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A chunk of wood, great for fires!",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "35",
@@ -860,8 +825,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It feels dangerous and sucks the heat from your hand.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "36",
@@ -884,8 +848,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "This branch bleeds bright red blood",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "37",
@@ -908,8 +871,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It stays cold in your hand and doesn't melt.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "38",
@@ -932,8 +894,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Are these the poisonous ones?",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "39",
@@ -956,8 +917,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "They look delicious",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "40",
@@ -980,8 +940,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It pricks you every time you touch it",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "41",
@@ -1004,8 +963,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Once per turn you can send the Raven to collect 1 trinket from the Forest",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "42",
@@ -1028,8 +986,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A green little bug",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "43",
@@ -1052,8 +1009,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Pull off the petals one at a time and chant",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "44",
@@ -1076,8 +1032,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It spasms, one of the wings was torn off.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "45",
@@ -1100,8 +1055,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The stinger twitches, ready to inject poison",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "46",
@@ -1124,8 +1078,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Sickly sweet droplets catch the light.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "47",
@@ -1148,8 +1101,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A nearly-perfect scaly molt",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "48",
@@ -1172,8 +1124,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "An ancient looking coin",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "49",
@@ -1196,8 +1147,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A nugget of copper, feels warm.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "50",
@@ -1220,8 +1170,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "TRUE",
     "flavour": "This nugget shines brightly.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "51",
@@ -1244,8 +1193,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "They twinkle and make you wish for more",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "52",
@@ -1268,8 +1216,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It bends light against physics. You feel mesmerised.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "53",
@@ -1292,8 +1239,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A liquid from below a battlefield, full of potential energy.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "54",
@@ -1316,8 +1262,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It floats slightly, and gives delusions of a rapturous apocalypse.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "55",
@@ -1340,8 +1285,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It crackles nicely and feels dry.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "56",
@@ -1364,8 +1308,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The purple flowers have a strong scent.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "57",
@@ -1388,8 +1331,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The sap is milky and toxic",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "58",
@@ -1412,8 +1354,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Torn off at the base",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "59",
@@ -1436,8 +1377,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "They snag on your clothing",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "60",
@@ -1460,8 +1400,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A speckled light blue egg.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "61",
@@ -1484,8 +1423,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A strip of fluff, no tailbone inside.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "62",
@@ -1508,8 +1446,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Once per turn you can send the Cat to collect 1 trinket from the Meadow",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "63",
@@ -1532,8 +1469,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A rock that is light as foam",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "64",
@@ -1556,8 +1492,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Smells like? something",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "65",
@@ -1580,8 +1515,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Soothing, shiny and black",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "66",
@@ -1604,8 +1538,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A fiery arachnid",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "67",
@@ -1628,8 +1561,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Soft grey ashes of something once alive",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "68",
@@ -1652,8 +1584,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Said to dispel evil spirits",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "69",
@@ -1676,8 +1607,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Imbued with the power of the volcano",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "70",
@@ -1700,8 +1630,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The charred remains of a tree",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "71",
@@ -1724,8 +1653,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "This stone feels smooth in your hand.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "72",
@@ -1748,8 +1676,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "This twig seems somehow imbued with metal",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "73",
@@ -1772,8 +1699,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A gemstone accustomed to both pain and beauty.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "74",
@@ -1796,8 +1722,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A chimeric fusion of metal alloys and oxygen.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "75",
@@ -1820,8 +1745,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Handle carefully! Its infernal radiation evaporates water.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "76",
@@ -1844,8 +1768,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Its unclear if this is alive or dead",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "77",
@@ -1868,8 +1791,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Very wriggly and tough, resistant to heat",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "78",
@@ -1892,8 +1814,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "It is scorched on the inside",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "79",
@@ -1916,8 +1837,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Found lodged between the rocks",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "80",
@@ -1940,8 +1860,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Grainy, black, and still warm in your hand.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "81",
@@ -1964,8 +1883,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Slimy and adapted to extreme temperatures",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "82",
@@ -1988,8 +1906,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A porous limestone ejected by the volcano.",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "83",
@@ -2012,8 +1929,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Hard and soulless ",
-    "consumable": "TRUE",
-    "": ""
+    "consumable": "TRUE"
   },
   {
     "card_id": "84",
@@ -2036,8 +1952,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Once per turn you can send the Salamander to collect 1 trinket from the Volcano",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "85",
@@ -2060,8 +1975,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Your journey with the Void begins",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "86",
@@ -2084,8 +1998,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Stare into the Void",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "87",
@@ -2108,8 +2021,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Speak to the Void",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "88",
@@ -2132,8 +2044,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Speak to the Void",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "89",
@@ -2156,8 +2067,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Your journey with Decay begins",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "90",
@@ -2180,8 +2090,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Meditate on Decay",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "91",
@@ -2204,8 +2113,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Initiate Self Digestion",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "92",
@@ -2228,8 +2136,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Initiate Self Digestion",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "93",
@@ -2252,8 +2159,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Your journey with Hypnotism begins",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "94",
@@ -2276,8 +2182,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Study Hypnotism",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "95",
@@ -2300,8 +2205,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Somnambulism",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "96",
@@ -2324,8 +2228,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Somnambulism",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "97",
@@ -2348,8 +2251,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Your journey with the Inferno begins",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "98",
@@ -2372,8 +2274,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Ignite the Inferno",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "99",
@@ -2396,8 +2297,7 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Fuel the Fire Inside",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   },
   {
     "card_id": "100",
@@ -2420,7 +2320,6 @@
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "Requires Investigate Immolation",
-    "consumable": "FALSE",
-    "": ""
+    "consumable": "FALSE"
   }
 ]
