@@ -118,6 +118,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
 
     const actions = {
         newGame: async () => {
+            if (!account.address) throw new Error("No active account");
             await newGame(account);
         },
         interact: async (cardId: number) => {
@@ -130,8 +131,13 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         }
     }
 
+    // helper to bind to a ValueInGame for the current game
+    const useGameValue = (valueId: number): number | undefined => {
+        return useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(valueId), BigInt(parseInt((activeGame || -1).toString()!))]))?.value
+    }
+
     const cards = cardDefs.map((def): [number, number] => {
-        return [parseInt(def.card_id), useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(def.card_id), BigInt(parseInt((activeGame || -1).toString()!))]))?.value || 0]
+        return [parseInt(def.card_id), useGameValue(parseInt(def.card_id)) || 0]
     }).filter(([_, count]) => count)
 
     const contextValue: SpellcrafterContext = {
@@ -139,11 +145,11 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         activeGame,
         setActiveGame,
         stats: {
-            chaos: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Chaos), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
-            power: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Power), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
-            hotCold: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.HotCold), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
-            lightDark: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.LightDark), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
-            barriers: useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(SpellStats.Barriers), BigInt(parseInt((activeGame || -1).toString()!))]))?.value,
+            chaos: useGameValue(SpellStats.Chaos),
+            power: useGameValue(SpellStats.Power),
+            hotCold: useGameValue(SpellStats.HotCold),
+            lightDark: useGameValue(SpellStats.LightDark),
+            barriers: useGameValue(SpellStats.Barriers)
         },
         cards,
         actions
