@@ -1,5 +1,7 @@
-mod init;
+mod new_game;
 mod forage;
+mod interact;
 
-use init::Init;
+use new_game::NewGame;
 use forage::Forage;
+use interact::Interact;

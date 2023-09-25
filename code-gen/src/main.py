@@ -19,6 +19,34 @@ FOOT =  """
 }
 """
 
+RMAP_HEAD = """
+// This file is generated. Do not edit! 
+// Edit the cards.csv instead and regenerate
+
+use array::ArrayTrait;
+use option::OptionTrait;
+use traits::TryInto;
+"""
+RMAP_FN = """
+fn {}() -> Array<u128> {{
+    array![
+"""
+RMAP_FOOT =  """
+    ]
+}
+"""
+
+def writeCardsRegionMapping(regionMap):
+    with open(args.outdir + "/" + "region_lookup" + ".cairo", "w") as f:
+        f.write(RMAP_HEAD)
+
+        for (region, card_ids) in regionMap.items():
+            f.write(RMAP_FN.format(region))
+            for cardId in card_ids:
+                f.write("        {},\n".format(cardId))
+            f.write(RMAP_FOOT)
+            
+
 def parse_type(val: str):
     try:
         return abs(int(val)), 'u32'
@@ -54,11 +82,21 @@ if __name__ == "__main__":
     ) 
     args = parser.parse_args()
 
+    cardIdsPerRegion = { 'forest' : [], 'cave': [], 'meadow': [], 'volcano': [] }
+
     with open(args.cardlist) as csvfile:
         reader = csv.DictReader(csvfile)
         rows = list(reader)
 
+        for row in rows:
+            if row['card_type'] in cardIdsPerRegion.keys():
+                cardIdsPerRegion[row['card_type']].append(int(row['card_id']))
+
+        writeCardsRegionMapping(cardIdsPerRegion)
+
         with open(args.outdir + ".cairo", "w") as module_file:
+            module_file.write(f"mod region_lookup;\n")
+
             for field in reader.fieldnames:
                 if field in args.skip:
                     continue
@@ -80,5 +118,3 @@ if __name__ == "__main__":
                             f.write("        Option::None,\n")
                     f.write(FOOT)
                     f.close()
-
-
