@@ -1,4 +1,5 @@
 const INITIAL_BARRIERS: u32 = 3;
+const CHAOS_PER_FORAGE: u32 = 3;
 
 // ensure these dont collide with card ids
 const CHAOS_STAT: u128 = 10000;
