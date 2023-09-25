@@ -2,6 +2,7 @@ import {useState} from 'react';
 import { useDojo } from './DojoContext';
 import { useSpellcrafter } from './SpellcrafterContext';
 import { Region, RegionDisplay } from './dojo/gameConfig';
+import cardDefs from './generated/cards.json';
 
 function App() {
   const {
@@ -52,7 +53,9 @@ function App() {
       </div>
 
       <div className="card">
-        <p>{JSON.stringify(cards)}</p>
+        {cards.map(([id, count]) => {
+          return <p key={id}>{cardDefs[id].name}: {count}</p>
+        })}
       </div>
 
       <div className="card">
@@ -67,7 +70,7 @@ function App() {
       <div className="card">
         <select value={selectedCard} onChange={e => setSelectedCard(e.target.value as any as Region)}>
           {cards.map(([cardId, _], index) => {
-            return <option value={cardId} key={index}>{cardId}</option>
+            return <option value={cardId} key={index}>{cardDefs[cardId].name}</option>
           })}
         </select>
         <button onClick={() => interact(selectedCard)}>Play</button>
