@@ -1,4 +1,6 @@
 
+export const POLAR_STAT_MIDPOINT = 2_147_483_647;
+
 export enum SpellStats {
     Chaos = 10000,
     Power = 10001,

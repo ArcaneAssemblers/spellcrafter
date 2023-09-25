@@ -4,7 +4,7 @@ import { useDojo } from './DojoContext';
 import { useEntityQuery, useComponentValue } from '@latticexyz/react';
 import { getEntityIdFromKeys } from '@dojoengine/utils';
 import { setComponent, HasValue } from '@latticexyz/recs';
-import { SpellStats, Region } from './dojo/gameConfig';
+import { SpellStats, Region, POLAR_STAT_MIDPOINT } from './dojo/gameConfig';
 import cardDefs from './generated/cards.json';
 
 type GameActions = {
@@ -152,9 +152,9 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         stats: {
             chaos: useGameValue(SpellStats.Chaos),
             power: useGameValue(SpellStats.Power),
-            hotCold: useGameValue(SpellStats.HotCold),
-            lightDark: useGameValue(SpellStats.LightDark),
-            barriers: useGameValue(SpellStats.Barriers)
+            barriers: useGameValue(SpellStats.Barriers),
+            hotCold: (useGameValue(SpellStats.HotCold) || POLAR_STAT_MIDPOINT) - POLAR_STAT_MIDPOINT,
+            lightDark: (useGameValue(SpellStats.LightDark) || POLAR_STAT_MIDPOINT) - POLAR_STAT_MIDPOINT,
         },
         cards,
         actions
