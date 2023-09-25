@@ -124,7 +124,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
             // the useEntityQuery hook to update. Need to figure that out so things work properly
             setTimeout(() => {
                 fetchGames(account.address)
-            }, 1000)
+            }, 2000)
         },
         interact: async (cardId: number) => {
             if (!activeGame) throw new Error("No active game");
