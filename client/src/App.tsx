@@ -1,6 +1,7 @@
+import {useState} from 'react';
 import { useDojo } from './DojoContext';
 import { useSpellcrafter } from './SpellcrafterContext';
-import { Region } from './dojo/gameConfig';
+import { Region, RegionDisplay } from './dojo/gameConfig';
 
 function App() {
   const {
@@ -12,12 +13,15 @@ function App() {
   } = useDojo();
 
   const {
-    actions: { newGame, forage },
+    actions: { newGame, forage, interact },
     games,
     setActiveGame,
     stats,
     cards,
   } = useSpellcrafter();
+
+  const [selectedRegion, setSelectedRegion] = useState(Region.Forest);
+  const [selectedCard, setSelectedCard] = useState(Region.Forest);
 
   return (
     <>
@@ -52,17 +56,22 @@ function App() {
       </div>
 
       <div className="card">
-        <select>
-          {Object.keys(Region).filter(e => isNaN(Number(e))).map((value, index) => {
-            return <option value={value} key={index}>{value}</option>
+        <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value as any as Region)}>
+          {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
+            return <option value={value as Region} key={index}>{RegionDisplay[value as Region]}</option>
           })}
         </select>
-        <button onClick={() => forage(Region.Cave)}>Forage</button>
+        <button onClick={() => forage(selectedRegion)}>Forage</button>
       </div>
 
-      {/* <div className="card">
-        <button onClick={() => newGame()}>Interact</button>
-      </div> */}
+      <div className="card">
+        <select value={selectedCard} onChange={e => setSelectedCard(e.target.value as any as Region)}>
+          {cards.map(([cardId, _], index) => {
+            return <option value={cardId} key={index}>{cardId}</option>
+          })}
+        </select>
+        <button onClick={() => interact(selectedCard)}>Play</button>
+      </div>
 
     </>
   );
