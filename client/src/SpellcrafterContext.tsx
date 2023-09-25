@@ -5,7 +5,7 @@ import { useEntityQuery, useComponentValue } from '@dojoengine/react';
 import { getEntityIdFromKeys } from '@dojoengine/utils';
 import { setComponent, HasValue, getComponentValue } from '@latticexyz/recs';
 import { SpellStats, Region } from './dojo/gameConfig';
-import { count } from 'console';
+import cardDefs from './generated/cards.json';
 
 type GameActions = {
     // create a new game and set it to be active
@@ -122,8 +122,8 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         }
     }
 
-    const cards = [...Array(80).keys()].map((card_id): [number, number] => {
-        return [card_id, useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(card_id), BigInt(parseInt((activeGame || 999).toString()!))]))?.value || 0]
+    const cards = cardDefs.map((def): [number, number] => {
+        return [parseInt(def.card_id), useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(def.card_id), BigInt(parseInt((activeGame || 999).toString()!))]))?.value || 0]
     }).filter(([_, count]) => count)
 
     const contextValue: SpellcrafterContext = {

@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState, useEffect } from 'react';
 import { useDojo } from './DojoContext';
 import { useSpellcrafter } from './SpellcrafterContext';
 import { Region, RegionDisplay } from './dojo/gameConfig';
@@ -21,8 +21,14 @@ function App() {
     cards,
   } = useSpellcrafter();
 
-  const [selectedRegion, setSelectedRegion] = useState(Region.Forest);
-  const [selectedCard, setSelectedCard] = useState(Region.Forest);
+  const [selectedRegion, setSelectedRegion] = useState<Region>(Region.Forest);
+  const [selectedCard, setSelectedCard] = useState<number | undefined>(undefined);
+
+  // update the selected card when the cards change
+  useEffect(() => {
+    setSelectedCard(cards[0]?.[0]);
+  }, [cards])
+
 
   return (
     <>
@@ -68,12 +74,12 @@ function App() {
       </div>
 
       <div className="card">
-        <select value={selectedCard} onChange={e => setSelectedCard(e.target.value as any as Region)}>
+        <select value={selectedCard} onChange={e => setSelectedCard(parseInt(e.target.value))}>
           {cards.map(([cardId, _], index) => {
             return <option value={cardId} key={index}>{cardDefs[cardId].name}</option>
           })}
         </select>
-        <button onClick={() => interact(selectedCard)}>Play</button>
+        <button onClick={() => {if (selectedCard) interact(selectedCard)}}>Play</button>
       </div>
 
     </>
