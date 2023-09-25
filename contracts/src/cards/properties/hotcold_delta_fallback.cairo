@@ -7,7 +7,7 @@ use option::OptionTrait;
 use traits::TryInto;
 fn get(card_id: u128) -> Option<u32> {
     let a: Array<Option<u32>> = array![
-        Option::Some(1),
+        Option::None,
         Option::None,
         Option::None,
         Option::None,

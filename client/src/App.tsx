@@ -6,10 +6,6 @@ import cardDefs from './generated/cards.json';
 
 function App() {
   const {
-    setup: {
-      components: { ValueInGame, Owner },
-      network: { graphSdk }
-    },
     account: { create, list, select, account, isDeploying }
   } = useDojo();
 

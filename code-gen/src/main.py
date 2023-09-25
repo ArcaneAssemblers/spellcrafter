@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import argparse
 import csv
+import json
 
 HEAD = """
 // This file is generated. Do not edit! 
@@ -74,7 +75,13 @@ if __name__ == "__main__":
         type=str,
         required=True,
         help="Directory to write out generated files",
-    )    
+    )
+    parser.add_argument(
+        "--json-outdir",
+        type=str,
+        required=False,
+        help="Directory to write out generated files",
+    )   
     parser.add_argument(
         "--skip",
         nargs='+', default=[],
@@ -87,6 +94,9 @@ if __name__ == "__main__":
     with open(args.cardlist) as csvfile:
         reader = csv.DictReader(csvfile)
         rows = list(reader)
+
+        if args.json_outdir:
+            json.dump(rows, open(args.json_outdir + "/cards.json", "w"), indent=2)
 
         for row in rows:
             if row['card_type'] in cardIdsPerRegion.keys():

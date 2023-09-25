@@ -55,7 +55,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
             components: { ValueInGame, Owner },
             network: { graphSdk }
         },
-        account: { create, list, select, account, isDeploying }
+        account: { account }
     } = dojo;
 
     // state held in this context
@@ -66,7 +66,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         const { data: { ownerComponents } } = await graphSdk.getPlayersGames({ address: address });
         ownerComponents?.edges?.forEach((entity) => {
             let keys = entity?.node?.entity?.keys
-            const entityIndex = getEntityIdFromKeys(keys);
+            const entityIndex = getEntityIdFromKeys(keys as any);
             entity?.node?.entity?.components?.forEach((component) => {
                 switch (component?.__typename) {
                     case "Owner":
@@ -80,7 +80,6 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
     }
 
     // repopulate the games list when the account changes
-    // this makes a graphql query and processes the response into the local entity store
     useEffect(() => {
         if (!account.address) {
             setActiveGame(undefined);
@@ -101,7 +100,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
             const { data: { valueingameComponents } } = await graphSdk.getGameValues({ game_id: "0x" + Number(activeGame).toString(16) });
             valueingameComponents?.edges?.forEach((entity) => {
                 let keys = entity?.node?.entity?.keys?.map((key) => BigInt(key!))
-                const entityIndex = getEntityIdFromKeys(keys);
+                const entityIndex = getEntityIdFromKeys(keys as any);
                 entity?.node?.entity?.components?.forEach((component) => {
                     switch (component?.__typename) {
                         case "ValueInGame":
@@ -120,6 +119,12 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         newGame: async () => {
             if (!account.address) throw new Error("No active account");
             await newGame(account);
+            // TODO: This is a huge hack and depends on waiting for the indexer
+            // For some reason the entities produces from the chain events are not triggering
+            // the useEntityQuery hook to update. Need to figure that out so things work properly
+            setTimeout(() => {
+                fetchGames(account.address)
+            }, 1000)
         },
         interact: async (cardId: number) => {
             if (!activeGame) throw new Error("No active game");
@@ -131,7 +136,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         }
     }
 
-    // helper to bind to a ValueInGame for the current game
+    // hook to bind to a ValueInGame for the current game
     const useGameValue = (valueId: number): number | undefined => {
         return useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(valueId), BigInt(parseInt((activeGame || -1).toString()!))]))?.value
     }
