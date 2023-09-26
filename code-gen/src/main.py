@@ -1,6 +1,7 @@
 #!/usr/bin/python
 import argparse
 import csv
+import json
 
 HEAD = """
 // This file is generated. Do not edit! 
@@ -49,7 +50,7 @@ def writeCardsRegionMapping(regionMap):
 
 def parse_type(val: str):
     try:
-        return abs(int(val)), 'u32'
+        return "({}, true)".format(abs(int(val))) if int(val) < 0 else "({}, false)".format(abs(int(val))), '(u32, bool)'
     except ValueError:
         if not val:
             return None, "unknown"
@@ -74,7 +75,13 @@ if __name__ == "__main__":
         type=str,
         required=True,
         help="Directory to write out generated files",
-    )    
+    )
+    parser.add_argument(
+        "--json-outdir",
+        type=str,
+        required=False,
+        help="Directory to write out generated files",
+    )   
     parser.add_argument(
         "--skip",
         nargs='+', default=[],
@@ -87,6 +94,9 @@ if __name__ == "__main__":
     with open(args.cardlist) as csvfile:
         reader = csv.DictReader(csvfile)
         rows = list(reader)
+
+        if args.json_outdir:
+            json.dump(rows, open(args.json_outdir + "/cards.json", "w"), indent=2)
 
         for row in rows:
             if row['card_type'] in cardIdsPerRegion.keys():

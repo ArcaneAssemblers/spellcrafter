@@ -5,8 +5,8 @@
 use array::ArrayTrait;
 use option::OptionTrait;
 use traits::TryInto;
-fn get(card_id: u128) -> Option<u32> {
-    let a: Array<Option<u32>> = array![
+fn get(card_id: u128) -> Option<(u32, bool)> {
+    let a: Array<Option<(u32, bool)>> = array![
         Option::None,
         Option::None,
         Option::None,
@@ -43,8 +43,8 @@ fn get(card_id: u128) -> Option<u32> {
         Option::None,
         Option::None,
         Option::None,
-        Option::Some(5),
-        Option::Some(5),
+        Option::Some((5, false)),
+        Option::Some((5, false)),
         Option::None,
         Option::None,
         Option::None,
