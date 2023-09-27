@@ -74,7 +74,7 @@ mod tests {
         let result = world.execute('NewGame', array![]);
         let game_id: u128 = (*result[0]).try_into().unwrap();
 
-        // post conditions
+        // pre conditions
         let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
         assert(items == 0, 'not initially no items');
 
