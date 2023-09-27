@@ -141,7 +141,7 @@ fn stat_meets_threshold(
                 return false;
             }
             let value = get!(ctx.world, (stat_id, game_id), ValueInGame).value;
-            value > threshold
+            value >= threshold
         },
         Option::None => {
             true
@@ -157,9 +157,9 @@ fn polar_stat_meets_threshold(
         Option::Some((threshold, is_negative)) => {
             let value = get!(ctx.world, (stat_id, game_id), ValueInGame).value;
             if is_negative && !reverse || !is_negative && reverse {
-                value < POLAR_STAT_MIDPOINT - threshold
+                value <= POLAR_STAT_MIDPOINT - threshold
             } else {
-                value > POLAR_STAT_MIDPOINT + threshold
+                value >= POLAR_STAT_MIDPOINT + threshold
             }
         },
         Option::None => {
