@@ -72,7 +72,7 @@ function App() {
 
       <div className="card">
         <select value={selectedCard} onChange={e => setSelectedCard(parseInt(e.target.value))}>
-          {cards.map(([cardId, _], index) => {
+          {cards.map(([cardId, ], index) => {
             return <option value={cardId} key={index}>{cardDefs[cardId].name}</option>
           })}
         </select>

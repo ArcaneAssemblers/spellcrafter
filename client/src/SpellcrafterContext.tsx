@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { EntityIndex } from "@latticexyz/recs";
 import { useDojo } from './DojoContext';
 import { useEntityQuery, useComponentValue } from '@latticexyz/react';
@@ -62,7 +62,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
     const [activeGame, setActiveGame] = useState<EntityIndex | undefined>(undefined);
     const games = useEntityQuery([HasValue(Owner, { address: account.address })])
 
-    const fetchGames = async (address: string) => {
+    const fetchGames = useCallback(async (address: string) => {
         const { data: { ownerComponents } } = await graphSdk.getPlayersGames({ address: address });
         ownerComponents?.edges?.forEach((entity) => {
             const keys = entity?.node?.entity?.keys
@@ -77,7 +77,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
                 }
             })
         })
-    }
+    }, [Owner, graphSdk]);
 
     // repopulate the games list when the account changes
     useEffect(() => {
@@ -86,7 +86,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
             return;
         }
         fetchGames(account.address);
-    }, [account.address]);
+    }, [account.address, fetchGames]);
 
     // update when the games list changes
     useEffect(() => {
@@ -113,7 +113,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
             })
         }
         fetchStats();
-    }, [activeGame]);
+    }, [activeGame, ValueInGame, graphSdk]);
 
     const actions = {
         newGame: async () => {
@@ -141,9 +141,17 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         return useComponentValue(ValueInGame, getEntityIdFromKeys([BigInt(valueId), BigInt(parseInt((activeGame || -1).toString()!))]))?.value
     }
 
-    const cards = cardDefs.map((def): [number, number] => {
-        return [parseInt(def.card_id), useGameValue(parseInt(def.card_id)) || 0]
-    }).filter(([_, count]) => count)
+    // cannot use map here as we need to keep the useGameValue hook in scope
+    // using the hook here is ok as cardDefs is static so there will be
+    // the same number of calls each time
+    const cards = [];
+    for(const cardDef of cardDefs) {
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const count = useGameValue(parseInt(cardDef.card_id));
+        if(count) {
+            cards.push([parseInt(cardDef.card_id), count]);
+        }
+    }
 
     const contextValue: SpellcrafterContext = {
         games,

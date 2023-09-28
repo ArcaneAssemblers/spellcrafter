@@ -33,13 +33,13 @@ export const DojoProvider = ({ children, value }: Props) => {
     const provider = useMemo(
         () =>
             new RpcProvider({
-                nodeUrl: VITE_PUBLIC_NODE_URL!,
+                nodeUrl: VITE_PUBLIC_NODE_URL,
             }),
-        [],
+        [VITE_PUBLIC_NODE_URL],
     );
 
-    const masterAddress = VITE_PUBLIC_MASTER_ADDRESS!;
-    const privateKey = VITE_PUBLIC_MASTER_PRIVATE_KEY!;
+    const masterAddress = VITE_PUBLIC_MASTER_ADDRESS;
+    const privateKey = VITE_PUBLIC_MASTER_PRIVATE_KEY;
     const masterAccount = useMemo(
         () => new Account(provider, masterAddress, privateKey),
         [provider, masterAddress, privateKey],
@@ -47,12 +47,12 @@ export const DojoProvider = ({ children, value }: Props) => {
 
     const { create, list, get, account, select, isDeploying, clear } = useBurner({
         masterAccount: masterAccount,
-        accountClassHash: VITE_PUBLIC_ACCOUNT_CLASS_HASH!,
+        accountClassHash: VITE_PUBLIC_ACCOUNT_CLASS_HASH,
     });
 
     const selectedAccount = useMemo(() => {
         return account || masterAccount;
-    }, [account])
+    }, [account, masterAccount])
 
     const contextValue: DojoContext = {
         setup: value,    // the provided setup
