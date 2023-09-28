@@ -65,7 +65,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
     const fetchGames = async (address: string) => {
         const { data: { ownerComponents } } = await graphSdk.getPlayersGames({ address: address });
         ownerComponents?.edges?.forEach((entity) => {
-            let keys = entity?.node?.entity?.keys
+            const keys = entity?.node?.entity?.keys
             const entityIndex = getEntityIdFromKeys(keys as any);
             entity?.node?.entity?.components?.forEach((component) => {
                 switch (component?.__typename) {
@@ -99,7 +99,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
         const fetchStats = async () => {
             const { data: { valueingameComponents } } = await graphSdk.getGameValues({ game_id: "0x" + Number(activeGame).toString(16) });
             valueingameComponents?.edges?.forEach((entity) => {
-                let keys = entity?.node?.entity?.keys?.map((key) => BigInt(key!))
+                const keys = entity?.node?.entity?.keys?.map((key) => BigInt(key!))
                 const entityIndex = getEntityIdFromKeys(keys as any);
                 entity?.node?.entity?.components?.forEach((component) => {
                     switch (component?.__typename) {

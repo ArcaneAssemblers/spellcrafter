@@ -7,7 +7,7 @@ export enum SpellStats {
     Barriers = 10002,
     HotCold = 10003,
     LightDark = 10004,
-};
+}
 
 export const SpellStatsDisplay: { [key in SpellStats]: string } = {
     [SpellStats.Chaos]: "Chaos",
