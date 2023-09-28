@@ -10,6 +10,9 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    defaults:
+        run:
+            working-directory: ./client
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -18,3 +21,4 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - run: bun run lint
+      - run: bun run build
