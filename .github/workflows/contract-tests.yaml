@@ -2,7 +2,11 @@ name: Contracts
 
 on:
   push:
+      branches:
+          - main
   pull_request:
+      branches:
+          - main
 
 jobs:
   sozo-test:
