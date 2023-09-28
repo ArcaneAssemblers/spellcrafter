@@ -144,7 +144,7 @@ export const SpellcrafterProvider = ({ children }: { children: React.ReactNode }
     // cannot use map here as we need to keep the useGameValue hook in scope
     // using the hook here is ok as cardDefs is static so there will be
     // the same number of calls each time
-    const cards = [];
+    const cards: Array<[number, number]> = [];
     for(const cardDef of cardDefs) {
         // eslint-disable-next-line react-hooks/rules-of-hooks
         const count = useGameValue(parseInt(cardDef.card_id));
