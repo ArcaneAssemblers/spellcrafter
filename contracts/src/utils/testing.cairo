@@ -21,6 +21,7 @@ use spellcrafter::systems::{
     NewGame,
     Forage,
     Interact,
+    Summon,
 };
 
 // used to spawn a test world with all the components and systems registered
@@ -36,6 +37,7 @@ fn initialize_world() -> IWorldDispatcher {
         NewGame::TEST_CLASS_HASH,
         Forage::TEST_CLASS_HASH,
         Interact::TEST_CLASS_HASH,
+        Summon::TEST_CLASS_HASH,
     ];
     
     spawn_test_world(components, systems)

@@ -98,7 +98,7 @@ mod tests {
     fn build_calldata(game_id: u128, region: Region) -> Array<felt252> {
         let mut calldata = array![];
         Serde::serialize(@game_id, ref calldata);
-        Serde::serialize(@Region::Forest, ref calldata);
+        Serde::serialize(@region, ref calldata);
         calldata
     }
 }
