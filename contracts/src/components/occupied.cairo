@@ -5,4 +5,5 @@ struct Occupied {
     #[key]
     entity_id: u128,
     until: u32,
+    doing: u8,
 }

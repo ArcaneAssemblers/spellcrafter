@@ -1,4 +1,4 @@
-#[derive(Component, Copy, Drop, Serde, SerdeLen)]
+#[derive(Copy, Drop, Serde, SerdeLen)]
 enum Region {
     Forest: (),
     Meadow: (),

@@ -7,11 +7,11 @@ mod Send {
     use spellcrafter::constants::{TICKS_PER_SEND, TICKS};
     use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive, assert_is_unoccupied, assert_is_familiar};
     use spellcrafter::cards::actions::{increase_stat, stat_meets_threshold, tick};
-    use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
+    use spellcrafter::types::{FamiliarType, FamiliarTypeTrait, Action};
     use spellcrafter::components::{ValueInGame, Occupied};
 
     // Send an unoccupied familiar to forage
-    fn execute(ctx: Context, game_id: u128, entity_id: u128) -> u128 {
+    fn execute(ctx: Context, game_id: u128, entity_id: u128) {
         assert_caller_is_owner(ctx, game_id);
         assert_is_alive(ctx, game_id);
         assert_is_familiar(ctx, game_id, entity_id);
@@ -22,11 +22,9 @@ mod Send {
         set!(
             ctx.world,
             (
-                Occupied { entity_id, until: currentTicks + TICKS_PER_SEND },
+                Occupied { entity_id, until: currentTicks + TICKS_PER_SEND, doing: 0 }, // TODO: Make familiars do their default action based on type
             )
         );
-
-        return entity_id;
     }
 }
 

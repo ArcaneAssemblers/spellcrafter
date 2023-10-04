@@ -1,6 +1,7 @@
 use spellcrafter::constants::{RAVENS, CATS, SALAMANDERS, WOLF_SPIDERS};
+use spellcrafter::types::{Action, ActionTrait};
 
-#[derive(Component, Copy, Drop, Serde, SerdeLen)]
+#[derive(Copy, Drop, Serde, SerdeLen)]
 enum FamiliarType {
     Raven: (),
     Cat: (),
@@ -16,6 +17,15 @@ impl ImplFamiliarType of FamiliarTypeTrait {
             FamiliarType::Cat => CATS,
             FamiliarType::Salamanger => SALAMANDERS,
             FamiliarType::WolfSpider => WOLF_SPIDERS,
+        }
+    }
+
+    fn default_action_id(self: FamiliarType) -> u8 {
+        match self {
+            FamiliarType::Raven => Action::ForageForest.id(),
+            FamiliarType::Cat => Action::ForageMeadow.id(),
+            FamiliarType::Salamanger => Action::ForageVolcano.id(),
+            FamiliarType::WolfSpider => Action::ForageCave.id(),
         }
     }
 }
