@@ -15,7 +15,8 @@ use option::OptionTrait;
 use spellcrafter::components::{
     owner::owner,
     value_in_game::value_in_game,
-    occupied::occupied
+    occupied::occupied,
+    familiar::familiar,
 };
 use spellcrafter::systems::{
     NewGame,
@@ -31,6 +32,7 @@ fn initialize_world() -> IWorldDispatcher {
         owner::TEST_CLASS_HASH,
         value_in_game::TEST_CLASS_HASH,
         occupied::TEST_CLASS_HASH,
+        familiar::TEST_CLASS_HASH,
     ];
 
     let mut systems = array![

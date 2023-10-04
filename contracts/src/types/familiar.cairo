@@ -1,7 +1,7 @@
 use spellcrafter::constants::{RAVENS, CATS, SALAMANDERS, WOLF_SPIDERS};
 
 #[derive(Component, Copy, Drop, Serde, SerdeLen)]
-enum Familiar {
+enum FamiliarType {
     Raven: (),
     Cat: (),
     Salamanger: (),
@@ -9,13 +9,13 @@ enum Familiar {
 }
 
 #[generate_trait]
-impl ImplFamiliar of FamiliarTrait {
-    fn stat_id(self: Familiar) -> u128 {
+impl ImplFamiliarType of FamiliarTypeTrait {
+    fn stat_id(self: FamiliarType) -> u128 {
         match self {
-            Familiar::Raven => RAVENS,
-            Familiar::Cat => CATS,
-            Familiar::Salamanger => SALAMANDERS,
-            Familiar::WolfSpider => WOLF_SPIDERS,
+            FamiliarType::Raven => RAVENS,
+            FamiliarType::Cat => CATS,
+            FamiliarType::Salamanger => SALAMANDERS,
+            FamiliarType::WolfSpider => WOLF_SPIDERS,
         }
     }
 }

@@ -11,25 +11,10 @@ mod NewGame {
         set!(
             ctx.world,
             (
-                Owner { entity_id: game_id, address: ctx.origin }
-            )
-        );
-        set!(
-            ctx.world,
-            (
-                ValueInGame { entity_id: BARRIERS_STAT, game_id, value: INITIAL_BARRIERS }
-            )
-        );
-        set!(
-            ctx.world,
-            (
-                ValueInGame { entity_id: HOTCOLD_STAT, game_id, value: POLAR_STAT_MIDPOINT }
-            )
-        );
-        set!(
-            ctx.world,
-            (
-                ValueInGame { entity_id: LIGHTDARK_STAT, game_id, value: POLAR_STAT_MIDPOINT }
+                Owner { entity_id: game_id, address: ctx.origin },
+                ValueInGame { entity_id: BARRIERS_STAT, game_id, value: INITIAL_BARRIERS },
+                ValueInGame { entity_id: HOTCOLD_STAT, game_id, value: POLAR_STAT_MIDPOINT },
+                ValueInGame { entity_id: LIGHTDARK_STAT, game_id, value: POLAR_STAT_MIDPOINT },
             )
         );
         game_id
