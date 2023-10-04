@@ -3,7 +3,7 @@ mod NewGame {
     use traits::Into;
     use dojo::world::Context;
 
-    use spellcrafter::constants::{INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT};
+    use spellcrafter::constants::{INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT, TICKS, CHAOS_STAT, POWER_STAT};
     use spellcrafter::components::{Owner, ValueInGame};
 
     fn execute(ctx: Context) -> u128 {

@@ -25,7 +25,7 @@ mod Summon {
         set!(
             ctx.world,
             (
-                Familiar { entity_id, familiar_type_id: familiar_type.stat_id() },
+                Familiar { entity_id, game_id, familiar_type_id: familiar_type.stat_id() },
                 Owner { entity_id, address: ctx.origin },
             )
         );
