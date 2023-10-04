@@ -4,11 +4,11 @@ mod Forage {
     use box::BoxTrait;
     use dojo::world::Context;
 
-    use spellcrafter::constants::{CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT};
+    use spellcrafter::constants::{CHAOS_STAT, ITEMS_HELD, TICKS_PER_FORAGE, ITEM_LIMIT};
     use spellcrafter::components::{Owner, ValueInGame};
     use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive};
     use spellcrafter::cards::selection::random_card_from_region;
-    use spellcrafter::cards::actions::{increase_stat, stat_meets_threshold};
+    use spellcrafter::cards::actions::{increase_stat, stat_meets_threshold, tick};
     use spellcrafter::types::Region;
 
     // In the context of a particular game, forage in a given region
@@ -24,8 +24,8 @@ mod Forage {
 
         let card_id = random_card_from_region(seed, region);
 
-        // increase chaos by a fixed amount. In the future this will be a function of time
-        increase_stat(ctx, game_id, CHAOS_STAT, CHAOS_PER_FORAGE);
+        // Move time forward, also increase chaos
+        tick(ctx, game_id, TICKS_PER_FORAGE);
         // increase the number of that card
         increase_stat(ctx, game_id, card_id, 1);
         // increase the total number of items held
