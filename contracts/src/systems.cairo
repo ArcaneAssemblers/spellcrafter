@@ -1,4 +1,3 @@
-
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 use spellcrafter::types::Region;
 
@@ -82,5 +81,121 @@ mod spellcrafter_systems {
         if !is_dead(world, game_id) {
             enact_card(world, game_id, item_id);
         }
+    }
+}
+
+
+#[cfg(test)]
+mod forage_tests {
+    use traits::{Into, TryInto};
+    use result::ResultTrait;
+    use array::ArrayTrait;
+    use option::OptionTrait;
+    use serde::Serde;
+    
+    use dojo::world::{ IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::test_utils::deploy_contract;
+
+    use spellcrafter::types::Region;
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
+    use spellcrafter::components::{Owner, ValueInGame};
+    use spellcrafter::constants::{ITEMS_HELD, ITEM_LIMIT};
+
+    use super::{spellcrafter_systems, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+
+    #[test]
+    #[available_gas(300000000000)]
+    fn test_forage() {
+        let SpellcraftDeployment {
+            world,
+            system,
+        } = deploy_game();
+
+        let game_id = system.new_game(world);
+        let card_id = system.forage(world, game_id, Region::Forest);
+
+        // post conditions
+        let card = get!(world, (card_id, game_id), ValueInGame);
+        assert(card.value == 1, 'failed to add ingredient');
+    }
+
+    #[test]
+    #[available_gas(300000000000)]
+    #[should_panic(expected: ('Too many items held', 'ENTRYPOINT_FAILED') )]
+    fn cannot_exceed_max_items() {
+        let SpellcraftDeployment {
+            world,
+            system
+        } = deploy_game();
+        
+        let game_id = system.new_game(world);
+
+        // // pre conditions
+        let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
+        assert(items == 0, 'not initially no items');
+
+        let mut i = 0;
+        loop {
+            if i >= ITEM_LIMIT {
+                break;
+            }
+            system.forage(world, game_id, Region::Forest);
+            i += 1;
+        };
+
+        // post conditions
+        let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
+        assert(items == ITEM_LIMIT, 'not expected n_items');
+
+        // should fail
+        system.forage(world, game_id, Region::Forest);
+    }
+}
+
+#[cfg(test)]
+mod interact_tests {
+    use traits::{Into, TryInto};
+    use result::ResultTrait;
+    use array::ArrayTrait;
+    use option::OptionTrait;
+    use serde::Serde;
+    
+    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::test_utils::deploy_contract;
+
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
+    use spellcrafter::components::{Owner, ValueInGame};
+
+    use super::{spellcrafter_systems, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+
+    #[test]
+    #[should_panic(expected: ('Item is not owned', 'ENTRYPOINT_FAILED') )]
+    #[available_gas(300000000000)]
+    fn reverts_if_card_not_owned() {
+        let CARD_ID: u128 = 1;
+
+        let SpellcraftDeployment {
+            world,
+            system,
+        } = deploy_game();
+
+        let game_id = system.new_game(world);
+        system.interact(world, game_id, CARD_ID);
+    }
+
+    #[test]
+    #[available_gas(300000000000)]
+    fn works_if_card_owned() {
+        let CARD_ID: u128 = 1;
+
+        let SpellcraftDeployment {
+            world,
+            system
+        } = deploy_game();
+
+        let game_id = system.new_game(world);
+
+        set!(world, ValueInGame{ entity_id: CARD_ID, game_id: game_id, value: 1 });
+        system.interact(world, game_id, CARD_ID);
     }
 }
