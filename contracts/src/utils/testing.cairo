@@ -17,26 +17,15 @@ use spellcrafter::components::{
     value_in_game::value_in_game,
     occupied::occupied
 };
-use spellcrafter::systems::{
-    NewGame,
-    Forage,
-    Interact,
-};
 
 // used to spawn a test world with all the components and systems registered
 fn initialize_world() -> IWorldDispatcher {
 
-    let mut components = array![
+    let mut models = array![
         owner::TEST_CLASS_HASH,
         value_in_game::TEST_CLASS_HASH,
         occupied::TEST_CLASS_HASH,
     ];
-
-    let mut systems = array![
-        NewGame::TEST_CLASS_HASH,
-        Forage::TEST_CLASS_HASH,
-        Interact::TEST_CLASS_HASH,
-    ];
     
-    spawn_test_world(components, systems)
+    spawn_test_world(models)
 }

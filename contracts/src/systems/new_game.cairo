@@ -1,33 +1,42 @@
+use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+use spellcrafter::types::Region;
+
+#[starknet::interface]
+trait INewGame<TContractState> {
+    fn new_game(self: @TContractState, world: IWorldDispatcher) -> u128;
+}
+
 #[system]
-mod NewGame {
+mod new_game {
     use traits::Into;
-    use dojo::world::Context;
+    use starknet::get_caller_address;
 
     use spellcrafter::constants::{INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT};
     use spellcrafter::components::{Owner, ValueInGame};
 
-    fn execute(ctx: Context) -> u128 {
-        let game_id: u128 = ctx.world.uuid().into();
+    #[external(v0)]
+    fn new_game(self: @ContractState, world: IWorldDispatcher) -> u128 {
+        let game_id: u128 = world.uuid().into();
         set!(
-            ctx.world,
+            world,
             (
-                Owner { entity_id: game_id, address: ctx.origin }
+                Owner { entity_id: game_id, address: get_caller_address() }
             )
         );
         set!(
-            ctx.world,
+            world,
             (
                 ValueInGame { entity_id: BARRIERS_STAT, game_id, value: INITIAL_BARRIERS }
             )
         );
         set!(
-            ctx.world,
+            world,
             (
                 ValueInGame { entity_id: HOTCOLD_STAT, game_id, value: POLAR_STAT_MIDPOINT }
             )
         );
         set!(
-            ctx.world,
+            world,
             (
                 ValueInGame { entity_id: LIGHTDARK_STAT, game_id, value: POLAR_STAT_MIDPOINT }
             )

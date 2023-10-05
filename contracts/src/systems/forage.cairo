@@ -7,7 +7,7 @@ trait IForage<TContractState> {
 }
 
 #[system]
-mod Forage {
+mod forage {
     use traits::Into;
     use box::BoxTrait;
     use starknet::get_caller_address;
@@ -44,70 +44,78 @@ mod Forage {
     }
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use traits::{Into, TryInto};
-//     use result::ResultTrait;
-//     use array::ArrayTrait;
-//     use option::OptionTrait;
-//     use serde::Serde;
+#[cfg(test)]
+mod tests {
+    use traits::{Into, TryInto};
+    use result::ResultTrait;
+    use array::ArrayTrait;
+    use option::OptionTrait;
+    use serde::Serde;
     
-//     use dojo::world::{ IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::world::{ IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::test_utils::deploy_contract;
 
-//     use spellcrafter::types::Region;
-//     use spellcrafter::utils::testing::initialize_world;
-//     use spellcrafter::components::{Owner, ValueInGame};
-//     use spellcrafter::constants::{ITEMS_HELD, ITEM_LIMIT};
+    use spellcrafter::types::Region;
+    use spellcrafter::utils::testing::initialize_world;
+    use spellcrafter::components::{Owner, ValueInGame};
+    use spellcrafter::systems::new_game::{new_game, INewGameDispatcher, INewGameDispatcherTrait};
+    use spellcrafter::constants::{ITEMS_HELD, ITEM_LIMIT};
 
+    use super::{forage, IForageDispatcher, IForageDispatcherTrait};
 
-//     #[test]
-//     #[available_gas(300000000000)]
-//     fn forage() {
-//         let world = initialize_world();        
-//         let result = world.execute('NewGame', array![]);
-//         let game_id: u128 = (*result[0]).try_into().unwrap();
+    #[test]
+    #[available_gas(300000000000)]
+    fn test_forage() {
+        let world = initialize_world();   
 
-//         let result = world.execute('Forage', build_calldata(game_id, Region::Forest));
-//         let card_id: u128 = (*result[0]).try_into().unwrap();
+        // deploy systems contract
+        let contract_address = deploy_contract(new_game::TEST_CLASS_HASH, array![].span());
+        let new_game_system = INewGameDispatcher { contract_address };
 
-//         // post conditions
-//         let card = get!(world, (card_id, game_id), ValueInGame);
-//         assert(card.value == 1, 'failed to add ingredient');
-//     }
+        let contract_address = deploy_contract(forage::TEST_CLASS_HASH, array![].span());
+        let forage_system = IForageDispatcher { contract_address };
 
-//     #[test]
-//     #[available_gas(300000000000)]
-//     #[should_panic(expected: ('Too many items held', 'ENTRYPOINT_FAILED', 'ENTRYPOINT_FAILED', 'ENTRYPOINT_FAILED') )]
-//     fn cannot_exceed_max_items() {
-//         let world = initialize_world();        
-//         let result = world.execute('NewGame', array![]);
-//         let game_id: u128 = (*result[0]).try_into().unwrap();
+        let game_id = new_game_system.new_game(world);
+        let card_id = forage_system.forage(world, game_id, Region::Forest);
 
-//         // pre conditions
-//         let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
-//         assert(items == 0, 'not initially no items');
+        // post conditions
+        let card = get!(world, (card_id, game_id), ValueInGame);
+        assert(card.value == 1, 'failed to add ingredient');
+    }
 
-//         let mut i = 0;
-//         loop {
-//             if i >= ITEM_LIMIT {
-//                 break;
-//             }
-//             world.execute('Forage', build_calldata(game_id, Region::Forest));
-//             i += 1;
-//         };
+    #[test]
+    #[available_gas(300000000000)]
+    #[should_panic(expected: ('Too many items held', 'ENTRYPOINT_FAILED') )]
+    fn cannot_exceed_max_items() {
+        let world = initialize_world();   
 
-//         // post conditions
-//         let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
-//         assert(items == ITEM_LIMIT, 'not expected n_items');
+        // deploy systems contract
+        let contract_address = deploy_contract(new_game::TEST_CLASS_HASH, array![].span());
+        let new_game_system = INewGameDispatcher { contract_address };
 
-//         // should fail
-//         world.execute('Forage', build_calldata(game_id, Region::Forest));
-//     }
+        let contract_address = deploy_contract(forage::TEST_CLASS_HASH, array![].span());
+        let forage_system = IForageDispatcher { contract_address };
 
-//     fn build_calldata(game_id: u128, region: Region) -> Array<felt252> {
-//         let mut calldata = array![];
-//         Serde::serialize(@game_id, ref calldata);
-//         Serde::serialize(@Region::Forest, ref calldata);
-//         calldata
-//     }
-// }
+        let game_id = new_game_system.new_game(world);
+
+        // // pre conditions
+        let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
+        assert(items == 0, 'not initially no items');
+
+        let mut i = 0;
+        loop {
+            if i >= ITEM_LIMIT {
+                break;
+            }
+            forage_system.forage(world, game_id, Region::Forest);
+            i += 1;
+        };
+
+        // post conditions
+        let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
+        assert(items == ITEM_LIMIT, 'not expected n_items');
+
+        // should fail
+        forage_system.forage(world, game_id, Region::Forest);
+    }
+}
