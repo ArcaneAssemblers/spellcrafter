@@ -1,5 +1,4 @@
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
-use spellcrafter::types::Region;
 
 #[starknet::interface]
 trait INewGame<TContractState> {
