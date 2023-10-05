@@ -17,17 +17,11 @@ use spellcrafter::components::{
     value_in_game::value_in_game,
     occupied::occupied
 };
-use spellcrafter::systems::{
-    new_game::{new_game, INewGameDispatcher},
-    forage::{forage, IForageDispatcher},
-    interact::{interact, IInteractDispatcher},
-};
+use spellcrafter::systems::{spellcrafter_systems, ISpellCrafterDispatcher};
 
 struct SpellcraftDeployment {
     world: IWorldDispatcher,
-    new_game_system: INewGameDispatcher,
-    forage_system: IForageDispatcher,
-    interact_system: IInteractDispatcher,
+    system: ISpellCrafterDispatcher,
 }
 
 // used to spawn a test world with all the components and systems registered
@@ -41,14 +35,10 @@ fn deploy_game() -> SpellcraftDeployment {
     
     let world = spawn_test_world(models);
 
-    let new_game_system = INewGameDispatcher { contract_address: deploy_contract(new_game::TEST_CLASS_HASH, array![].span()) };
-    let forage_system = IForageDispatcher { contract_address: deploy_contract(forage::TEST_CLASS_HASH, array![].span()) };
-    let interact_system = IInteractDispatcher { contract_address: deploy_contract(interact::TEST_CLASS_HASH, array![].span()) };
+    let system = ISpellCrafterDispatcher { contract_address: deploy_contract(spellcrafter_systems::TEST_CLASS_HASH, array![].span()) };
 
     SpellcraftDeployment {
         world,
-        new_game_system,
-        forage_system,
-        interact_system,
+        system,
     }
 }
