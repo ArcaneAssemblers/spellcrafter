@@ -2,10 +2,10 @@ const INITIAL_BARRIERS: u32 = 3;
 const TICKS_PER_FORAGE: u32 = 3;
 const TICKS_PER_SUMMON: u32 = 5;
 const TICKS_PER_SEND: u32 = 3;
+const CHAOS_PER_TICK: u32 = 1;
 
 const ITEM_LIMIT: u32 = 7;
 const FAMILIAR_LIMIT: u32 = 1;
-
 
 // ensure these dont collide with card ids
 const CHAOS_STAT: u128 = 10000;

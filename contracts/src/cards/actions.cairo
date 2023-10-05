@@ -8,7 +8,7 @@ use spellcrafter::cards::properties::{
     requires_hot_gt, requires_light_gt, requires_dark_gt, chaos_delta_fallback,
     power_delta_fallback, hotcold_delta_fallback, lightdark_delta_fallback
 };
-use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT, POLAR_STAT_MIDPOINT, TICKS};
+use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT, POLAR_STAT_MIDPOINT, TICKS, CHAOS_PER_TICK};
 
 
 // modify the game state as demanded by this card
@@ -95,7 +95,7 @@ fn bust_barrier(ctx: Context, game_id: u128) {
 /// Chaos increases by one point per tick
 fn tick(ctx: Context, game_id: u128, amount: u32) {
     increase_stat(ctx, game_id, TICKS, amount);
-    increase_stat(ctx, game_id, CHAOS_STAT, amount);
+    increase_stat(ctx, game_id, CHAOS_STAT, amount * CHAOS_PER_TICK);
 }
 
 fn is_dead(ctx: Context, game_id: u128) -> bool {

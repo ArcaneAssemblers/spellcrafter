@@ -13,6 +13,7 @@ mod Send {
     // Send an unoccupied familiar to forage
     fn execute(ctx: Context, game_id: u128, entity_id: u128) {
         assert_caller_is_owner(ctx, game_id);
+        assert_caller_is_owner(ctx, entity_id); // can only send familiars you own
         assert_is_alive(ctx, game_id);
         assert_is_familiar(ctx, game_id, entity_id);
         assert_is_unoccupied(ctx, game_id, entity_id);

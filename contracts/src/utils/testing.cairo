@@ -24,6 +24,7 @@ use spellcrafter::systems::{
     Interact,
     Summon,
     Send,
+    Wait,
 };
 
 // used to spawn a test world with all the components and systems registered
@@ -42,6 +43,7 @@ fn initialize_world() -> IWorldDispatcher {
         Interact::TEST_CLASS_HASH,
         Summon::TEST_CLASS_HASH,
         Send::TEST_CLASS_HASH,
+        Wait::TEST_CLASS_HASH,
     ];
     
     spawn_test_world(components, systems)
