@@ -50,7 +50,7 @@ mod tests {
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
     use dojo::test_utils::deploy_contract;
 
-    use spellcrafter::utils::testing::initialize_world;
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
     use spellcrafter::components::{Owner, ValueInGame};
     use spellcrafter::systems::new_game::{new_game, INewGameDispatcher, INewGameDispatcherTrait};
     use super::{interact, IInteractDispatcher, IInteractDispatcherTrait};
@@ -61,14 +61,12 @@ mod tests {
     fn reverts_if_card_not_owned() {
         let CARD_ID: u128 = 1;
 
-        let world = initialize_world();   
-
-        // deploy systems contract
-        let contract_address = deploy_contract(new_game::TEST_CLASS_HASH, array![].span());
-        let new_game_system = INewGameDispatcher { contract_address };
-
-        let contract_address = deploy_contract(interact::TEST_CLASS_HASH, array![].span());
-        let interact_system = IInteractDispatcher { contract_address };
+        let SpellcraftDeployment {
+            world,
+            new_game_system,
+            interact_system,
+            forage_system
+        } = deploy_game();
 
         let game_id = new_game_system.new_game(world);
         interact_system.interact(world, game_id, CARD_ID);
@@ -79,14 +77,12 @@ mod tests {
     fn works_if_card_owned() {
         let CARD_ID: u128 = 1;
 
-        let world = initialize_world();   
-
-        // deploy systems contract
-        let contract_address = deploy_contract(new_game::TEST_CLASS_HASH, array![].span());
-        let new_game_system = INewGameDispatcher { contract_address };
-
-        let contract_address = deploy_contract(interact::TEST_CLASS_HASH, array![].span());
-        let interact_system = IInteractDispatcher { contract_address };
+        let SpellcraftDeployment {
+            world,
+            new_game_system,
+            interact_system,
+            forage_system
+        } = deploy_game();
 
         let game_id = new_game_system.new_game(world);
 

@@ -56,7 +56,7 @@ mod tests {
     use dojo::test_utils::deploy_contract;
 
     use spellcrafter::types::Region;
-    use spellcrafter::utils::testing::initialize_world;
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
     use spellcrafter::components::{Owner, ValueInGame};
     use spellcrafter::systems::new_game::{new_game, INewGameDispatcher, INewGameDispatcherTrait};
     use spellcrafter::constants::{ITEMS_HELD, ITEM_LIMIT};
@@ -66,14 +66,12 @@ mod tests {
     #[test]
     #[available_gas(300000000000)]
     fn test_forage() {
-        let world = initialize_world();   
-
-        // deploy systems contract
-        let contract_address = deploy_contract(new_game::TEST_CLASS_HASH, array![].span());
-        let new_game_system = INewGameDispatcher { contract_address };
-
-        let contract_address = deploy_contract(forage::TEST_CLASS_HASH, array![].span());
-        let forage_system = IForageDispatcher { contract_address };
+        let SpellcraftDeployment {
+            world,
+            new_game_system,
+            interact_system,
+            forage_system
+        } = deploy_game();
 
         let game_id = new_game_system.new_game(world);
         let card_id = forage_system.forage(world, game_id, Region::Forest);
@@ -87,15 +85,13 @@ mod tests {
     #[available_gas(300000000000)]
     #[should_panic(expected: ('Too many items held', 'ENTRYPOINT_FAILED') )]
     fn cannot_exceed_max_items() {
-        let world = initialize_world();   
-
-        // deploy systems contract
-        let contract_address = deploy_contract(new_game::TEST_CLASS_HASH, array![].span());
-        let new_game_system = INewGameDispatcher { contract_address };
-
-        let contract_address = deploy_contract(forage::TEST_CLASS_HASH, array![].span());
-        let forage_system = IForageDispatcher { contract_address };
-
+        let SpellcraftDeployment {
+            world,
+            new_game_system,
+            interact_system,
+            forage_system
+        } = deploy_game();
+        
         let game_id = new_game_system.new_game(world);
 
         // // pre conditions
