@@ -3,7 +3,7 @@ use spellcrafter::types::Region;
 
 #[starknet::interface]
 trait IForage<TContractState> {
-    fn forage(self: @TContractState, world: IWorldDispatcher, game_id: u128, region: Region);
+    fn forage(self: @TContractState, world: IWorldDispatcher, game_id: u128, region: Region) -> u128;
 }
 
 #[system]
