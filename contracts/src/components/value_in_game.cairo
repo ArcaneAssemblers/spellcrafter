@@ -1,5 +1,5 @@
 // The value of a particular property in the context of a game
-#[derive(Component, Copy, Drop, Serde, SerdeLen)]
+#[derive(Model, Copy, Drop, Serde)]
 struct ValueInGame {
     #[key]
     entity_id: u128,
