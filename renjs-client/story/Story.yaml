@@ -1,6 +1,6 @@
 start:
   # - play mysterious:
-  - scene: manageSpell
+  - scene: forest
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
@@ -17,7 +17,7 @@ start:
 
 manageSpell:
   - show bench: WTTH FADE
-  - text: The current spell power is {power}. You have {barriers} barriers remaining
+  - text: The current spell power is {power}, and its chaos is {chaos}. You have {barriers} barriers remaining
   - choice:
     - text: What would you like to do?
     - Forage:
@@ -28,11 +28,14 @@ manageSpell:
           - var foraging: forest
         - Meadow:
           - text: You leave the tower for the meadow. It is beautiful and sunny.
+          - var foraging: meadow
         - Volcano:
           - text: You begin hiking toward the volcano. Lucky you know a heat shielding spell.
+          - var foraging: volcano
         - Cave:
           - text: You begin your journey to the cave. Don't forget the lantern.
-      - scene: foraging
+          - var foraging: cave
+      - scene: leavingTower
 
     - Study:
       - choice:
@@ -44,7 +47,7 @@ manageSpell:
       - call SpellCrafter: interact 1
       - scene: manageSpell
 
-foraging:
+leavingTower:
   - show outside: WITH FADE
   - show deuzi: normal AT CENTER WITH FADE
   - deuzi says: I'll guard the tower while you're away.
@@ -55,9 +58,13 @@ foraging:
 
 forest:
   - show forest: WITH FADE
-  - text: "You are foraging in the forest. 4:14 remaining until you return to the tower..."
+  - text: "You forage in the forest for several hours"
+  - wait: 1000
+  - call SpellCrafter: forage forest
+  - text: You found 1 {lastForagedItem}!. Time to return to the tower.
+  - scene: manageSpell
 
 
 endGame:
-  - deuzi says normal: Quickstart over!
+  - deuzi says normal: Game over!
   - hide ALL:

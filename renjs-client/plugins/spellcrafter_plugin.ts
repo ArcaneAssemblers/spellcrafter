@@ -1,6 +1,8 @@
+import cards from "../generated/cards.json";
+
 class SpellcrafterPlugin extends RenJS.Plugin {
 
-    items: [number]; // array of card indices of held items
+    items: Array<number>; // array of card indices of held items
     vars: { [key: string]: any; }; // game variables
 
     // called when new game is started, just before interpreter is called
@@ -14,6 +16,9 @@ class SpellcrafterPlugin extends RenJS.Plugin {
         this.vars["hotcold"] = 0;
         this.vars["barriers"] = 3;
         this.vars["dead"] = false;
+        this.vars["lastForagedItem"] = null;
+
+        this.items = []
 	}
 
     /// Called when the plugin is called from the story the `call spellcrafter` command
@@ -36,18 +41,38 @@ class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.resolveAction(); // must call this to return control to the story
 	}
 
-    /// Called every Phaser update loop. No need to return anything from here
-    onUpdateLoop(): void {
+    // /// Called every Phaser update loop. No need to return anything from here
+    // onUpdateLoop(): void {
 
-	}
+	// }
 
     forage(region): void {
-        this.items.push(1);
+        switch(region) {
+            case "forest":
+            case "meadow":
+            case "volcano":
+            case "cave":
+                let item = randomCard();
+                this.items.push(parseInt(item.card_id));
+                this.vars["lastForagedItem"] = item.name;
+                break;
+            default:
+                console.error("invalid region to forage: ", region);
+        }
+        this.vars["chaos"] += 3;
     }
 
     interact(region): void {
         this.vars["power"] += 1;
     }
+}
+
+function randomInteger(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function randomCard() {
+    return cards[randomInteger(0, cards.length - 1)]
 }
 
 RenJSGame.addPlugin('SpellCrafter', SpellcrafterPlugin)
