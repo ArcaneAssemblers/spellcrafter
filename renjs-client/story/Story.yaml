@@ -1,5 +1,6 @@
 start:
-  - play mysterious:
+  - call SpellCrafter: 123
+  # - play mysterious:
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
