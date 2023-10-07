@@ -17,7 +17,7 @@ use spellcrafter::components::{
     value_in_game::value_in_game,
     occupied::occupied
 };
-use spellcrafter::systems::{spellcrafter_systems, ISpellCrafterDispatcher};
+use spellcrafter::systems::{spellcrafter_system, ISpellCrafterDispatcher};
 
 struct SpellcraftDeployment {
     world: IWorldDispatcher,
@@ -35,7 +35,7 @@ fn deploy_game() -> SpellcraftDeployment {
     
     let world = spawn_test_world(models);
 
-    let system = ISpellCrafterDispatcher { contract_address: deploy_contract(spellcrafter_systems::TEST_CLASS_HASH, array![].span()) };
+    let system = ISpellCrafterDispatcher { contract_address: deploy_contract(spellcrafter_system::TEST_CLASS_HASH, array![].span()) };
 
     SpellcraftDeployment {
         world,

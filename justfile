@@ -29,10 +29,9 @@ set_auth:
 
 	WORLD_ADDRESS=$(just migrate | grep "at address" | grep -oE9 '(0x[a-fA-F0-9]{63})')
 	cd contracts
-	sozo auth writer --world ${WORLD_ADDRESS} ValueInGame Interact
-	sozo auth writer --world ${WORLD_ADDRESS} ValueInGame Forage
-	sozo auth writer --world ${WORLD_ADDRESS} ValueInGame NewGame 
-	sozo auth writer --world ${WORLD_ADDRESS} Owner NewGame 
+	sozo auth writer --world ${WORLD_ADDRESS} ValueInGame spellcrafter_system
+	sozo auth writer --world ${WORLD_ADDRESS} Owner spellcrafter_system 
+	sozo auth writer --world ${WORLD_ADDRESS} Occupied spellcrafter_system 
 
 # start the dev server hosting the web client
 start_client:

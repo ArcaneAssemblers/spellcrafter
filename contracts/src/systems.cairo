@@ -9,7 +9,7 @@ trait ISpellCrafter<TContractState> {
 }
 
 #[system]
-mod spellcrafter_systems {
+mod spellcrafter_system {
     use traits::Into;
     use starknet::get_caller_address;
 
@@ -101,7 +101,7 @@ mod forage_tests {
     use spellcrafter::components::{Owner, ValueInGame};
     use spellcrafter::constants::{ITEMS_HELD, ITEM_LIMIT};
 
-    use super::{spellcrafter_systems, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+    use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
 
     #[test]
     #[available_gas(300000000000)]
@@ -166,7 +166,7 @@ mod interact_tests {
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
     use spellcrafter::components::{Owner, ValueInGame};
 
-    use super::{spellcrafter_systems, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+    use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
 
     #[test]
     #[should_panic(expected: ('Item is not owned', 'ENTRYPOINT_FAILED') )]
