@@ -1,6 +1,6 @@
 start:
-  - call SpellCrafter: 123
   # - play mysterious:
+  - scene: manageSpell
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
@@ -10,14 +10,14 @@ start:
       - wait: 1000
       - deuzi says happy: A spark of magic springs to life. You're ready to begin!
       - hide deuzi: WITH FADE
-      - scene: spellBegin
+      - scene: manageSpell
     - "What does this mean?":
-      - deuzi says: Well, I'll be here when you're ready!
-  - deuzi says happy: And if you already have some experience, you can go ahead and start writing!
-  - scene: endGame
+      - deuzi says: No time to explain. GTFO
+      - scene: endGame
 
-spellBegin:
+manageSpell:
   - show bench: WTTH FADE
+  - text: The current spell power is {power}. You have {barriers} barriers remaining
   - choice:
     - text: What would you like to do?
     - Forage:
@@ -40,6 +40,9 @@ spellBegin:
         - The void:
     - Summon Familiar:
       - deuzi says: You are not experienced enough to summon a familiar yet
+    - Add Components:
+      - call SpellCrafter: interact 1
+      - scene: manageSpell
 
 foraging:
   - show outside: WITH FADE
