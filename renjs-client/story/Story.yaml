@@ -47,7 +47,9 @@ manageSpell:
 
     - Add Components:
       - if ({itemCount} > 0):
-        - call SpellCrafter: showItemsChoice
+        - call SpellCrafter: selectAndAddIngredient
+        - text: You added {lastAddedItemName} to the spell
+        - text: The chaos changed by {chaosDelta}. The power changed by {powerDelta}
       - else:
         - deuzi says angry: You don't have any components to add!!
         - hide deuzi: WITH FADE

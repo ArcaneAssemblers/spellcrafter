@@ -39,8 +39,8 @@ class SpellcrafterPlugin extends RenJS.Plugin {
                     }
                 case "interact":
                     return interact(this.spellcrafterGame, parseInt(args[0]));
-                case "showItemsChoice":
-                    return this.showItemsChoice()
+                case "selectAndAddIngredient":
+                    return this.selectAndAddIngredient()
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -55,16 +55,22 @@ class SpellcrafterPlugin extends RenJS.Plugin {
     /// Display the currently owned items and allow the player to select one
     /// After this resolves the `chosenItem` variable will hold the index of the chosen item
     /// This promise will also resolve with the chosen value
-    async showItemsChoice(): Promise<number> {
-        return new Promise<number>((resolve, reject) => {
+    async selectAndAddIngredient(): Promise<void> {
+        return new Promise<void>((resolve, reject) => {
             this.game.gui.hud.hide();
             // add a button for each card
             let btns = []
             this.spellcrafterGame.cards.forEach((cardId, index) => {
-                const btn = this.game.add.button(50+index*130, 200, "cardback", () => {
-                    console.log("clicked the blackberry!!!")
+                const btn = this.game.add.button(50+index*130, 200, "cardback", async () => {
                     btns.forEach((btn) => btn.destroy());
-                    resolve(cardId);
+
+                    let pre_stats = {...this.spellcrafterGame.stats};
+                    await interact(this.spellcrafterGame, cardId);
+                    this.game.managers.logic.vars["lastAddedItemName"] =  cards[cardId].name;
+                    this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
+                    this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
+
+                    resolve();
                 }, this, 0);
                 btns.push(btn);
             });

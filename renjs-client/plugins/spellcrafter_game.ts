@@ -32,7 +32,8 @@ export function newGame(): SpellcrafterGame {
 }
 
 export async function interact(game: SpellcrafterGame, cardId: number): Promise<void> {
-    console.log("interact with card: ", cardId);
+    game.cards.splice(game.cards.indexOf(cardId), 1);
+    
 }
 
 export async function forage(game: SpellcrafterGame, region: number): Promise<void> {
