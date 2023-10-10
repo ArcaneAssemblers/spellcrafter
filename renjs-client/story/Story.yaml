@@ -1,6 +1,6 @@
 start:
   # - play mysterious:
-  - scene: forest
+  - scene: manageSpell
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
@@ -55,15 +55,48 @@ leavingTower:
   - text: "It will take 5:00 minutes to forage in the {foraging}"
   - if ({foraging} == "forest"):
       - scene: forest
+  - if ({foraging} == "meadow"):
+      - scene: meadow
+  - if ({foraging} == "volcano"):
+      - scene: volcano
+  - if ({foraging} == "cave"):
+      - scene: cave
 
 forest:
   - show forest: WITH FADE
   - text: "You forage in the forest for several hours"
   - wait: 1000
   - call SpellCrafter: forage forest
-  - text: You found 1 {lastForagedItem}!. Time to return to the tower.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: Time to return to the tower.
   - scene: manageSpell
 
+meadow:
+  - show forest: WITH FADE
+  - text: "You forage in the meadow for several hours"
+  - wait: 1000
+  - call SpellCrafter: forage meadow
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: Time to return to the tower.
+  - scene: manageSpell
+
+volcano:
+  - show forest: WITH FADE
+  - text: "You forage in the volcano for several hours"
+  - wait: 1000
+  - call SpellCrafter: forage volcano
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: Time to return to the tower.
+  - scene: manageSpell
+
+cave:
+  - show forest: WITH FADE
+  - text: "You forage in the cave for several hours"
+  - wait: 1000
+  - call SpellCrafter: forage cave
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: Time to return to the tower.
+  - scene: manageSpell
 
 endGame:
   - deuzi says normal: Game over!

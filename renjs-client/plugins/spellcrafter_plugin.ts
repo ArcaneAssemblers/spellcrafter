@@ -9,6 +9,7 @@ class SpellcrafterPlugin extends RenJS.Plugin {
     // called when new game is started, just before interpreter is called
     onStart(): void {
         this.spellcrafterGame = newGame();
+        this.syncState();
 	}
 
     /// Called when the plugin is called from the story the `call spellcrafter` command
@@ -35,6 +36,9 @@ class SpellcrafterPlugin extends RenJS.Plugin {
                         default:
                             throw new Error("invalid region to forage: " + args[0]);
                     }
+                case "showItemsChoice":
+                    console.log(this.spellcrafterGame.cards);
+                    return Promise.resolve();
                 case "interact":
                     return interact(this.spellcrafterGame, parseInt(args[0]));
                 default:
@@ -59,7 +63,10 @@ class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["hotcold"] = stats.hotCold;
         this.game.managers.logic.vars["barriers"] = stats.barriers;
         this.game.managers.logic.vars["dead"] = stats.barriers <= 0;
-        this.game.managers.logic.vars["lastForagedItem"] = this.spellcrafterGame.cards.length > 0 ? cards[this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1]].name : null;
+
+        const lastForagedItem: number | null = this.spellcrafterGame.cards.length > 0 ? this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1] : null;
+        this.game.managers.logic.vars["lastForagedItemName"] =  lastForagedItem ? cards[lastForagedItem].name : null
+        this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].flavour : null
     }
 }
 

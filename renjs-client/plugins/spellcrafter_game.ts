@@ -1,5 +1,8 @@
 import cards from "../generated/cards.json";
 
+const ITEM_LIMIT = 7;
+const CHAOS_PER_FORAGE = 3;
+
 export type GameStats = {
     chaos: number,
     power: number,
@@ -33,9 +36,17 @@ export async function interact(game: SpellcrafterGame, cardId: number): Promise<
 }
 
 export async function forage(game: SpellcrafterGame, region: number): Promise<void> {
-    let cardId = randomInteger(0, cards.length - 1);
-    game.cards.push(cardId);
-    game.stats.chaos += 3;
+    if (game.cards.length >= ITEM_LIMIT) {
+        console.error("too many cards");
+    }
+
+    // return a random card from within the region
+    const regionString = ["forest", "meadow", "volcano", "cave"][region];
+    let regionCards = cards.filter((card) => card.card_type === regionString);
+    let card = regionCards[randomInteger(0, regionCards.length - 1)];
+
+    game.cards.push(parseInt(card.card_id));
+    game.stats.chaos += CHAOS_PER_FORAGE;
 }
 
 
