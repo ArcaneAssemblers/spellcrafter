@@ -36,14 +36,6 @@ manageSpell:
           - var foraging: cave
       - scene: leavingTower
 
-    - Study:
-      - choice:
-        - text: What would you like to study?
-        - The void:
-
-    - Summon Familiar:
-      - deuzi says: You are not experienced enough to summon a familiar yet
-
     - Add Components:
       - if ({itemCount} > 0):
         - call SpellCrafter: selectAndAddIngredient
