@@ -15,13 +15,11 @@ characters:
       angry: assets/characters/Char3AngrySchool.png
 
 cgs:
-  phone1: assets/objects/phone1.png
-  phone2: assets/objects/phone2.png
-
+  cardback: assets/objects/cardback.png
+  
 music:
-  rollingCredits: assets/audio/Evan_Schaeffer_-_01_-_Aqueduct.mp3
-  morningBGM: assets/audio/Evan_Schaeffer_-_03_-_Glow.mp3
   mysterious: assets/audio/mysterious.mp3
+
 sfx:
   ringtoneSFX: assets/audio/nokia6210-24-elise.mp3
   ringtoneSFX2: assets/audio/alcatel-top_secret.mp3

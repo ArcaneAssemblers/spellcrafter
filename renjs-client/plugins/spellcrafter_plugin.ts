@@ -1,8 +1,9 @@
 import cards from "../generated/cards.json";
+// import Plugin from "renjs/dist/types/src/core/Plugin";
 
 import { SpellcrafterGame, newGame, forage, interact } from "./spellcrafter_game";
-
 class SpellcrafterPlugin extends RenJS.Plugin {
+// class SpellcrafterPlugin extends Plugin {
 
     spellcrafterGame: SpellcrafterGame;
     
@@ -16,7 +17,7 @@ class SpellcrafterPlugin extends RenJS.Plugin {
     // examples:
     //  call SpellCrafter: forage forest
     //  call SpellCrafter: interact 3
-    // 
+    // call spellCrafter : showItemsChoice
 	onCall({body}): void {
         console.log("spellcrafter called with: ", body);
         const [method, ...args] = body.split(" ");
@@ -36,11 +37,10 @@ class SpellcrafterPlugin extends RenJS.Plugin {
                         default:
                             throw new Error("invalid region to forage: " + args[0]);
                     }
-                case "showItemsChoice":
-                    console.log(this.spellcrafterGame.cards);
-                    return Promise.resolve();
                 case "interact":
                     return interact(this.spellcrafterGame, parseInt(args[0]));
+                case "showItemsChoice":
+                    return this.showItemsChoice()
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -51,6 +51,25 @@ class SpellcrafterPlugin extends RenJS.Plugin {
             this.game.resolveAction(); // must call this to return control to the story
         })
 	}
+
+    /// Display the currently owned items and allow the player to select one
+    /// After this resolves the `chosenItem` variable will hold the index of the chosen item
+    /// This promise will also resolve with the chosen value
+    async showItemsChoice(): Promise<number> {
+        return new Promise<number>((resolve, reject) => {
+            this.game.gui.hud.hide();
+            // add a button for each card
+            let btns = []
+            this.spellcrafterGame.cards.forEach((cardId, index) => {
+                const btn = this.game.add.button(50+index*130, 200, "cardback", () => {
+                    console.log("clicked the blackberry!!!")
+                    btns.forEach((btn) => btn.destroy());
+                    resolve(cardId);
+                }, this, 0);
+                btns.push(btn);
+            });
+        });
+    }
 
     /// copies variables from the game state object into the renjs context
     /// so they can be displayed in-game and used to alter the story flow
@@ -63,6 +82,7 @@ class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["hotcold"] = stats.hotCold;
         this.game.managers.logic.vars["barriers"] = stats.barriers;
         this.game.managers.logic.vars["dead"] = stats.barriers <= 0;
+        this.game.managers.logic.vars["itemCount"] = this.spellcrafterGame.cards.length;
 
         const lastForagedItem: number | null = this.spellcrafterGame.cards.length > 0 ? this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1] : null;
         this.game.managers.logic.vars["lastForagedItemName"] =  lastForagedItem ? cards[lastForagedItem].name : null
