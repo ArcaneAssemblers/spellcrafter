@@ -27,7 +27,7 @@ export function newGame(): SpellcrafterGame {
             lightDark: 0,
             barriers: 3,
         },
-        cards: [0,1],
+        cards: [],
     }
 }
 
