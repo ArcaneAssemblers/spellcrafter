@@ -32,8 +32,10 @@ export function newGame(): SpellcrafterGame {
 }
 
 export async function interact(game: SpellcrafterGame, cardId: number): Promise<void> {
-    game.cards.splice(game.cards.indexOf(cardId), 1);
-    
+    enactCard(game, cardId);
+    if (cards[cardId].consumable) {
+        game.cards.splice(game.cards.indexOf(cardId), 1);
+    }
 }
 
 export async function forage(game: SpellcrafterGame, region: number): Promise<void> {
@@ -50,9 +52,42 @@ export async function forage(game: SpellcrafterGame, region: number): Promise<vo
     game.stats.chaos += CHAOS_PER_FORAGE;
 }
 
+function enactCard(game: SpellcrafterGame, cardId: number): void {
+    const card = cards[cardId];
+    if(
+        lessThanOrNaN(game.stats.hotCold, -1 * parseInt(card.requires_cold_gt)) && 
+        greaterThanOrNaN(game.stats.hotCold, parseInt(card.requires_hot_gt)) &&
+        lessThanOrNaN(game.stats.lightDark, -1 * parseInt(card.requires_dark_gt)) &&
+        greaterThanOrNaN(game.stats.lightDark, parseInt(card.requires_light_gt))
+    ) {
+        game.stats.chaos += parseOrZero(card.chaos_delta);
+        game.stats.power += parseOrZero(card.power_delta);
+        game.stats.hotCold += parseOrZero(card.hotcold_delta);
+        game.stats.lightDark += parseOrZero(card.lightdark_delta);
+        game.stats.barriers += parseOrZero(card.barriers_delta);
+    } else {
+        game.stats.chaos += parseOrZero(card.chaos_delta_fallback);
+        game.stats.power += parseOrZero(card.power_delta_fallback);
+        game.stats.hotCold += parseOrZero(card.hotcold_delta_fallback);
+        game.stats.lightDark += parseOrZero(card.lightdark_delta_fallback);
+    }
+}
+
 
 ///// helpers //////
 
 function randomInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function parseOrZero(str: string): number {
+    return parseInt(str) || 0;
+}
+
+function greaterThanOrNaN(a: number, b: number): boolean {
+    return a > b || isNaN(b);
+}
+
+function lessThanOrNaN(a: number, b: number): boolean {
+    return a < b || isNaN(b);
 }
