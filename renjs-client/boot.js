@@ -1,5 +1,7 @@
 import { SpellcrafterPlugin } from './plugins/spellcrafter_plugin';
 
+const BASE_URL = import.meta.env.BASE_URL;
+
 const RenJSConfig =  {
   'name': 'Quickstart',
   'w': 640,
@@ -7,9 +9,9 @@ const RenJSConfig =  {
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
-    'background': '/assets/gui/loaderloaderbackground.png',
+    'background': BASE_URL+'/assets/gui/loaderloaderbackground.png',
     'loadingBar': {
-      'asset': '/assets/gui/loaderloading-bar.png',
+      'asset': BASE_URL+'/assets/gui/loaderloading-bar.png',
       'position': {
         'x': 109,
         'y': 458
@@ -20,12 +22,12 @@ const RenJSConfig =  {
       }
     }
   },
-  'fonts': '/assets/gui/fonts.css',
-  'guiConfig': '/story/GUI.yaml',
-  storyConfig: '/story/Config.yaml',
-  storySetup: '/story/Setup.yaml',
+  'fonts': BASE_URL+'/assets/gui/fonts.css',
+  'guiConfig': BASE_URL+'/story/GUI.yaml',
+  storyConfig: BASE_URL+'/story/Config.yaml',
+  storySetup: BASE_URL+'/story/Setup.yaml',
   'storyText': [
-    '/story/Story.yaml'
+    BASE_URL+'/story/Story.yaml'
   ],
   'logChoices': false,
 }
