@@ -1,8 +1,7 @@
 import cards from "../generated/cards.json";
-// import Plugin from "renjs/dist/types/src/core/Plugin";
 
 import { SpellcrafterGame, newGame, forage, interact } from "./spellcrafter_game";
-class SpellcrafterPlugin extends RenJS.Plugin {
+export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
     spellcrafterGame: SpellcrafterGame;
@@ -95,5 +94,3 @@ class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].flavour : null
     }
 }
-
-RenJSGame.addPlugin('SpellCrafter', SpellcrafterPlugin)
