@@ -1,24 +1,14 @@
 import cards from "../generated/cards.json";
 
+import { SpellcrafterGame, newGame, forage, interact } from "./spellcrafter_game";
+
 class SpellcrafterPlugin extends RenJS.Plugin {
 
-    items: Array<number>; // array of card indices of held items
-    vars: { [key: string]: any; }; // game variables
-
+    spellcrafterGame: SpellcrafterGame;
+    
     // called when new game is started, just before interpreter is called
     onStart(): void {
-        // set initial game variables
-        this.vars = this.game.managers.logic.vars;
-
-        this.vars["chaos"] = 0;
-        this.vars["power"] = 0;
-        this.vars["lightdark"] = 0;
-        this.vars["hotcold"] = 0;
-        this.vars["barriers"] = 3;
-        this.vars["dead"] = false;
-        this.vars["lastForagedItem"] = null;
-
-        this.items = []
+        this.spellcrafterGame = newGame();
 	}
 
     /// Called when the plugin is called from the story the `call spellcrafter` command
@@ -29,50 +19,48 @@ class SpellcrafterPlugin extends RenJS.Plugin {
 	onCall({body}): void {
         console.log("spellcrafter called with: ", body);
         const [method, ...args] = body.split(" ");
-        switch(method) {
-            case "forage":
-                this.forage(args[0]);
-                break;
-            case "interact":
-                this.interact(args[0]);
-                break;
+
+        const decodeCall = (method: string, ...args: any[]): Promise<void> => {
+            switch(method) {
+                case "forage":
+                    switch(args[0]) {
+                        case "forest":
+                            return forage(this.spellcrafterGame, 0);
+                        case "meadow":
+                            return forage(this.spellcrafterGame, 1);
+                        case "volcano":
+                            return forage(this.spellcrafterGame, 2);
+                        case "cave":
+                            return forage(this.spellcrafterGame, 3);
+                        default:
+                            throw new Error("invalid region to forage: " + args[0]);
+                    }
+                case "interact":
+                    return interact(this.spellcrafterGame, parseInt(args[0]));
+                default:
+                    throw new Error("invalid method: " + method);
+            }
         }
 
-        this.game.resolveAction(); // must call this to return control to the story
+        decodeCall(method, ...args).then(() => {
+            this.syncState();
+            this.game.resolveAction(); // must call this to return control to the story
+        })
 	}
 
-    // /// Called every Phaser update loop. No need to return anything from here
-    // onUpdateLoop(): void {
+    /// copies variables from the game state object into the renjs context
+    /// so they can be displayed in-game and used to alter the story flow
+    syncState(): void {
+        const stats = this.spellcrafterGame.stats;
 
-	// }
-
-    forage(region): void {
-        switch(region) {
-            case "forest":
-            case "meadow":
-            case "volcano":
-            case "cave":
-                let item = randomCard();
-                this.items.push(parseInt(item.card_id));
-                this.vars["lastForagedItem"] = item.name;
-                break;
-            default:
-                console.error("invalid region to forage: ", region);
-        }
-        this.vars["chaos"] += 3;
+        this.game.managers.logic.vars["chaos"] = stats.chaos;
+        this.game.managers.logic.vars["power"] = stats.power;
+        this.game.managers.logic.vars["lightdark"] = stats.lightDark;
+        this.game.managers.logic.vars["hotcold"] = stats.hotCold;
+        this.game.managers.logic.vars["barriers"] = stats.barriers;
+        this.game.managers.logic.vars["dead"] = stats.barriers <= 0;
+        this.game.managers.logic.vars["lastForagedItem"] = this.spellcrafterGame.cards.length > 0 ? cards[this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1]].name : null;
     }
-
-    interact(region): void {
-        this.vars["power"] += 1;
-    }
-}
-
-function randomInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function randomCard() {
-    return cards[randomInteger(0, cards.length - 1)]
 }
 
 RenJSGame.addPlugin('SpellCrafter', SpellcrafterPlugin)
