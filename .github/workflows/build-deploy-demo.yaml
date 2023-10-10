@@ -21,7 +21,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  check:
+  build-and-deploy:
     runs-on: ubuntu-latest
     defaults:
         run:
