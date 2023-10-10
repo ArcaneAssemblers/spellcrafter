@@ -1,9 +1,8 @@
 start:
-  # - play mysterious:
-  - scene: manageSpell
-  - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
+  - play mysterious:
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
+  - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
   - choice:
     - "I accept":
       - deuzi says happy: One moment while your sacrifice is received..
@@ -12,8 +11,8 @@ start:
       - hide deuzi: WITH FADE
       - scene: manageSpell
     - "What does this mean?":
-      - deuzi says: No time to explain. GTFO
-      - scene: endGame
+      - deuzi says: When we have a tutorial this will go here...
+      - scene: start
 
 manageSpell:
   - show bench: WTTH FADE
@@ -36,14 +35,6 @@ manageSpell:
           - text: You begin your journey to the cave. Don't forget the lantern.
           - var foraging: cave
       - scene: leavingTower
-
-    - Study:
-      - choice:
-        - text: What would you like to study?
-        - The void:
-
-    - Summon Familiar:
-      - deuzi says: You are not experienced enough to summon a familiar yet
 
     - Add Components:
       - if ({itemCount} > 0):
@@ -80,7 +71,7 @@ forest:
   - scene: manageSpell
 
 meadow:
-  - show forest: WITH FADE
+  - show meadow: WITH FADE
   - text: "You forage in the meadow for several hours"
   - wait: 1000
   - call SpellCrafter: forage meadow
@@ -89,7 +80,7 @@ meadow:
   - scene: manageSpell
 
 volcano:
-  - show forest: WITH FADE
+  - show volcano: WITH FADE
   - text: "You forage in the volcano for several hours"
   - wait: 1000
   - call SpellCrafter: forage volcano
@@ -98,7 +89,7 @@ volcano:
   - scene: manageSpell
 
 cave:
-  - show forest: WITH FADE
+  - show cave: WITH FADE
   - text: "You forage in the cave for several hours"
   - wait: 1000
   - call SpellCrafter: forage cave
