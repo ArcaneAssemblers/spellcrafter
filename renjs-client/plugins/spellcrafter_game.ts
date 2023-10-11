@@ -52,6 +52,13 @@ export async function forage(game: SpellcrafterGame, region: number): Promise<vo
     game.stats.chaos += CHAOS_PER_FORAGE;
 }
 
+export async function approachSpell(game: SpellcrafterGame): Promise<void> {
+    let roll = 2 * randomInteger(1, 20);
+    if (roll < game.stats.chaos) {
+        game.stats.barriers -= 1;
+    }
+}
+
 function enactCard(game: SpellcrafterGame, cardId: number): void {
     const card = cards[cardId];
     if(
