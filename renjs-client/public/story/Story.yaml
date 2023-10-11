@@ -1,5 +1,6 @@
 start:
   - play mysterious:
+  - scene: volcano
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
@@ -90,7 +91,8 @@ forest:
   - text: "You forage in the forest for several hours"
   - wait: 1000
   - call SpellCrafter: forage forest
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
@@ -99,7 +101,8 @@ meadow:
   - text: "You forage in the meadow for several hours"
   - wait: 1000
   - call SpellCrafter: forage meadow
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
@@ -108,7 +111,8 @@ volcano:
   - text: "You forage in the volcano for several hours"
   - wait: 1000
   - call SpellCrafter: forage volcano
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
@@ -117,7 +121,8 @@ cave:
   - text: "You forage in the cave for several hours"
   - wait: 1000
   - call SpellCrafter: forage cave
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
