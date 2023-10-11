@@ -33,7 +33,7 @@ export function newGame(): SpellcrafterGame {
 
 export async function interact(game: SpellcrafterGame, cardId: number): Promise<void> {
     enactCard(game, cardId);
-    if (cards[cardId].consumable) {
+    if (cards[cardId].consumable == "TRUE") {
         game.cards.splice(game.cards.indexOf(cardId), 1);
     }
 }
@@ -41,6 +41,7 @@ export async function interact(game: SpellcrafterGame, cardId: number): Promise<
 export async function forage(game: SpellcrafterGame, region: number): Promise<void> {
     if (game.cards.length >= ITEM_LIMIT) {
         console.error("too many cards");
+        return;
     }
 
     // return a random card from within the region
