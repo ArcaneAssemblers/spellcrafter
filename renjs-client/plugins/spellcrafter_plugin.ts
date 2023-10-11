@@ -1,6 +1,6 @@
 import cards from "../generated/cards.json";
 
-import { SpellcrafterGame, newGame, forage, interact } from "./spellcrafter_game";
+import { SpellcrafterGame, newGame, forage, interact, approachSpell } from "./spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
@@ -36,10 +36,10 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                         default:
                             throw new Error("invalid region to forage: " + args[0]);
                     }
-                case "interact":
-                    return interact(this.spellcrafterGame, parseInt(args[0]));
+                case "checkApproachSpell":
+                    return this.checkApproachSpell();
                 case "selectAndAddIngredient":
-                    return this.selectAndAddIngredient()
+                    return this.selectAndAddIngredient();
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -74,6 +74,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                 btns.push(btn);
             });
         });
+    }
+
+    async checkApproachSpell(): Promise<void> {
+        let pre_barriers = this.spellcrafterGame.stats.barriers;
+        await approachSpell(this.spellcrafterGame);
+        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
     }
 
     /// copies variables from the game state object into the renjs context
