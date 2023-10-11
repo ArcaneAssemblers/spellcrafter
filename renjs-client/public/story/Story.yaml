@@ -1,5 +1,6 @@
 start:
   - play mysterious:
+  - scene: manageActions
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
@@ -15,7 +16,21 @@ start:
 
 manageActions:
   - show tower: WITH FADE
-  - text: The current spell power is {power}, and its chaos is {chaos}. You have {barriers} barriers remaining
+  - text: The current spell power is {power}, and its chaos is {chaos}.
+  
+  - if ({lightdark} > 0):
+    - text: The spell is light level {lightdark}.
+  - if ({lightdark} < 0):
+    - var dark: "{lightdark} * -1"
+    - text: The spell is dark level {dark}.
+
+  - if ({hotcold} > 0):
+    - text: The spell is hot level {hotcold}.
+  - if ({hotcold} < 0):
+    - var cold: "{hotcold} * -1"
+    - text: The spell is cold level {cold}.
+
+  - text: You have {barriers} barriers remaining
   - choice:
     - text: What would you like to do?
     - Forage:
@@ -63,6 +78,17 @@ interacting:
         - call SpellCrafter: selectAndAddIngredient # This will set the {lastAddedItemName}, {chaosDelta}, {powerDelta} variables
         - text: You added {lastAddedItemName} to the spell
         - text: The chaos changed by {chaosDelta}. The power changed by {powerDelta}
+
+        - if ({lightdarkDelta} > 0):
+          - text: The spell became lighter by {lightdarkDelta}.
+        - if ({lightdarkDelta} < 0):
+          - text: The spell became darker by {lightdarkDelta}.
+      
+        - if ({hotcoldDelta} > 0):
+          - text: The spell became hotter by {hotcoldDelta}.
+        - if ({hotcoldDelta} < 0):
+          - text: The spell became colder by {hotcoldDelta}.
+
       - else:
         - deuzi says angry: You don't have any components to add!!
         - hide deuzi: WITH FADE
@@ -90,7 +116,8 @@ forest:
   - text: "You forage in the forest for several hours"
   - wait: 1000
   - call SpellCrafter: forage forest
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
@@ -99,7 +126,8 @@ meadow:
   - text: "You forage in the meadow for several hours"
   - wait: 1000
   - call SpellCrafter: forage meadow
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
@@ -108,7 +136,8 @@ volcano:
   - text: "You forage in the volcano for several hours"
   - wait: 1000
   - call SpellCrafter: forage volcano
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
@@ -117,10 +146,13 @@ cave:
   - text: "You forage in the cave for several hours"
   - wait: 1000
   - call SpellCrafter: forage cave
-  - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
 endGame:
-  - deuzi says normal: Game over!
+  - deuzi says normal: And that is the story of an unknown mage, who died in the pursuit of power greater than themselves...
+  - deuzi says angry: Now on to my next victim!
   - hide ALL:
+  - endgame:

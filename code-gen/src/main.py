@@ -2,6 +2,7 @@
 import argparse
 import csv
 import json
+import subprocess
 
 HEAD = """
 // This file is generated. Do not edit! 
@@ -96,6 +97,16 @@ if __name__ == "__main__":
         rows = list(reader)
 
         if args.json_outdir:
+            for card in rows:
+                params = json.dumps(card).replace('"', '\\"')
+                cmd = f"./make_card_description.py \"{params}\""
+                try:
+                    text = subprocess.check_output(cmd, shell=True, text=True)
+                    print(text)
+                    card['description'] = text
+                except subprocess.CalledProcessError as e:
+                    print(f"Error running the command {cmd}: {e}")
+
             json.dump(rows, open(args.json_outdir + "/cards.json", "w"), indent=2)
 
         for row in rows:
