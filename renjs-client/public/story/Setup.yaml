@@ -2,7 +2,6 @@
 backgrounds:
   bench: assets/backgrounds/bench.png
   tower: assets/backgrounds/tower.png
-  altar: assets/backgrounds/altar.png
   outside: assets/backgrounds/outside.png
   forest: assets/backgrounds/forest.png
   meadow: assets/backgrounds/meadow.png

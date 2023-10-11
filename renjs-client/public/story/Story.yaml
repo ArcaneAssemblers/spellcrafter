@@ -1,6 +1,5 @@
 start:
-  - scene: approaching
-  # - play mysterious:
+  - play mysterious:
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
@@ -10,13 +9,13 @@ start:
       - wait: 1000
       - deuzi says happy: A spark of magic springs to life. You're ready to begin!
       - hide deuzi: WITH FADE
-      - scene: manageActions
+      - scene: manageSpell
     - "What does this mean?":
       - deuzi says: When we have a tutorial this will go here...
       - scene: start
 
-manageActions:
-  - show tower: WITH FADE
+manageSpell:
+  - show bench: WTTH FADE
   - text: The current spell power is {power}, and its chaos is {chaos}. You have {barriers} barriers remaining
   - choice:
     - text: What would you like to do?
@@ -36,48 +35,23 @@ manageActions:
           - text: You begin your journey to the cave. Don't forget the lantern.
           - var foraging: cave
       - scene: leavingTower
-    - Approach the Spell:
-      - scene: approaching
 
-approaching:
-  - hide ALL: WITH FADE
-  - text: You approach the spell...
-  - call SpellCrafter: checkApproachSpell # this will set the {dead} and {barriersDelta} variable to be used in this section
-  - show altar: WITH FADE
-
-  - if ({dead}):
-    - effect SHAKE:
-    - text: The spell rushes past its final barrier and explodes outward. The last thing you see is a blinding flash of light... and then darkness.
-    - scene: endGame
-
-  - if ({barriersDelta} < 0):
-    - effect SHAKE:
-    - text: You see a barrier shatter and fall away. Only {barriers} remain holding the spell in place.
-  - else:
-    - text: The spell holds in place.
-
-  - scene: interacting
-
-interacting:
-  - choice:
-    - Add Component:
+    - Add Components:
       - if ({itemCount} > 0):
-        - call SpellCrafter: selectAndAddIngredient # This will set the {lastAddedItemName}, {chaosDelta}, {powerDelta} variables
+        - call SpellCrafter: selectAndAddIngredient
         - text: You added {lastAddedItemName} to the spell
         - text: The chaos changed by {chaosDelta}. The power changed by {powerDelta}
       - else:
         - deuzi says angry: You don't have any components to add!!
         - hide deuzi: WITH FADE
-      - scene: interacting
-    - Leave:
-      - scene: manageActions
+      - scene: manageSpell
 
 leavingTower:
-  # - show outside: WITH FADE
-  # - show deuzi: normal AT CENTER WITH FADE
-  # - deuzi says: I'll guard the tower while you're away.
-  # - hide deuzi: WITH FADE
-  # - text: "It will take 5:00 minutes to forage in the {foraging}"
+  - show outside: WITH FADE
+  - show deuzi: normal AT CENTER WITH FADE
+  - deuzi says: I'll guard the tower while you're away.
+  - hide deuzi: WITH FADE
+  - text: "It will take 5:00 minutes to forage in the {foraging}"
   - if ({foraging} == "forest"):
       - scene: forest
   - if ({foraging} == "meadow"):
@@ -94,7 +68,7 @@ forest:
   - call SpellCrafter: forage forest
   - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
   - text: Time to return to the tower.
-  - scene: manageActions
+  - scene: manageSpell
 
 meadow:
   - show meadow: WITH FADE
@@ -103,7 +77,7 @@ meadow:
   - call SpellCrafter: forage meadow
   - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
   - text: Time to return to the tower.
-  - scene: manageActions
+  - scene: manageSpell
 
 volcano:
   - show volcano: WITH FADE
@@ -112,7 +86,7 @@ volcano:
   - call SpellCrafter: forage volcano
   - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
   - text: Time to return to the tower.
-  - scene: manageActions
+  - scene: manageSpell
 
 cave:
   - show cave: WITH FADE
@@ -121,7 +95,7 @@ cave:
   - call SpellCrafter: forage cave
   - text: You found 1 {lastForagedItemName}! {lastForagedItemDescription}.
   - text: Time to return to the tower.
-  - scene: manageActions
+  - scene: manageSpell
 
 endGame:
   - deuzi says normal: Game over!
