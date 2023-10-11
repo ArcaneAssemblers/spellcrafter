@@ -1,6 +1,6 @@
 start:
   - play mysterious:
-  - scene: volcano
+  - scene: manageActions
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
@@ -16,7 +16,21 @@ start:
 
 manageActions:
   - show tower: WITH FADE
-  - text: The current spell power is {power}, and its chaos is {chaos}. You have {barriers} barriers remaining
+  - text: The current spell power is {power}, and its chaos is {chaos}.
+  
+  - if ({lightdark} > 0):
+    - text: The spell is light level {lightdark}.
+  - if ({lightdark} < 0):
+    - var dark: "{lightdark} * -1"
+    - text: The spell is dark level {dark}.
+
+  - if ({hotcold} > 0):
+    - text: The spell is hot level {hotcold}.
+  - if ({hotcold} < 0):
+    - var cold: "{hotcold} * -1"
+    - text: The spell is cold level {cold}.
+
+  - text: You have {barriers} barriers remaining
   - choice:
     - text: What would you like to do?
     - Forage:
@@ -127,5 +141,7 @@ cave:
   - scene: manageActions
 
 endGame:
-  - deuzi says normal: Game over!
+  - deuzi says normal: And that is the story of an unknown mage, who died in the pursuit of power greater than themselves...
+  - deuzi says angry: Now on to my next victim!
   - hide ALL:
+  - endgame:

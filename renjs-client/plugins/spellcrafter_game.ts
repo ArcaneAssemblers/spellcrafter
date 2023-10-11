@@ -23,7 +23,7 @@ export function newGame(): SpellcrafterGame {
         stats: {
             chaos: 0,
             power: 0,
-            hotCold: 0,
+            hotCold: -1,
             lightDark: 0,
             barriers: 3,
         },
