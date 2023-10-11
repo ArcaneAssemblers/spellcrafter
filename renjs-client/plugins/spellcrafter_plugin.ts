@@ -68,6 +68,8 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     this.game.managers.logic.vars["lastAddedItemName"] =  cards[cardId].name;
                     this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
                     this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
+                    this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
+                    this.game.managers.logic.vars["hotcoldDelta"] = this.spellcrafterGame.stats.hotCold - pre_stats.hotCold;
 
                     resolve();
                 }, this, 0);

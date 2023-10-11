@@ -78,6 +78,17 @@ interacting:
         - call SpellCrafter: selectAndAddIngredient # This will set the {lastAddedItemName}, {chaosDelta}, {powerDelta} variables
         - text: You added {lastAddedItemName} to the spell
         - text: The chaos changed by {chaosDelta}. The power changed by {powerDelta}
+
+        - if ({lightdarkDelta} > 0):
+          - text: The spell became lighter by {lightdarkDelta}.
+        - if ({lightdarkDelta} < 0):
+          - text: The spell became darker by {lightdarkDelta}.
+      
+        - if ({hotcoldDelta} > 0):
+          - text: The spell became hotter by {hotcoldDelta}.
+        - if ({hotcoldDelta} < 0):
+          - text: The spell became colder by {hotcoldDelta}.
+
       - else:
         - deuzi says angry: You don't have any components to add!!
         - hide deuzi: WITH FADE
