@@ -33,24 +33,57 @@ manageActions:
   - text: You have {barriers} barriers remaining
   - choice:
     - text: What would you like to do?
-    - Forage:
+
+    - "Forage":
       - choice:
         - text: Where would you like to visit?
-        - Forest:
+        - "Forest":
           - text: You head out to the snowy forest. It's cold, but you're prepared.
           - var foraging: forest
-        - Meadow:
+        - "Meadow":
           - text: You leave the tower for the meadow. It is beautiful and sunny.
           - var foraging: meadow
-        - Volcano:
+        - "Volcano":
           - text: You begin hiking toward the volcano. Lucky you know a heat shielding spell.
           - var foraging: volcano
-        - Cave:
+        - "Cave":
           - text: You begin your journey to the cave. Don't forget the lantern.
           - var foraging: cave
       - scene: leavingTower
-    - Approach the Spell:
+
+    - "Send Familiar":
+      - if ({familiar} == ""):
+        - text: You don't have a familiar to send out.
+      - else:
+        - text: You send your {familiar} out to forage. Check back later to see what they bring back.
+      - scene: manageActions
+
+    - "Summon":
+      - text: You begin the summoning ritual
+      - choice:
+        - text: What would you like to summon?
+        - "Raven":
+          - text: You summon a (bold)raven(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
+          - var familiar: raven
+        - "Cat":
+          - text: You summon a (bold)cat(end) into existence. It is a sweet but dangerous companion that can forage in the Meadow.
+          - var familiar: cat
+        - "Salamander":
+          - text: You summon a (bold)salamander(end) into existence. It is a fiery critter that can forage in the Volcano.
+          - var familiar: salamander
+        - "Wolf Spider": 
+          - text: You summon a (bold)wolf spider(end) into existence. It is a creepy critter that can forage in the Cave.
+          - var familiar: wolfspider
+      - scene: manageActions
+
+    - "Study":
+      - text: This action is not available yet
+      - scene: manageActions
+
+    - "Approach the Spell":
       - scene: approaching
+
+
 
 approaching:
   - hide ALL: WITH FADE
@@ -70,6 +103,8 @@ approaching:
     - text: The spell holds in place.
 
   - scene: interacting
+
+
 
 interacting:
   - choice:
@@ -96,6 +131,8 @@ interacting:
     - Leave:
       - scene: manageActions
 
+
+
 leavingTower:
   # - show outside: WITH FADE
   # - show deuzi: normal AT CENTER WITH FADE
@@ -116,9 +153,11 @@ forest:
   - text: "You forage in the forest for several hours"
   - wait: 1000
   - call SpellCrafter: forage forest
+  - show cardback: WITH FADE AT 300,300
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
+  - hide cardback:
   - scene: manageActions
 
 meadow:

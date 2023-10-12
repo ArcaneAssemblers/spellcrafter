@@ -1,4 +1,5 @@
 import cards from "../generated/cards.json";
+// import { Plugin } from "renjs";
 
 import { SpellcrafterGame, newGame, forage, interact, approachSpell } from "./spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
@@ -24,18 +25,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         const decodeCall = (method: string, ...args: any[]): Promise<void> => {
             switch(method) {
                 case "forage":
-                    switch(args[0]) {
-                        case "forest":
-                            return forage(this.spellcrafterGame, 0);
-                        case "meadow":
-                            return forage(this.spellcrafterGame, 1);
-                        case "volcano":
-                            return forage(this.spellcrafterGame, 2);
-                        case "cave":
-                            return forage(this.spellcrafterGame, 3);
-                        default:
-                            throw new Error("invalid region to forage: " + args[0]);
-                    }
+                    return this.forage(args[0]);
                 case "checkApproachSpell":
                     return this.checkApproachSpell();
                 case "selectAndAddIngredient":
@@ -82,6 +72,11 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         let pre_barriers = this.spellcrafterGame.stats.barriers;
         await approachSpell(this.spellcrafterGame);
         this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
+    }
+
+    async forage(region: string): Promise<void> {
+        const regionId = ["forest", "meadow", "volcano", "cave"].findIndex(() => region)
+        await forage(this.spellcrafterGame, regionId);
     }
 
     /// copies variables from the game state object into the renjs context
