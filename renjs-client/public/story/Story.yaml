@@ -1,5 +1,5 @@
 start:
-  - play mysterious:
+  - play mysterious: LOOPED
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
@@ -15,10 +15,6 @@ start:
 
 manageActions:
   - show tower: WITH FADE
-
-  - if ({chaosDelta} > 0):
-    - text: The chaos increased by {chaosDelta} while you were away.
-    - var chaosDelta: 0
 
   - text: The current spell power is {power}, and its chaos is {chaos}.
   
@@ -84,14 +80,17 @@ manageActions:
       - text: This action is not available yet
       - scene: manageActions
 
-    - "Approach the Spell":
-      - scene: approaching
+    - "Add Components":
+      - scene: addComponents
 
 
 
 approaching:
   - hide ALL: WITH FADE
-  - text: "You approach the spell(pause: click).(pause: click).(pause: click)."
+  - if ({chaosDelta} > 0):
+    - text: The chaos increased by {chaosDelta} while you were away.
+    - var chaosDelta: 0
+  - text: "You approach the spell(pause: 500).(pause: 500).(pause: 500)."
   - call SpellCrafter: checkApproachSpell # this will set the {dead} and {barriersDelta} variable to be used in this section
   - if ({dead}):
     - effect SHAKE:
@@ -108,35 +107,31 @@ approaching:
     - text: (color:#008900)PASS(end)
     - show altar: WITH FADE
     - text: The spell appears to be stable for now
-  - scene: interacting
+  - scene: manageActions
 
 
-interacting:
-  - choice:
-    - Add Component:
-      - if ({itemCount} > 0):
-        - call SpellCrafter: selectAndAddIngredient # This will set the {lastAddedItemName}, {chaosDelta}, {powerDelta} variables
-        - text: You added {lastAddedItemName} to the spell
-        - text: The chaos changed by {chaosDelta}. The power changed by {powerDelta}
+addComponents:
+  - if ({itemCount} > 0):
+    - call SpellCrafter: selectAndAddIngredient # This will set the {lastAddedItemName}, {chaosDelta}, {powerDelta} variables
+    - text: You added {lastAddedItemName} to the spell
+    - text: The chaos changed by {chaosDelta}. The power changed by {powerDelta}
 
-        - if ({lightdarkDelta} > 0):
-          - text: The spell became lighter by {lightdarkDelta}.
-        - if ({lightdarkDelta} < 0):
-          - text: The spell became darker by {lightdarkDelta}.
-      
-        - if ({hotcoldDelta} > 0):
-          - text: The spell became hotter by {hotcoldDelta}.
-        - if ({hotcoldDelta} < 0):
-          - text: The spell became colder by {hotcoldDelta}.
+    - if ({lightdarkDelta} > 0):
+      - text: The spell became lighter by {lightdarkDelta}.
+    - if ({lightdarkDelta} < 0):
+      - text: The spell became darker by {lightdarkDelta}.
+  
+    - if ({hotcoldDelta} > 0):
+      - text: The spell became hotter by {hotcoldDelta}.
+    - if ({hotcoldDelta} < 0):
+      - text: The spell became colder by {hotcoldDelta}.
 
-        - var chaosDelta: 0
+    - var chaosDelta: 0
 
-      - else:
-        - deuzi says angry: You don't have any components to add!!
-        - hide deuzi: WITH FADE
-      - scene: interacting
-    - Leave:
-      - scene: manageActions
+  - else:
+    - deuzi says angry: You don't have any components to add!!
+    - hide deuzi: WITH FADE
+  - scene: manageActions
 
 
 
@@ -165,7 +160,7 @@ forest:
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - hide cardback:
-  - scene: manageActions
+  - scene: approaching
 
 meadow:
   - show meadow: WITH FADE
@@ -176,7 +171,8 @@ meadow:
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
-  - scene: manageActions
+  - hide cardback:
+  - scene: approaching
 
 volcano:
   - show volcano: WITH FADE
@@ -187,7 +183,8 @@ volcano:
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
-  - scene: manageActions
+  - hide cardback:
+  - scene: approaching
 
 cave:
   - show cave: WITH FADE
@@ -198,7 +195,8 @@ cave:
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
-  - scene: manageActions
+  - hide cardback:
+  - scene: approaching
 
 endGame:
   - deuzi says normal: And that is the story of an unknown mage who died in the pursuit of power greater than themselves...
