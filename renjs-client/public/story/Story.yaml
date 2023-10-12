@@ -1,6 +1,5 @@
 start:
   - play mysterious:
-  - scene: manageActions
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
   - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
@@ -16,6 +15,11 @@ start:
 
 manageActions:
   - show tower: WITH FADE
+
+  - if ({chaosDelta} > 0):
+    - text: The chaos increased by {chaosDelta} while you were away.
+    - var chaosDelta: 0
+
   - text: The current spell power is {power}, and its chaos is {chaos}.
   
   - if ({lightdark} > 0):
@@ -33,43 +37,79 @@ manageActions:
   - text: You have {barriers} barriers remaining
   - choice:
     - text: What would you like to do?
-    - Forage:
+
+    - "Forage":
       - choice:
         - text: Where would you like to visit?
-        - Forest:
+        - "Forest":
           - text: You head out to the snowy forest. It's cold, but you're prepared.
           - var foraging: forest
-        - Meadow:
+        - "Meadow":
           - text: You leave the tower for the meadow. It is beautiful and sunny.
           - var foraging: meadow
-        - Volcano:
+        - "Volcano":
           - text: You begin hiking toward the volcano. Lucky you know a heat shielding spell.
           - var foraging: volcano
-        - Cave:
+        - "Cave":
           - text: You begin your journey to the cave. Don't forget the lantern.
           - var foraging: cave
       - scene: leavingTower
-    - Approach the Spell:
+
+    - "Send Familiar":
+      - if (!{familiar}):
+        - text: You don't have a familiar to send out.
+      - else:
+        - text: You send your {familiar} out to forage. Check back later to see what they bring back.
+      - scene: manageActions
+
+    - "Summon":
+      - text: You begin the summoning ritual
+      - choice:
+        - text: What would you like to summon?
+        - "Raven":
+          - text: You summon a (bold)raven(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
+          - var familiar: raven
+        - "Cat":
+          - text: You summon a (bold)cat(end) into existence. It is a sweet but dangerous companion that can forage in the Meadow.
+          - var familiar: cat
+        - "Salamander":
+          - text: You summon a (bold)salamander(end) into existence. It is a fiery critter that can forage in the Volcano.
+          - var familiar: salamander
+        - "Wolf Spider": 
+          - text: You summon a (bold)wolf spider(end) into existence. It is a creepy critter that can forage in the Cave.
+          - var familiar: wolfspider
+      - scene: manageActions
+
+    - "Study":
+      - text: This action is not available yet
+      - scene: manageActions
+
+    - "Approach the Spell":
       - scene: approaching
+
+
 
 approaching:
   - hide ALL: WITH FADE
-  - text: You approach the spell...
+  - text: "You approach the spell(pause: click).(pause: click).(pause: click)."
   - call SpellCrafter: checkApproachSpell # this will set the {dead} and {barriersDelta} variable to be used in this section
-  - show altar: WITH FADE
-
   - if ({dead}):
     - effect SHAKE:
+    - text: (color:#c40000)FAIL(end)
+    - show altar: WITH FADE
     - text: The spell rushes past its final barrier and explodes outward. The last thing you see is a blinding flash of light... and then darkness.
     - scene: endGame
-
   - if ({barriersDelta} < 0):
     - effect SHAKE:
+    - text: (color:#c40000)FAIL(end)
+    - show altar: WITH FADE
     - text: You see a barrier shatter and fall away. Only {barriers} remain holding the spell in place.
   - else:
-    - text: The spell holds in place.
-
+    - text: (color:#008900)PASS(end)
+    - show altar: WITH FADE
+    - text: The spell appears to be stable for now
   - scene: interacting
+
 
 interacting:
   - choice:
@@ -89,12 +129,16 @@ interacting:
         - if ({hotcoldDelta} < 0):
           - text: The spell became colder by {hotcoldDelta}.
 
+        - var chaosDelta: 0
+
       - else:
         - deuzi says angry: You don't have any components to add!!
         - hide deuzi: WITH FADE
       - scene: interacting
     - Leave:
       - scene: manageActions
+
+
 
 leavingTower:
   # - show outside: WITH FADE
@@ -116,9 +160,11 @@ forest:
   - text: "You forage in the forest for several hours"
   - wait: 1000
   - call SpellCrafter: forage forest
+  - show cardback: WITH FADE AT 350,300
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
+  - hide cardback:
   - scene: manageActions
 
 meadow:
@@ -126,6 +172,7 @@ meadow:
   - text: "You forage in the meadow for several hours"
   - wait: 1000
   - call SpellCrafter: forage meadow
+  - show cardback: WITH FADE AT 350,300
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
@@ -136,6 +183,7 @@ volcano:
   - text: "You forage in the volcano for several hours"
   - wait: 1000
   - call SpellCrafter: forage volcano
+  - show cardback: WITH FADE AT 350,300
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
@@ -146,13 +194,14 @@ cave:
   - text: "You forage in the cave for several hours"
   - wait: 1000
   - call SpellCrafter: forage cave
+  - show cardback: WITH FADE AT 350,300
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
   - text: "{lastForagedItemDescription}"
   - text: Time to return to the tower.
   - scene: manageActions
 
 endGame:
-  - deuzi says normal: And that is the story of an unknown mage, who died in the pursuit of power greater than themselves...
+  - deuzi says normal: And that is the story of an unknown mage who died in the pursuit of power greater than themselves...
   - deuzi says angry: Now on to my next victim!
   - hide ALL:
   - endgame:

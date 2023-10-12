@@ -23,7 +23,7 @@ export function newGame(): SpellcrafterGame {
         stats: {
             chaos: 0,
             power: 0,
-            hotCold: -1,
+            hotCold: 0,
             lightDark: 0,
             barriers: 3,
         },
@@ -38,15 +38,14 @@ export async function interact(game: SpellcrafterGame, cardId: number): Promise<
     }
 }
 
-export async function forage(game: SpellcrafterGame, region: number): Promise<void> {
+export async function forage(game: SpellcrafterGame, region: string): Promise<void> {
     if (game.cards.length >= ITEM_LIMIT) {
         console.error("too many cards");
         return;
     }
 
     // return a random card from within the region
-    const regionString = ["forest", "meadow", "volcano", "cave"][region];
-    let regionCards = cards.filter((card) => card.card_type === regionString);
+    let regionCards = cards.filter((card) => card.card_type === region);
     let card = regionCards[randomInteger(0, regionCards.length - 1)];
 
     game.cards.push(parseInt(card.card_id));
