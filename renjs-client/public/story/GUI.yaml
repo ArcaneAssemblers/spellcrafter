@@ -87,23 +87,13 @@ config:
       binding: skip
   menus:
     main:
-      - type: image
-        x: 0
-        'y': 0
-        asset: loaderbackground
       - type: button
-        x: 40
-        'y': 452
-        asset: asset3
-        binding: openMenu
-        menu: saveload
-      - type: button
-        x: 289
+        x: 150
         'y': 452
         asset: asset4
         binding: start
       - type: button
-        x: 489
+        x: 350
         'y': 452
         asset: asset5
         binding: openMenu

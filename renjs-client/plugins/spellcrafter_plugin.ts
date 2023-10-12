@@ -75,8 +75,9 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     }
 
     async forage(region: string): Promise<void> {
-        const regionId = ["forest", "meadow", "volcano", "cave"].findIndex(() => region)
-        await forage(this.spellcrafterGame, regionId);
+        let pre_chaos = this.spellcrafterGame.stats.chaos;
+        await forage(this.spellcrafterGame, region);
+        this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.barriers - pre_chaos;
     }
 
     /// copies variables from the game state object into the renjs context
