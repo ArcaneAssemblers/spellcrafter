@@ -7,9 +7,9 @@ config:
   hud:
     - id: default
       type: choices
-      asset: asset31
-      x: 42
-      'y': 300
+      asset: buttonspritesheet
+      x: 40
+      'y': 680
       alignment: centered
       separation: 10
       sfx: none
@@ -19,7 +19,7 @@ config:
         'y': 0
         style:
           font: fontsaudimat-mono
-          fontSize: 32px
+          fontSize: 40px
           fill: '#FFFFFF'
           align: left
           boundsAlignH: center
@@ -103,11 +103,11 @@ assets:
       fileName: readystar.png
       w: 40
       h: 43
-    asset31: # option buttons
-      name: asset31
-      fileName: hudasset31.png
-      w: 560
-      h: 65
+    buttonspritesheet: # option buttons
+      name: buttonspritesheet
+      fileName: buttonspritesheet.png
+      w: 1000
+      h: 140
     asset32: # interrupt buttons
       name: asset32
       fileName: hudasset32.png
