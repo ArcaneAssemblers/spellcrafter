@@ -4,21 +4,20 @@ const BASE_URL = import.meta.env.BASE_URL;
 
 const RenJSConfig =  {
   'name': 'Quickstart',
-  'w': 640,
-  'h': 960,
+  'w': 1080,
+  'h': 1920,
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
-    'background': BASE_URL+'/assets/gui/loaderloaderbackground.png',
     'loadingBar': {
-      'asset': BASE_URL+'/assets/gui/loaderloading-bar.png',
+      'asset': BASE_URL+'/assets/gui/loadingbarspritesheet.png',
       'position': {
-        'x': 109,
-        'y': 458
+        'x': 240,
+        'y': 1450
       },
       'size': {
-        'w': 578,
-        'h': 82
+        'w': 600,
+        'h': 171
       }
     }
   },

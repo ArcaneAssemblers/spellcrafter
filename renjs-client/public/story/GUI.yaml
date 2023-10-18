@@ -1,90 +1,69 @@
-name: Quickstart
+name: ArcaneAssembler
 resolution:
-  - 640
-  - 960
+  - 1080
+  - 1920
 assetCounter: 44
 config:
   hud:
     - id: default
+      type: image
+      asset: gameframe
+      x: 0
+      'y': 0
+    - id: default
       type: choices
-      asset: asset31
-      x: 42
-      'y': 300
+      asset: buttonspritesheet
+      x: 40
+      'y': 680
       alignment: centered
       separation: 10
       sfx: none
-      chosenColor: '#535050'
       text:
         x: 0
         'y': 0
         style:
           font: fontsaudimat-mono
-          fontSize: 32px
+          fontSize: 45px
           fill: '#FFFFFF'
           align: left
           boundsAlignH: center
           boundsAlignV: middle
     - id: default
       type: messageBox
-      asset: asset19
+      asset: textbox
       x: 40
-      'y': 749
+      'y': 1560
       sfx: none
       text:
-        x: 24
-        'y': 24
+        x: 110
+        'y': 34
         style:
           font: fontsaudimat-mono
-          fontSize: 20px
-          fill: '#89BAA8'
+          fontSize: 45px
+          fill: '#BF9FE6'
           align: left
           wordWrap: true
-          wordWrapWidth: '550'
+          wordWrapWidth: '870'
       ctc:
-        x: 570
-        'y': 91
-        asset: asset21
+        x: 960
+        'y': 280
+        asset: readystar
     - id: default
       type: nameBox
-      asset: asset20
-      x: 84
-      'y': 700
+      asset: namebox
+      x: 140
+      'y': 1490
       text:
         x: 0
         'y': 0
         style:
           font: fontsaudimat-mono
-          fontSize: 26px
-          fill: '#FFFFFF'
+          fontSize: 40px
+          fill: '#BF9FE6'
           align: left
           boundsAlignH: center
           boundsAlignV: middle
-    - type: image
-      x: 640
-      'y': 468
-      asset: asset22
-    - type: button
-      x: 646
-      'y': 474
-      asset: asset24
-      binding: openMenu
-      menu: settings
-    - type: button
-      x: 688
-      'y': 474
-      asset: asset23
-      binding: openMenu
-      menu: saveload
-    - type: button
-      x: 646
-      'y': 514
-      asset: asset26
-      binding: auto
-    - type: button
-      x: 688
-      'y': 514
-      asset: asset25
-      binding: skip
+
   menus:
     main:
       - type: button
@@ -98,210 +77,23 @@ config:
         asset: asset5
         binding: openMenu
         menu: settings
-    settings:
-      - type: image
-        x: 0
-        'y': 0
-        asset: asset16
-      - type: label
-        x: 221
-        'y': 40
-        text: S.E.T.T.I.N.G.S
-        style:
-          font: fontsaudimat-mono
-          fontSize: 47px
-          fill: '#B0B0B0'
-          boundsAlignH: left
-          boundsAlignV: top
-      - type: label
-        x: 100
-        'y': 175
-        text: music volume
-        style:
-          font: fontsaudimat-mono
-          fontSize: 33px
-          fill: '#6D6C6C'
-          boundsAlignH: left
-          boundsAlignV: top
-      - type: label
-        x: 109
-        'y': 325
-        text: sfx volume
-        style:
-          font: fontsaudimat-mono
-          fontSize: 33px
-          fill: '#6D6C6C'
-          boundsAlignH: left
-          boundsAlignV: top
-      - type: label
-        x: 503
-        'y': 325
-        text: auto speed
-        style:
-          font: fontsaudimat-mono
-          fontSize: 33px
-          fill: '#6D6C6C'
-          boundsAlignH: left
-          boundsAlignV: top
-      - type: label
-        x: 503
-        'y': 175
-        text: text speed
-        style:
-          font: fontsaudimat-mono
-          fontSize: 33px
-          fill: '#6D6C6C'
-          boundsAlignH: left
-          boundsAlignV: top
-      - type: slider
-        x: 74
-        'y': 220
-        asset: asset12
-        binding: changeUserPreference
-        userPreference: bgmv
-        mask: horizontal
-      - type: slider
-        x: 74
-        'y': 370
-        asset: asset12
-        binding: changeUserPreference
-        userPreference: sfxv
-        mask: horizontal
-      - type: slider
-        x: 463
-        'y': 220
-        asset: asset12
-        binding: changeUserPreference
-        userPreference: textSpeed
-        mask: horizontal
-      - type: slider
-        x: 463
-        'y': 370
-        asset: asset12
-        binding: changeUserPreference
-        userPreference: autoSpeed
-        mask: horizontal
-      - type: button
-        x: 616
-        'y': 506
-        asset: asset17
-        binding: return
-    saveload:
-      - type: image
-        x: 0
-        'y': 0
-        asset: asset16
-      - type: saveSlot
-        x: 71
-        'y': 168
-        asset: asset18
-        slot: '0'
-        thumbnail:
-          x: 24
-          'y': 22
-          width: 154
-          height: 110
-      - type: saveSlot
-        x: 303
-        'y': 168
-        asset: asset18
-        slot: '1'
-        thumbnail:
-          x: 24
-          'y': 22
-          width: 154
-          height: 110
-      - type: saveSlot
-        x: 531
-        'y': 168
-        asset: asset18
-        slot: '2'
-        thumbnail:
-          x: 24
-          'y': 22
-          width: 154
-          height: 110
-      - type: label
-        x: 222
-        'y': 40
-        text: S.A.V.E.L.O.A.D
-        style:
-          font: fontsaudimat-mono
-          fontSize: 47px
-          fill: '#B0B0B0'
-          boundsAlignH: left
-          boundsAlignV: top
-      - type: button
-        x: 120
-        'y': 340
-        asset: asset39
-        binding: save
-        slot: '0'
-      - type: button
-        x: 120
-        'y': 408
-        asset: asset40
-        binding: load
-        slot: '0'
-      - type: button
-        x: 353
-        'y': 340
-        asset: asset39
-        binding: save
-        slot: '1'
-      - type: button
-        x: 353
-        'y': 408
-        asset: asset40
-        binding: load
-        slot: '1'
-      - type: button
-        x: 580
-        'y': 340
-        asset: asset39
-        binding: save
-        slot: '2'
-      - type: button
-        x: 580
-        'y': 408
-        asset: asset40
-        binding: load
-        slot: '2'
-      - type: button
-        x: 616
-        'y': 506
-        asset: asset17
-        binding: return
+
 assets:
   images:
-    loaderbackground:
-      name: loaderbackground
-      fileName: loaderloaderbackground.png
-    asset16:
-      name: asset16
-      fileName: saveloadasset16.png
-    asset18:
-      name: asset18
-      fileName: saveloadasset18.png
-    asset19:
-      name: asset19
-      fileName: hudasset19.png
-    asset20:
-      name: asset20
-      fileName: hudasset20.png
-    asset22:
-      name: asset22
-      fileName: hudasset22.png
+    textbox:
+      name: textbox
+      fileName: textbox.png
+    namebox:
+      name: namebox
+      fileName: namebox.png
+    gameframe:
+      name: gameframe
+      fileName: gameframe.png
   spritesheets:
     loading-bar:
       name: loading-bar
       fileName: loaderloading-bar.png
       w: 578
-      h: 82
-    asset3:
-      name: asset3
-      fileName: mainasset3.png
-      w: 199
       h: 82
     asset4:
       name: asset4
@@ -313,64 +105,24 @@ assets:
       fileName: mainasset5.png
       w: 199
       h: 82
-    asset12:
-      name: asset12
-      fileName: settingsasset12.png
-      w: 256
-      h: 53
-    asset17:
-      name: asset17
-      fileName: saveloadasset17.png
-      w: 163
-      h: 82
-    asset21:
-      name: asset21
-      fileName: hudasset21.png
-      w: 19
-      h: 20
-    asset23:
-      name: asset23
-      fileName: hudasset23.png
-      w: 41
-      h: 39
-    asset24:
-      name: asset24
-      fileName: hudasset24.png
-      w: 41
-      h: 39
-    asset25:
-      name: asset25
-      fileName: hudasset25.png
-      w: 41
-      h: 39
-    asset26:
-      name: asset26
-      fileName: hudasset26.png
-      w: 41
-      h: 39
-    asset31:
-      name: asset31
-      fileName: hudasset31.png
-      w: 560
-      h: 65
-    asset32:
+    readystar: # blinky thing
+      name: readystar
+      fileName: readystar.png
+      w: 40
+      h: 43
+    buttonspritesheet: # option buttons
+      name: buttonspritesheet
+      fileName: buttonspritesheet.png
+      w: 1000
+      h: 140
+    asset32: # interrupt buttons
       name: asset32
       fileName: hudasset32.png
       w: 716
       h: 65
-    asset39:
-      name: asset39
-      fileName: saveloadasset39.png
-      w: 103
-      h: 53
-    asset40:
-      name: asset40
-      fileName: saveloadasset40.png
-      w: 103
-      h: 53
   fonts:
     fontsaudimat-mono:
-      fileName: fontsfontsaudimat-mono.ttf
+      fileName: OpenDyslexic3-Regular.ttf
       name: fontsaudimat-mono
   audio:
     Evan_Schaeffer_-_01_-_Aqueduct:

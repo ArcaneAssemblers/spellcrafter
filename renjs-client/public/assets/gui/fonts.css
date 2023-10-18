@@ -1,15 +1,13 @@
+@font-face {
 
+    font-family: 'fontsaudimat-mono';
 
-      @font-face {
+    src: url('/assets/gui/OpenDyslexic3-Regular.ttf');
 
-          font-family: 'fontsaudimat-mono';
+    src: url('/assets/gui/OpenDyslexic3-Regular.ttf').format('truetype');
 
-          src: url('/assets/gui/fontsfontsaudimat-mono.ttf');
+    font-weight: normal;
 
-          src: url('/assets/gui/fontsfontsaudimat-mono.ttf').format('truetype');
+    font-style: normal;
 
-          font-weight: normal;
-
-          font-style: normal;
-
-      }
+}
