@@ -18,7 +18,7 @@ config:
         'y': 0
         style:
           font: fontsaudimat-mono
-          fontSize: 40px
+          fontSize: 45px
           fill: '#FFFFFF'
           align: left
           boundsAlignH: center
@@ -30,15 +30,15 @@ config:
       'y': 1560
       sfx: none
       text:
-        x: 100
-        'y': 24
+        x: 110
+        'y': 34
         style:
           font: fontsaudimat-mono
-          fontSize: 50px
+          fontSize: 45px
           fill: '#89BAA8'
           align: left
           wordWrap: true
-          wordWrapWidth: '800'
+          wordWrapWidth: '900'
       ctc:
         x: 960
         'y': 280
@@ -114,7 +114,7 @@ assets:
       h: 65
   fonts:
     fontsaudimat-mono:
-      fileName: fontsfontsaudimat-mono.ttf
+      fileName: OpenDyslexic3-Regular.ttf
       name: fontsaudimat-mono
   audio:
     Evan_Schaeffer_-_01_-_Aqueduct:
