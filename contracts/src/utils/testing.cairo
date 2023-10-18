@@ -1,5 +1,5 @@
 use dojo::{executor::executor, world::{world, IWorldDispatcher, IWorldDispatcherTrait}};
-use dojo::test_utils::{spawn_test_world, deploy_contract};
+use dojo::test_utils::spawn_test_world;
 
 use starknet::{
     syscalls::deploy_syscall,
@@ -8,6 +8,7 @@ use starknet::{
 };
 
 use traits::{Into, TryInto};
+use core::array::SpanTrait;
 use result::ResultTrait;
 use array::ArrayTrait;
 use option::OptionTrait;
@@ -35,7 +36,9 @@ fn deploy_game() -> SpellcraftDeployment {
     
     let world = spawn_test_world(models);
 
-    let system = ISpellCrafterDispatcher { contract_address: deploy_contract(spellcrafter_system::TEST_CLASS_HASH, array![].span()) };
+    // deploy systems contract
+    let contract_address = world.deploy_contract('yummysalt', spellcrafter_system::TEST_CLASS_HASH.try_into().unwrap());
+    let system = ISpellCrafterDispatcher { contract_address };
 
     SpellcraftDeployment {
         world,
