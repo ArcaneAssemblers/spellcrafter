@@ -13,7 +13,6 @@ config:
       alignment: centered
       separation: 10
       sfx: none
-      chosenColor: '#535050'
       text:
         x: 0
         'y': 0
