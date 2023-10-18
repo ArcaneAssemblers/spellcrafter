@@ -4,8 +4,8 @@ const BASE_URL = import.meta.env.BASE_URL;
 
 const RenJSConfig =  {
   'name': 'Quickstart',
-  'w': 640,
-  'h': 960,
+  'w': 1080,
+  'h': 1920,
   'renderer': Phaser.AUTO, // become renderer
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
