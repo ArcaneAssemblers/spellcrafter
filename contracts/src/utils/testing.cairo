@@ -1,17 +1,7 @@
+use array::ArrayTrait;
+
 use dojo::{executor::executor, world::{world, IWorldDispatcher, IWorldDispatcherTrait}};
 use dojo::test_utils::spawn_test_world;
-
-use starknet::{
-    syscalls::deploy_syscall,
-    class_hash::Felt252TryIntoClassHash, 
-    get_caller_address, ClassHash
-};
-
-use traits::{Into, TryInto};
-use core::array::SpanTrait;
-use result::ResultTrait;
-use array::ArrayTrait;
-use option::OptionTrait;
 
 use spellcrafter::components::{
     owner::owner,

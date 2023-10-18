@@ -1,4 +1,3 @@
-use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 use spellcrafter::types::Region;
 
 #[starknet::interface]
@@ -11,7 +10,6 @@ trait ISpellCrafter<TContractState> {
 #[dojo::contract]
 mod spellcrafter_system {
     use super::ISpellCrafter;
-    use traits::Into;
     use starknet::get_caller_address;
 
     use spellcrafter::constants::{INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT, CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT};
@@ -91,15 +89,8 @@ mod spellcrafter_system {
 
 
 #[cfg(test)]
-mod forage_tests {
-    use traits::{Into, TryInto};
-    use result::ResultTrait;
-    use array::ArrayTrait;
-    use option::OptionTrait;
-    use serde::Serde;
-    
+mod forage_tests {    
     use dojo::world::{ IWorldDispatcher, IWorldDispatcherTrait};
-    use dojo::test_utils::deploy_contract;
 
     use spellcrafter::types::Region;
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
