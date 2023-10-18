@@ -6,6 +6,11 @@ assetCounter: 44
 config:
   hud:
     - id: default
+      type: image
+      asset: gameframe
+      x: 0
+      'y': 0
+    - id: default
       type: choices
       asset: buttonspritesheet
       x: 40
@@ -35,10 +40,10 @@ config:
         style:
           font: fontsaudimat-mono
           fontSize: 45px
-          fill: '#89BAA8'
+          fill: '#BF9FE6'
           align: left
           wordWrap: true
-          wordWrapWidth: '900'
+          wordWrapWidth: '870'
       ctc:
         x: 960
         'y': 280
@@ -49,12 +54,12 @@ config:
       x: 140
       'y': 1490
       text:
-        x: 10
+        x: 0
         'y': 0
         style:
           font: fontsaudimat-mono
-          fontSize: 50px
-          fill: '#FFFFFF'
+          fontSize: 40px
+          fill: '#BF9FE6'
           align: left
           boundsAlignH: center
           boundsAlignV: middle
@@ -75,12 +80,15 @@ config:
 
 assets:
   images:
-    textbox: # text box
+    textbox:
       name: textbox
       fileName: textbox.png
-    namebox: # name box
+    namebox:
       name: namebox
       fileName: namebox.png
+    gameframe:
+      name: gameframe
+      fileName: gameframe.png
   spritesheets:
     loading-bar:
       name: loading-bar
