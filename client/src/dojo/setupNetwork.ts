@@ -29,8 +29,8 @@ export async function setupNetwork() {
         graphSdk: createGraphSdk(),
 
         // Execute function.
-        execute: async (signer: Account, system: string, call_data: num.BigNumberish[]) => {
-            return provider.execute(signer, system, call_data);
+        execute: async (signer: Account, system: string, method: string, call_data: num.BigNumberish[]) => {
+            return provider.execute(signer, system, method, call_data);
         },
 
         // Entity query function.

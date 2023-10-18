@@ -11,9 +11,9 @@
     "codegen": "graphql-codegen"
   },
   "dependencies": {
-    "@dojoengine/core": "^0.0.20",
-    "@dojoengine/create-burner": "^0.0.18",
-    "@dojoengine/utils": "^0.0.2",
+    "@dojoengine/core": "^0.1.1",
+    "@dojoengine/create-burner": "^0.1.1",
+    "@dojoengine/utils": "^0.1.1",
     "@latticexyz/dev-tools": "^2.0.0-alpha.1.62",
     "@latticexyz/react": "^1.43.0",
     "@latticexyz/recs": "^1.43.0",
