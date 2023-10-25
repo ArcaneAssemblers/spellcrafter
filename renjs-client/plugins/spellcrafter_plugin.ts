@@ -1,7 +1,7 @@
 import cards from "../generated/cards.json";
 // import { Plugin } from "renjs";
 
-import { SpellcrafterGame, newGame, forage, interact, approachSpell } from "./spellcrafter_game";
+import { SpellcrafterGame, newGame, forage, interact, approachSpell, summonFamiliar, sendFamiliar, claimFamiliarItem } from "./spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
@@ -24,12 +24,21 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 
         const decodeCall = (method: string, ...args: any[]): Promise<void> => {
             switch(method) {
+                case "printDebug":
+                    console.log(this.spellcrafterGame);
+                    return Promise.resolve();
                 case "forage":
                     return this.forage(args[0]);
                 case "checkApproachSpell":
                     return this.checkApproachSpell();
                 case "selectAndAddIngredient":
                     return this.selectAndAddIngredient();
+                case "summonFamiliar":
+                    return this.summonFamiliar(args[0]);
+                case "sendFamiliar":
+                    return this.sendFamiliar();
+                case "claimFamiliarItem":
+                    return this.claimFamiliarItem();
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -38,7 +47,10 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         decodeCall(method, ...args).then(() => {
             this.syncState();
             this.game.resolveAction(); // must call this to return control to the story
-        })
+        }).catch((err) => {
+            console.error(err.message);
+            // hang forever
+        });
 	}
 
     /// Display the currently owned items and allow the player to select one
@@ -78,6 +90,30 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
         await forage(this.spellcrafterGame, region);
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.barriers - pre_chaos;
+    }
+
+    async summonFamiliar(region: string): Promise<void> {
+        let pre_chaos = this.spellcrafterGame.stats.chaos;
+        await summonFamiliar(this.spellcrafterGame, region);
+        if (this.spellcrafterGame.familiar) {
+            this.game.managers.logic.vars["familiar"] = this.spellcrafterGame.familiar.id;
+            this.game.managers.logic.vars["familiarName"] = cards[this.spellcrafterGame.familiar.id].name;
+        }
+        this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.barriers - pre_chaos;
+    }
+
+    async sendFamiliar(): Promise<void> {
+        await sendFamiliar(this.spellcrafterGame);
+    }
+
+    async claimFamiliarItem(): Promise<void> {
+        try {
+            await claimFamiliarItem(this.spellcrafterGame);
+            this.game.managers.logic.vars["familiarReturnedItem"] = true;
+        } catch (err) { // just print errors here since we know this can fail
+            console.log("familiar item check failed: ", err.message);
+            return;
+        }
     }
 
     /// copies variables from the game state object into the renjs context

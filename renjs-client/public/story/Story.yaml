@@ -1,4 +1,5 @@
 start:
+  - scene: manageActions
   - play mysterious: LOOPED
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
@@ -15,6 +16,16 @@ start:
 
 manageActions:
   - show tower: WITH FADE
+
+  # upkeep
+  - call SpellCrafter: printDebug
+  - call SpellCrafter: claimFamiliarItem
+  - if ({familiarReturnedItem}):
+    - show cardback: WITH FADE AT 350,300
+    - text: Your {familiarName} returned a {lastForagedItemName}! {lastForagedItemFlavour}.
+    - text: "{lastForagedItemDescription}"
+    - hide cardback:
+    - var familiarReturnedItem: false
 
   - text: The current spell power is {power}, and its chaos is {chaos}.
   
@@ -55,26 +66,30 @@ manageActions:
       - if (!{familiar}):
         - text: You don't have a familiar to send out.
       - else:
-        - text: You send your {familiar} out to forage. Check back later to see what they bring back.
+        - call SpellCrafter: sendFamiliar
+        - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
       - scene: manageActions
 
     - "Summon":
+      - if ({familiarName}):
+        - text: You already have a familiar
+        - scene: manageActions
       - text: You begin the summoning ritual
       - choice:
         - text: What would you like to summon?
         - "Raven":
+          - call SpellCrafter: summonFamiliar forest
           - text: You summon a (bold)raven(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
-          - var familiar: raven
         - "Cat":
+          - call SpellCrafter: summonFamiliar meadow
           - text: You summon a (bold)cat(end) into existence. It is a sweet but dangerous companion that can forage in the Meadow.
-          - var familiar: cat
         - "Salamander":
+          - call SpellCrafter: summonFamiliar volcano
           - text: You summon a (bold)salamander(end) into existence. It is a fiery critter that can forage in the Volcano.
-          - var familiar: salamander
         - "Wolf Spider": 
+          - call SpellCrafter: summonFamiliar cave
           - text: You summon a (bold)wolf spider(end) into existence. It is a creepy critter that can forage in the Cave.
-          - var familiar: wolfspider
-      - scene: manageActions
+      - scene: approaching
 
     - "Study":
       - text: This action is not available yet
