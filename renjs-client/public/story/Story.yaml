@@ -70,8 +70,8 @@ manageActions:
         - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
       - scene: manageActions
 
-    - "Summon":
-      - if ({familiarName}):
+    - "Summon Familiar":
+      - if ({familiar}):
         - text: You already have a familiar
         - scene: manageActions
       - text: You begin the summoning ritual
@@ -90,6 +90,9 @@ manageActions:
           - call SpellCrafter: summonFamiliar cave
           - text: You summon a (bold)wolf spider(end) into existence. It is a creepy critter that can forage in the Cave.
       - scene: approaching
+
+    - "Sacrifice Familiar":
+      - scene: sacrifice
 
     - "Study":
       - text: This action is not available yet
@@ -148,7 +151,19 @@ addComponents:
     - hide deuzi: WITH FADE
   - scene: manageActions
 
-
+sacrifice:
+  - if ({familiar} && {familiarIdle}):
+    - text: You begin the sacrifice ritual
+    - text: I'm sorry {familiarName}, but I really need your help.
+    - show altar: WITH FADE
+    - text: You place your {familiarName} on the altar.
+    - call SpellCrafter: sacrificeFamiliar
+    - effect SHAKE:
+    - text: You sacrifice your {familiarName} to the spell.
+  - else:
+    - deuzi says angry: You don't have a familiar to sacrifice!!
+    - hide deuzi: WITH FADE
+  - scene: manageActions
 
 leavingTower:
   # - show outside: WITH FADE

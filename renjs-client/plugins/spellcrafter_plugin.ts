@@ -1,7 +1,7 @@
 import cards from "../generated/cards.json";
 // import { Plugin } from "renjs";
 
-import { SpellcrafterGame, newGame, forage, interact, approachSpell, summonFamiliar, sendFamiliar, claimFamiliarItem } from "./spellcrafter_game";
+import { SpellcrafterGame, newGame, forage, interact, approachSpell, summonFamiliar, sendFamiliar, claimFamiliarItem, sacrificeFamiliar } from "./spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
@@ -37,6 +37,8 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return this.summonFamiliar(args[0]);
                 case "sendFamiliar":
                     return this.sendFamiliar();
+                case "sacrificeFamiliar":
+                    return this.sacrificeFamiliar();
                 case "claimFamiliarItem":
                     return this.claimFamiliarItem();
                 default:
@@ -89,21 +91,21 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     async forage(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
         await forage(this.spellcrafterGame, region);
-        this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.barriers - pre_chaos;
+        this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
     }
 
     async summonFamiliar(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
         await summonFamiliar(this.spellcrafterGame, region);
-        if (this.spellcrafterGame.familiar) {
-            this.game.managers.logic.vars["familiar"] = this.spellcrafterGame.familiar.id;
-            this.game.managers.logic.vars["familiarName"] = cards[this.spellcrafterGame.familiar.id].name;
-        }
-        this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.barriers - pre_chaos;
+        this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
     }
 
     async sendFamiliar(): Promise<void> {
         await sendFamiliar(this.spellcrafterGame);
+    }
+
+    async sacrificeFamiliar(): Promise<void> {
+        await sacrificeFamiliar(this.spellcrafterGame);
     }
 
     async claimFamiliarItem(): Promise<void> {
@@ -112,7 +114,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             this.game.managers.logic.vars["familiarReturnedItem"] = true;
         } catch (err) { // just print errors here since we know this can fail
             console.log("familiar item check failed: ", err.message);
-            return;
         }
     }
 
@@ -133,5 +134,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["lastForagedItemName"] =  lastForagedItem ? cards[lastForagedItem].name : null
         this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].description : null
         this.game.managers.logic.vars["lastForagedItemFlavour"] = lastForagedItem ? cards[lastForagedItem].flavour : null
+        if (this.spellcrafterGame.familiar) {
+            this.game.managers.logic.vars["familiar"] = this.spellcrafterGame.familiar.id;
+            this.game.managers.logic.vars["familiarName"] = cards[this.spellcrafterGame.familiar.id].name;
+            this.game.managers.logic.vars["familiarIdle"] = this.spellcrafterGame.familiar.busyUntil <= this.spellcrafterGame.time;
+        } else {
+            this.game.managers.logic.vars["familiar"] = null;
+        }
     }
 }

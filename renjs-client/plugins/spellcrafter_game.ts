@@ -1,11 +1,13 @@
 import cards from "../generated/cards.json";
 
 const ITEM_LIMIT = 7;
+const BARRIERS_LIMIT = 3;
+
 const CHAOS_PER_FORAGE = 2;
-const CHAOS_PER_SUMMON = 3;
+const CHAOS_PER_SUMMON = 5;
 
 const TICKS_PER_FORAGE = 2;
-const TICKS_PER_SUMMON = 3;
+const TICKS_PER_SUMMON = 5;
 const TICKS_FOR_FAMILIAR_FORAGE = 2;
 
 export type GameStats = {
@@ -98,6 +100,17 @@ export async function sendFamiliar(game: SpellcrafterGame): Promise<void> {
     game.familiar.hasItem = true;
 }
 
+export async function sacrificeFamiliar(game: SpellcrafterGame): Promise<void> {
+    if (!game.familiar) {
+        throw new Error("no familiar to sacrifice");
+    }
+    if (game.familiar.busyUntil > game.time) {
+        throw new Error("familiar is busy");
+    }
+    enactCard(game, game.familiar.id)
+    game.familiar = null;
+}
+
 export async function claimFamiliarItem(game: SpellcrafterGame): Promise<void> {
     if (!game.familiar) {
         throw new Error("No familiar owned");
@@ -139,7 +152,7 @@ function enactCard(game: SpellcrafterGame, cardId: number): void {
         game.stats.power += parseOrZero(card.power_delta);
         game.stats.hotCold += parseOrZero(card.hotcold_delta);
         game.stats.lightDark += parseOrZero(card.lightdark_delta);
-        game.stats.barriers += parseOrZero(card.barriers_delta);
+        game.stats.barriers = Math.min(BARRIERS_LIMIT, game.stats.barriers + parseOrZero(card.barriers_delta));
     } else {
         game.stats.chaos += parseOrZero(card.chaos_delta_fallback);
         game.stats.power += parseOrZero(card.power_delta_fallback);
