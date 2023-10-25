@@ -28,7 +28,7 @@ manageActions:
     - var familiarReturnedItem: false
 
   - text: The current spell power is {power}, and its chaos is {chaos}.
-  
+  - call SpellCrafter: showBarriers
   - if ({lightdark} > 0):
     - text: The spell is light level {lightdark}.
   - if ({lightdark} < 0):
@@ -62,7 +62,7 @@ manageActions:
           - var foraging: cave
       - scene: leavingTower
 
-    - "Send Familiar":
+    - Send Familiar !if ({familiar}):
       - if (!{familiar}):
         - text: You don't have a familiar to send out.
       - else:
@@ -70,7 +70,7 @@ manageActions:
         - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
       - scene: manageActions
 
-    - "Summon Familiar":
+    - Summon Familiar !if (!{familiar}):
       - if ({familiar}):
         - text: You already have a familiar
         - scene: manageActions
@@ -91,7 +91,7 @@ manageActions:
           - text: You summon a (bold)wolf spider(end) into existence. It is a creepy critter that can forage in the Cave.
       - scene: approaching
 
-    - "Sacrifice Familiar":
+    - Sacrifice Familiar !if ({familiar}):
       - scene: sacrifice
 
     - "Study":

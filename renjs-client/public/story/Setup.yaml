@@ -20,6 +20,9 @@ characters:
 
 cgs:
   cardback: assets/objects/cardback.png
+  barrier: assets/objects/barrier.png
+  barrier_broken: assets/objects/barrier_broken.png
+
   
 music:
   mysterious: assets/audio/mysterious.mp3
