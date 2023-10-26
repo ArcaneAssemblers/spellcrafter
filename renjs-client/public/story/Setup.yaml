@@ -18,6 +18,30 @@ characters:
       happy: assets/characters/Char3HappySchool.png
       angry: assets/characters/Char3AngrySchool.png
 
+  raven:
+    displayName: Raven
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+
+  cat:
+    displayName: Cat
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+
+  salamander:
+    displayName: Salamander
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+
+  spider:
+    displayName: Wolf Spider
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+
 cgs:
   cardback: assets/objects/cardback.png
   

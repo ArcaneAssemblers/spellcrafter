@@ -21,10 +21,40 @@ manageActions:
   - call SpellCrafter: printDebug
   - call SpellCrafter: claimFamiliarItem
   - if ({familiarReturnedItem}):
+
+    - if ({familiarName} == "Raven"):
+      - show raven: WITH CUT AT OUTLEFT
+      - show raven: WITH MOVE AT LEFT
+    - if ({familiarName} == "Cat"):
+      - show cat: WITH CUT AT OUTLEFT
+      - show cat: WITH MOVE AT LEFT
+    - if ({familiarName} == "Salamander"):
+      - show salamander: WITH CUT AT OUTLEFT
+      - show salamander: WITH MOVE AT LEFT
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: WITH CUT AT OUTLEFT
+      - show spider: WITH MOVE AT LEFT
+
     - show cardback: WITH FADE AT 350,300
+
     - text: Your {familiarName} returned a {lastForagedItemName}! {lastForagedItemFlavour}.
+
+    - if ({familiarName} == "Raven"):
+      - show raven: WITH MOVE AT OUTLEFT
+      - hide raven: WITH CUT AT OUTLEFT
+    - if ({familiarName} == "Cat"):
+      - show cat: WITH MOVE AT OUTLEFT
+      - hide cat: WITH CUT AT OUTLEFT
+    - if ({familiarName} == "Salamander"):
+      - show salamander: WITH MOVE AT OUTLEFT
+      - hide salamander: WITH CUT AT OUTLEFT
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: WITH MOVE AT OUTLEFT
+      - hide spider: WITH CUT AT OUTLEFT
+
     - text: "{lastForagedItemDescription}"
     - hide cardback:
+
     - var familiarReturnedItem: false
 
   - text: The current spell power is {power}, and its chaos is {chaos}.
@@ -67,7 +97,35 @@ manageActions:
         - text: You don't have a familiar to send out.
       - else:
         - call SpellCrafter: sendFamiliar
+
+        - if ({familiarName} == "Raven"):
+          - show raven: WITH CUT AT OUTLEFT
+          - show raven: WITH MOVE AT LEFT
+        - if ({familiarName} == "Cat"):
+          - show cat: WITH CUT AT OUTLEFT
+          - show cat: WITH MOVE AT LEFT
+        - if ({familiarName} == "Salamander"):
+          - show salamander: WITH CUT AT OUTLEFT
+          - show salamander: WITH MOVE AT LEFT
+        - if ({familiarName} == "Wolf Spider"):
+          - show spider: WITH CUT AT OUTLEFT
+          - show spider: WITH MOVE AT LEFT
+
         - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
+
+        - if ({familiarName} == "Raven"):
+          - show raven: WITH MOVE AT OUTLEFT
+          - hide raven: WITH CUT AT OUTLEFT
+        - if ({familiarName} == "Cat"):
+          - show cat: WITH MOVE AT OUTLEFT
+          - hide cat: WITH CUT AT OUTLEFT
+        - if ({familiarName} == "Salamander"):
+          - show salamander: WITH MOVE AT OUTLEFT
+          - hide salamander: WITH CUT AT OUTLEFT
+        - if ({familiarName} == "Wolf Spider"):
+          - show spider: WITH MOVE AT OUTLEFT
+          - hide spider: WITH CUT AT OUTLEFT
+
       - scene: manageActions
 
     - "Summon Familiar":
@@ -79,16 +137,17 @@ manageActions:
         - text: What would you like to summon?
         - "Raven":
           - call SpellCrafter: summonFamiliar forest
-          - text: You summon a (bold)raven(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
+          - show raven: WITH FADE AT CENTER
         - "Cat":
           - call SpellCrafter: summonFamiliar meadow
-          - text: You summon a (bold)cat(end) into existence. It is a sweet but dangerous companion that can forage in the Meadow.
+          - show cat: WITH FADE AT CENTER
         - "Salamander":
           - call SpellCrafter: summonFamiliar volcano
-          - text: You summon a (bold)salamander(end) into existence. It is a fiery critter that can forage in the Volcano.
+          - show salamander: WITH FADE AT CENTER
         - "Wolf Spider": 
           - call SpellCrafter: summonFamiliar cave
-          - text: You summon a (bold)wolf spider(end) into existence. It is a creepy critter that can forage in the Cave.
+          - show spider: WITH FADE AT CENTER
+      - text: You summon a (bold){familiarName}(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
       - scene: approaching
 
     - "Sacrifice Familiar":
