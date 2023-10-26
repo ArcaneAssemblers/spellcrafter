@@ -25,15 +25,19 @@ manageActions:
     - if ({familiarName} == "Raven"):
       - show raven: WITH CUT AT OUTLEFT
       - show raven: WITH MOVE AT LEFT
+      - play raven:
     - if ({familiarName} == "Cat"):
       - show cat: WITH CUT AT OUTLEFT
       - show cat: WITH MOVE AT LEFT
+      - play cat:
     - if ({familiarName} == "Salamander"):
       - show salamander: WITH CUT AT OUTLEFT
       - show salamander: WITH MOVE AT LEFT
+      - play salamander:
     - if ({familiarName} == "Wolf Spider"):
       - show spider: WITH CUT AT OUTLEFT
       - show spider: WITH MOVE AT LEFT
+      - play spider:
 
     - show cardback: WITH FADE AT 350,300
 
@@ -101,15 +105,19 @@ manageActions:
         - if ({familiarName} == "Raven"):
           - show raven: WITH CUT AT OUTLEFT
           - show raven: WITH MOVE AT LEFT
+          - play raven:
         - if ({familiarName} == "Cat"):
           - show cat: WITH CUT AT OUTLEFT
           - show cat: WITH MOVE AT LEFT
+          - play cat:
         - if ({familiarName} == "Salamander"):
           - show salamander: WITH CUT AT OUTLEFT
           - show salamander: WITH MOVE AT LEFT
+          - play salamander:
         - if ({familiarName} == "Wolf Spider"):
           - show spider: WITH CUT AT OUTLEFT
           - show spider: WITH MOVE AT LEFT
+          - play spider:
 
         - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
 
@@ -138,15 +146,19 @@ manageActions:
         - "Raven":
           - call SpellCrafter: summonFamiliar forest
           - show raven: WITH FADE AT CENTER
+          - play raven:
         - "Cat":
           - call SpellCrafter: summonFamiliar meadow
           - show cat: WITH FADE AT CENTER
+          - play cat:
         - "Salamander":
           - call SpellCrafter: summonFamiliar volcano
           - show salamander: WITH FADE AT CENTER
+          - play salamander:
         - "Wolf Spider": 
           - call SpellCrafter: summonFamiliar cave
           - show spider: WITH FADE AT CENTER
+          - play spider:
       - text: You summon a (bold){familiarName}(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
       - scene: approaching
 
@@ -213,11 +225,42 @@ addComponents:
 sacrifice:
   - if ({familiar} && {familiarIdle}):
     - text: You begin the sacrifice ritual
+    
+    - if ({familiarName} == "Raven"):
+      - show raven: WITH FADE AT CENTER
+    - if ({familiarName} == "Cat"):
+      - show cat: WITH FADE AT CENTER
+    - if ({familiarName} == "Salamander"):
+      - show salamander: WITH FADE AT CENTER
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: WITH FADE AT CENTER
+
     - text: I'm sorry {familiarName}, but I really need your help.
     - show altar: WITH FADE
+
+    - if ({familiarName} == "Raven"):
+      - show raven: scared WITH CUT AT CENTER
+    - if ({familiarName} == "Cat"):
+      - show cat: scared WITH CUT AT CENTER
+    - if ({familiarName} == "Salamander"):
+      - show salamander: scared WITH CUT AT CENTER
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: scared WITH CUT AT CENTER
+
     - text: You place your {familiarName} on the altar.
     - call SpellCrafter: sacrificeFamiliar
     - effect SHAKE:
+    - play sacrifice:
+
+    - if ({familiarName} == "Raven"):
+      - hide raven:
+    - if ({familiarName} == "Cat"):
+      - hide cat:
+    - if ({familiarName} == "Salamander"):
+      - hide salamander:
+    - if ({familiarName} == "Wolf Spider"):
+      - hide spider:
+
     - text: You sacrifice your {familiarName} to the spell.
   - else:
     - deuzi says angry: You don't have a familiar to sacrifice!!
