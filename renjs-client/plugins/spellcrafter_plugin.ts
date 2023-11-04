@@ -29,9 +29,9 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             cardText.setText(cards[cardId].description);
         }
 
-        this.barrierImages.push(this.game.add.image(100, 0, "barrier"));
-        this.barrierImages.push(this.game.add.image(200, 0, "barrier"));
-        this.barrierImages.push(this.game.add.image(300, 0, "barrier"));
+        this.barrierImages.push(this.game.add.image(700, 1520, "barrier"));
+        this.barrierImages.push(this.game.add.image(800, 1520, "barrier"));
+        this.barrierImages.push(this.game.add.image(900, 1520, "barrier"));
         this.barrierImages.forEach(img => { img.visible = false});
 
         this.syncState()
@@ -226,7 +226,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             if (stats.barriers >= (i+1))
                 this.barrierImages[2-i].loadTexture("barrier");
             else
-                this.barrierImages[2-i].loadTexture("barrier_broken");
+                this.barrierImages[2-i].loadTexture("barrier-broken");
         }
     }
 }

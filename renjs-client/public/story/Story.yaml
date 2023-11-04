@@ -1,4 +1,5 @@
 start:
+  - scene: manageActions
   - play mysterious: LOOPED
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
@@ -70,8 +71,6 @@ manageActions:
   - if ({hotcold} < 0):
     - var cold: "{hotcold} * -1"
     - text: The spell is cold level {cold}.
-
-  - text: You have {barriers} barriers remaining
 
   - choice:
     - text: What would you like to do?
