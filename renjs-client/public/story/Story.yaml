@@ -1,5 +1,4 @@
 start:
-  - scene: manageActions
   - play mysterious: LOOPED
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE

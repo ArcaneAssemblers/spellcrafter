@@ -51,7 +51,7 @@ punctuationWait: 5
 precomputeBreakLines: true
 
 userPreferences:
-  textSpeed: 80
+  textSpeed: 90
   autoSpeed: 150
   bgmv: 0.8
   sfxv: 0.5
