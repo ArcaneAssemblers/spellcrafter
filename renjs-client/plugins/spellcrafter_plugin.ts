@@ -1,15 +1,33 @@
 import cards from "../generated/cards.json";
-// import { Plugin } from "renjs";
+import { Plugin } from "renjs";
 
 import { SpellcrafterGame, newGame, forage, interact, approachSpell, summonFamiliar, sendFamiliar, claimFamiliarItem, sacrificeFamiliar } from "./spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
     spellcrafterGame: SpellcrafterGame;
+    cardDisplayGroup;
+    setCard;
     
     // called when new game is started, just before interpreter is called
     onStart(): void {
         this.spellcrafterGame = newGame();
+
+        const cardBack = this.game.add.image(195, 95, "cardback");
+        const cardName = this.game.add.text(300, 150, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
+        const cardText = this.game.add.text(300, 270, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
+
+        this.cardDisplayGroup = this.game.add.group()
+        this.cardDisplayGroup.add(cardBack);
+        this.cardDisplayGroup.add(cardName);
+        this.cardDisplayGroup.add(cardText);
+        this.cardDisplayGroup.visible = false;
+
+        this.setCard = (cardId: number) => {
+            cardName.setText(cards[cardId].name);
+            cardText.setText(cards[cardId].description);
+        }
+
         this.syncState();
 	}
 
@@ -41,6 +59,10 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return this.sacrificeFamiliar();
                 case "claimFamiliarItem":
                     return this.claimFamiliarItem();
+                case "showCard":
+                    return this.showCard();
+                case "hideCard":
+                    return this.hideCard();
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -60,25 +82,62 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     /// This promise will also resolve with the chosen value
     async selectAndAddIngredient(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            this.game.gui.hud.hide();
-            // add a button for each card
-            let btns = []
-            this.spellcrafterGame.cards.forEach((cardId, index) => {
-                const btn = this.game.add.button(50+index*130, 200, "cardback", async () => {
-                    btns.forEach((btn) => btn.destroy());
+            let selectedCardIndex = 0;
 
-                    let pre_stats = {...this.spellcrafterGame.stats};
-                    await interact(this.spellcrafterGame, cardId);
-                    this.game.managers.logic.vars["lastAddedItemName"] =  cards[cardId].name;
-                    this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
-                    this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
-                    this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
-                    this.game.managers.logic.vars["hotcoldDelta"] = this.spellcrafterGame.stats.hotCold - pre_stats.hotCold;
+            const updateCardDisplay = () => {
+                cardName.setText(cards[this.spellcrafterGame.cards[selectedCardIndex]].name);
+                cardText.setText(cards[this.spellcrafterGame.cards[selectedCardIndex]].description);
+            }
 
-                    resolve();
-                }, this, 0);
-                btns.push(btn);
-            });
+            const returnToStory = () => {
+                cardBack.destroy();
+                cardName.destroy();
+                cardText.destroy();
+                cancelButton.destroy();
+                leftButton.destroy();
+                rightButton.destroy();
+                addToSpellButton.destroy();
+                buttonText.destroy();
+
+                resolve();
+            }
+
+            const cardBack = this.game.add.image(195, 95, "cardback");
+            const cardName = this.game.add.text(300, 150, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
+            const cardText = this.game.add.text(300, 270, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
+
+            updateCardDisplay();
+
+            const cancelButton = this.game.add.button(875, 90, "cancel-button", () => {
+                this.game.managers.logic.vars["lastAddedItemName"] = "nothing";
+                this.game.managers.logic.vars["chaosDelta"] = 0;
+                this.game.managers.logic.vars["powerDelta"] = 0;
+                returnToStory();
+            }, this, 0);
+
+            const leftButton = this.game.add.button(43, 845, "back-button", () => {
+                selectedCardIndex = (selectedCardIndex - 1 + this.spellcrafterGame.cards.length) % this.spellcrafterGame.cards.length;
+                updateCardDisplay()
+            }, this, 0);
+            const rightButton = this.game.add.button(875+150, 845+150, "back-button", () => {
+                selectedCardIndex = (selectedCardIndex + 1) % this.spellcrafterGame.cards.length;
+                updateCardDisplay()
+            }, this, 0);
+            rightButton.rotation = Math.PI;
+
+            const addToSpellButton = this.game.add.button(40, 1025, "button", async () => {
+                let pre_stats = {...this.spellcrafterGame.stats};
+                this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardIndex]].name;
+                await interact(this.spellcrafterGame, this.spellcrafterGame.cards[selectedCardIndex]);
+                this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
+                this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
+                this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
+                this.game.managers.logic.vars["hotcoldDelta"] = this.spellcrafterGame.stats.hotCold - pre_stats.hotCold;
+
+                returnToStory();
+            }, this, 0);
+            const buttonText = this.game.add.text(360, 1050, "Add To Spell", { font: "45px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle", boundsAlignH: "center" });
+
         });
     }
 
@@ -117,6 +176,15 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         }
     }
 
+    async showCard(): Promise<void> {
+        this.setCard(this.game.managers.logic.vars["lastForagedItem"]);
+        this.cardDisplayGroup.visible = true;
+    }
+
+    async hideCard(): Promise<void> {
+        this.cardDisplayGroup.visible = false;
+    }
+
     /// copies variables from the game state object into the renjs context
     /// so they can be displayed in-game and used to alter the story flow
     syncState(): void {
@@ -131,6 +199,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["itemCount"] = this.spellcrafterGame.cards.length;
 
         const lastForagedItem: number | null = this.spellcrafterGame.cards.length > 0 ? this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1] : null;
+        this.game.managers.logic.vars["lastForagedItem"] =  lastForagedItem ? cards[lastForagedItem].card_id : null
         this.game.managers.logic.vars["lastForagedItemName"] =  lastForagedItem ? cards[lastForagedItem].name : null
         this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].description : null
         this.game.managers.logic.vars["lastForagedItemFlavour"] = lastForagedItem ? cards[lastForagedItem].flavour : null
