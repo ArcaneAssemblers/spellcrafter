@@ -39,8 +39,9 @@ manageActions:
       - show spider: WITH MOVE AT LEFT
       - play spider:
 
-  
+    - call SpellCrafter: showCard
     - text: Your {familiarName} returned a {lastForagedItemName}! {lastForagedItemFlavour}.
+    - call SpellCrafter: hideCard
 
     - if ({familiarName} == "Raven"):
       - show raven: WITH MOVE AT OUTLEFT
@@ -54,8 +55,6 @@ manageActions:
     - if ({familiarName} == "Wolf Spider"):
       - show spider: WITH MOVE AT OUTLEFT
       - hide spider: WITH CUT AT OUTLEFT
-
-    - text: "{lastForagedItemDescription}"
   
     - var familiarReturnedItem: false
 
@@ -74,6 +73,7 @@ manageActions:
     - text: The spell is cold level {cold}.
 
   - text: You have {barriers} barriers remaining
+
   - choice:
     - text: What would you like to do?
 
@@ -279,6 +279,9 @@ forest:
   - text: "You forage in the forest for several hours"
   - wait: 1000
   - call SpellCrafter: forage forest
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
   - text: Time to return to the tower.
   - scene: approaching
 
@@ -287,6 +290,9 @@ meadow:
   - text: "You forage in the meadow for several hours"
   - wait: 1000
   - call SpellCrafter: forage meadow
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
   - text: Time to return to the tower.
   - scene: approaching
 
@@ -295,6 +301,9 @@ volcano:
   - text: "You forage in the volcano for several hours"
   - wait: 1000
   - call SpellCrafter: forage volcano
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
   - text: Time to return to the tower.
   - scene: approaching
 
@@ -303,6 +312,9 @@ cave:
   - text: "You forage in the cave for several hours"
   - wait: 1000
   - call SpellCrafter: forage cave
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
   - text: Time to return to the tower.
   - scene: approaching
 

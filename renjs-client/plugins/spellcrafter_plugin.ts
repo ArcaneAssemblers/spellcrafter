@@ -6,10 +6,28 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
     spellcrafterGame: SpellcrafterGame;
+    cardDisplayGroup;
+    setCard;
     
     // called when new game is started, just before interpreter is called
     onStart(): void {
         this.spellcrafterGame = newGame();
+
+        const cardBack = this.game.add.image(195, 95, "cardback");
+        const cardName = this.game.add.text(300, 150, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
+        const cardText = this.game.add.text(300, 270, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
+
+        this.cardDisplayGroup = this.game.add.group()
+        this.cardDisplayGroup.add(cardBack);
+        this.cardDisplayGroup.add(cardName);
+        this.cardDisplayGroup.add(cardText);
+        this.cardDisplayGroup.visible = false;
+
+        this.setCard = (cardId: number) => {
+            cardName.setText(cards[cardId].name);
+            cardText.setText(cards[cardId].description);
+        }
+
         this.syncState();
 	}
 
@@ -41,6 +59,10 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return this.sacrificeFamiliar();
                 case "claimFamiliarItem":
                     return this.claimFamiliarItem();
+                case "showCard":
+                    return this.showCard();
+                case "hideCard":
+                    return this.hideCard();
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -129,19 +151,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     async forage(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
         await forage(this.spellcrafterGame, region);
-
-        const lastForagedItem = this.spellcrafterGame.cards.length > 0 ? cards[this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1]] : null;
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
-
-        const cardBack = this.game.add.image(195, 95, "cardback");
-        const cardName = this.game.add.text(300, 150, lastForagedItem?.name, { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
-        const cardText = this.game.add.text(300, 270, lastForagedItem?.description, { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
-
-        await this.game.managers.text.display(`You found a ${lastForagedItem?.name}! ${lastForagedItem?.flavour}`, "default");
-
-        cardBack.destroy();
-        cardName.destroy();
-        cardText.destroy();
     }
 
     async summonFamiliar(region: string): Promise<void> {
@@ -167,6 +177,15 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         }
     }
 
+    async showCard(): Promise<void> {
+        this.setCard(this.game.managers.logic.vars["lastForagedItem"]);
+        this.cardDisplayGroup.visible = true;
+    }
+
+    async hideCard(): Promise<void> {
+        this.cardDisplayGroup.visible = false;
+    }
+
     /// copies variables from the game state object into the renjs context
     /// so they can be displayed in-game and used to alter the story flow
     syncState(): void {
@@ -181,6 +200,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["itemCount"] = this.spellcrafterGame.cards.length;
 
         const lastForagedItem: number | null = this.spellcrafterGame.cards.length > 0 ? this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1] : null;
+        this.game.managers.logic.vars["lastForagedItem"] =  lastForagedItem ? cards[lastForagedItem].card_id : null
         this.game.managers.logic.vars["lastForagedItemName"] =  lastForagedItem ? cards[lastForagedItem].name : null
         this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].description : null
         this.game.managers.logic.vars["lastForagedItemFlavour"] = lastForagedItem ? cards[lastForagedItem].flavour : null
