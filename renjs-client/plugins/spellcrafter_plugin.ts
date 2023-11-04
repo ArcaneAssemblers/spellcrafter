@@ -8,6 +8,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     spellcrafterGame: SpellcrafterGame;
     cardDisplayGroup;
     setCard;
+    barrierImages: any = [];
     
     // called when new game is started, just before interpreter is called
     onStart(): void {
@@ -28,7 +29,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             cardText.setText(cards[cardId].description);
         }
 
-        this.syncState();
+        this.barrierImages.push(this.game.add.image(100, 0, "barrier"));
+        this.barrierImages.push(this.game.add.image(200, 0, "barrier"));
+        this.barrierImages.push(this.game.add.image(300, 0, "barrier"));
+        this.barrierImages.forEach(img => { img.visible = false});
+
+        this.syncState()
 	}
 
     /// Called when the plugin is called from the story the `call spellcrafter` command
@@ -63,6 +69,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return this.showCard();
                 case "hideCard":
                     return this.hideCard();
+                case "showBarriers":
+                    this.barrierImages.forEach(img => { img.visible = true });
+                    return Promise.resolve();
+                case "hideBarriers":
+                    this.barrierImages.forEach(img => { img.visible = false });
+                    return Promise.resolve(); 
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -209,6 +221,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             this.game.managers.logic.vars["familiarIdle"] = this.spellcrafterGame.familiar.busyUntil <= this.spellcrafterGame.time;
         } else {
             this.game.managers.logic.vars["familiar"] = null;
+        }
+        for(let i = 0; i < 3; i++) {
+            if (stats.barriers >= (i+1))
+                this.barrierImages[2-i].loadTexture("barrier");
+            else
+                this.barrierImages[2-i].loadTexture("barrier_broken");
         }
     }
 }

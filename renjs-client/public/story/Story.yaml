@@ -58,7 +58,7 @@ manageActions:
     - var familiarReturnedItem: false
 
   - text: The current spell power is {power}, and its chaos is {chaos}.
-  
+  - call SpellCrafter: showBarriers
   - if ({lightdark} > 0):
     - text: The spell is light level {lightdark}.
   - if ({lightdark} < 0):
