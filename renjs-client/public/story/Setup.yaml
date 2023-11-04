@@ -18,8 +18,38 @@ characters:
       happy: assets/characters/Char3HappySchool.png
       angry: assets/characters/Char3AngrySchool.png
 
+  raven:
+    displayName: Raven
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/raven.png
+      scared: assets/characters/ravenScared.png
+
+  cat:
+    displayName: Cat
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+
+  salamander:
+    displayName: Salamander
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+
+  spider:
+    displayName: Wolf Spider
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/Char3NormalSchool.png
+
 cgs:
   cardback: assets/objects/cardback.png
   
 music:
   mysterious: assets/audio/mysterious.mp3
+
+sfx:
+  raven: assets/audio/raven.mp3
+  cat: assets/audio/cat.mp3
+  sacrifice: assets/audio/sacrifice.mp3
