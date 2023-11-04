@@ -94,7 +94,7 @@ manageActions:
           - var foraging: cave
       - scene: leavingTower
 
-    - Send Familiar !if ({familiar}):
+    - Send Familiar !if ({familiar} && {familiarIdle}):
       - call SpellCrafter: sendFamiliar
 
       - if ({familiarName} == "Raven"):
@@ -154,7 +154,7 @@ manageActions:
       - text: You summon a (bold){familiarName}(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
       - scene: approaching
 
-    - Sacrifice Familiar !if ({familiar}):
+    - Sacrifice Familiar !if ({familiar} && {familiarIdle}):
       - scene: sacrifice
 
     - "Study":

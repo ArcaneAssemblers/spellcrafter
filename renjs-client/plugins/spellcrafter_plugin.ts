@@ -82,7 +82,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     /// This promise will also resolve with the chosen value
     async selectAndAddIngredient(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            // this.game.gui.hud.hide();
             let selectedCardIndex = 0;
 
             const updateCardDisplay = () => {
