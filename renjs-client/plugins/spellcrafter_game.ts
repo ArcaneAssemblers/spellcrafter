@@ -39,8 +39,6 @@ export type SpellcrafterGame = {
 
 
 export function newGame(): SpellcrafterGame {
-    const initialCard = Number(cards.filter((card) => card.card_type == "cave" || card.card_type == "forest" || card.card_type == "meadow" || card.card_type == "volcano")[0].card_id);
-
     return {
         time: 0,
         stats: {
@@ -50,7 +48,7 @@ export function newGame(): SpellcrafterGame {
             lightDark: 0,
             barriers: 3,
         },
-        cards: [initialCard],
+        cards: [],
         familiar: null,
     }
 }

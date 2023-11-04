@@ -61,11 +61,11 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     async selectAndAddIngredient(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
             // this.game.gui.hud.hide();
-            let selectedCardId = 0;
+            let selectedCardIndex = 0;
 
             const updateCardDisplay = () => {
-                cardName.setText(cards[this.spellcrafterGame.cards[selectedCardId]].name);
-                cardText.setText(cards[this.spellcrafterGame.cards[selectedCardId]].description);
+                cardName.setText(cards[this.spellcrafterGame.cards[selectedCardIndex]].name);
+                cardText.setText(cards[this.spellcrafterGame.cards[selectedCardIndex]].description);
             }
 
             const returnToStory = () => {
@@ -95,19 +95,19 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             }, this, 0);
 
             const leftButton = this.game.add.button(43, 845, "back-button", () => {
-                selectedCardId = (selectedCardId - 1 + this.spellcrafterGame.cards.length) % this.spellcrafterGame.cards.length;
+                selectedCardIndex = (selectedCardIndex - 1 + this.spellcrafterGame.cards.length) % this.spellcrafterGame.cards.length;
                 updateCardDisplay()
             }, this, 0);
             const rightButton = this.game.add.button(875+150, 845+150, "back-button", () => {
-                selectedCardId = (selectedCardId + 1) % this.spellcrafterGame.cards.length;
+                selectedCardIndex = (selectedCardIndex + 1) % this.spellcrafterGame.cards.length;
                 updateCardDisplay()
             }, this, 0);
             rightButton.rotation = Math.PI;
 
             const addToSpellButton = this.game.add.button(40, 1025, "button", async () => {
                 let pre_stats = {...this.spellcrafterGame.stats};
-                await interact(this.spellcrafterGame, selectedCardId);
-                this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardId]].name;
+                this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardIndex]].name;
+                await interact(this.spellcrafterGame, this.spellcrafterGame.cards[selectedCardIndex]);
                 this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
                 this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
                 this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
@@ -129,7 +129,19 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     async forage(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
         await forage(this.spellcrafterGame, region);
+
+        const lastForagedItem = this.spellcrafterGame.cards.length > 0 ? cards[this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1]] : null;
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
+
+        const cardBack = this.game.add.image(195, 95, "cardback");
+        const cardName = this.game.add.text(300, 150, lastForagedItem?.name, { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
+        const cardText = this.game.add.text(300, 270, lastForagedItem?.description, { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
+
+        await this.game.managers.text.display(`You found a ${lastForagedItem?.name}! ${lastForagedItem?.flavour}`, "default");
+
+        cardBack.destroy();
+        cardName.destroy();
+        cardText.destroy();
     }
 
     async summonFamiliar(region: string): Promise<void> {
