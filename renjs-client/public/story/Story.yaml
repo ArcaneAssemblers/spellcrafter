@@ -96,50 +96,44 @@ manageActions:
           - var foraging: cave
       - scene: leavingTower
 
-    - "Send Familiar":
-      - if (!{familiar}):
-        - text: You don't have a familiar to send out.
-      - else:
-        - call SpellCrafter: sendFamiliar
+    - Send Familiar !if ({familiar}):
+      - call SpellCrafter: sendFamiliar
 
-        - if ({familiarName} == "Raven"):
-          - show raven: WITH CUT AT OUTLEFT
-          - show raven: WITH MOVE AT LEFT
-          - play raven:
-        - if ({familiarName} == "Cat"):
-          - show cat: WITH CUT AT OUTLEFT
-          - show cat: WITH MOVE AT LEFT
-          - play cat:
-        - if ({familiarName} == "Salamander"):
-          - show salamander: WITH CUT AT OUTLEFT
-          - show salamander: WITH MOVE AT LEFT
-          - play salamander:
-        - if ({familiarName} == "Wolf Spider"):
-          - show spider: WITH CUT AT OUTLEFT
-          - show spider: WITH MOVE AT LEFT
-          - play spider:
+      - if ({familiarName} == "Raven"):
+        - show raven: WITH CUT AT OUTLEFT
+        - show raven: WITH MOVE AT LEFT
+        - play raven:
+      - if ({familiarName} == "Cat"):
+        - show cat: WITH CUT AT OUTLEFT
+        - show cat: WITH MOVE AT LEFT
+        - play cat:
+      - if ({familiarName} == "Salamander"):
+        - show salamander: WITH CUT AT OUTLEFT
+        - show salamander: WITH MOVE AT LEFT
+        - play salamander:
+      - if ({familiarName} == "Wolf Spider"):
+        - show spider: WITH CUT AT OUTLEFT
+        - show spider: WITH MOVE AT LEFT
+        - play spider:
 
-        - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
+      - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
 
-        - if ({familiarName} == "Raven"):
-          - show raven: WITH MOVE AT OUTLEFT
-          - hide raven: WITH CUT AT OUTLEFT
-        - if ({familiarName} == "Cat"):
-          - show cat: WITH MOVE AT OUTLEFT
-          - hide cat: WITH CUT AT OUTLEFT
-        - if ({familiarName} == "Salamander"):
-          - show salamander: WITH MOVE AT OUTLEFT
-          - hide salamander: WITH CUT AT OUTLEFT
-        - if ({familiarName} == "Wolf Spider"):
-          - show spider: WITH MOVE AT OUTLEFT
-          - hide spider: WITH CUT AT OUTLEFT
+      - if ({familiarName} == "Raven"):
+        - show raven: WITH MOVE AT OUTLEFT
+        - hide raven: WITH CUT AT OUTLEFT
+      - if ({familiarName} == "Cat"):
+        - show cat: WITH MOVE AT OUTLEFT
+        - hide cat: WITH CUT AT OUTLEFT
+      - if ({familiarName} == "Salamander"):
+        - show salamander: WITH MOVE AT OUTLEFT
+        - hide salamander: WITH CUT AT OUTLEFT
+      - if ({familiarName} == "Wolf Spider"):
+        - show spider: WITH MOVE AT OUTLEFT
+        - hide spider: WITH CUT AT OUTLEFT
 
       - scene: manageActions
 
-    - "Summon Familiar":
-      - if ({familiar}):
-        - text: You already have a familiar
-        - scene: manageActions
+    - Summon Familiar !if (!{familiar}):
       - text: You begin the summoning ritual
       - choice:
         - text: What would you like to summon?
@@ -162,7 +156,7 @@ manageActions:
       - text: You summon a (bold){familiarName}(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
       - scene: approaching
 
-    - "Sacrifice Familiar":
+    - Sacrifice Familiar !if ({familiar}):
       - scene: sacrifice
 
     - "Study":
