@@ -44,7 +44,11 @@ characters:
       normal: assets/characters/Char3NormalSchool.png
 
 cgs:
-  cardback: assets/objects/cardback.png
+  cardback: assets/objects/card-background.png
+  button: assets/objects/button.png
+  cancel-button: assets/objects/cancel-button.png
+  back-button: assets/objects/back-button.png
+
   
 music:
   mysterious: assets/audio/mysterious.mp3

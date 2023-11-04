@@ -3,7 +3,8 @@ import cards from "../generated/cards.json";
 const ITEM_LIMIT = 7;
 const BARRIERS_LIMIT = 3;
 
-const CHAOS_PER_FORAGE = 2;
+const CHAOS_PER_FORAGE = 1;
+const POWER_PER_FORAGE = 1;
 const CHAOS_PER_SUMMON = 5;
 
 const TICKS_PER_FORAGE = 2;
@@ -38,6 +39,8 @@ export type SpellcrafterGame = {
 
 
 export function newGame(): SpellcrafterGame {
+    const initialCard = Number(cards.filter((card) => card.card_type == "cave" || card.card_type == "forest" || card.card_type == "meadow" || card.card_type == "volcano")[0].card_id);
+
     return {
         time: 0,
         stats: {
@@ -47,7 +50,7 @@ export function newGame(): SpellcrafterGame {
             lightDark: 0,
             barriers: 3,
         },
-        cards: [],
+        cards: [initialCard],
         familiar: null,
     }
 }
@@ -70,6 +73,7 @@ export async function forage(game: SpellcrafterGame, region: string): Promise<vo
 
     game.cards.push(parseInt(card.card_id));
     game.stats.chaos += CHAOS_PER_FORAGE;
+    game.stats.power += POWER_PER_FORAGE;
     game.time += TICKS_PER_FORAGE;
 }
 

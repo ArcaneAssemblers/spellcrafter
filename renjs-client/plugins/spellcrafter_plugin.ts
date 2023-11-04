@@ -1,5 +1,5 @@
 import cards from "../generated/cards.json";
-// import { Plugin } from "renjs";
+import { Plugin } from "renjs";
 
 import { SpellcrafterGame, newGame, forage, interact, approachSpell, summonFamiliar, sendFamiliar, claimFamiliarItem, sacrificeFamiliar } from "./spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
@@ -60,25 +60,63 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     /// This promise will also resolve with the chosen value
     async selectAndAddIngredient(): Promise<void> {
         return new Promise<void>((resolve, reject) => {
-            this.game.gui.hud.hide();
-            // add a button for each card
-            let btns = []
-            this.spellcrafterGame.cards.forEach((cardId, index) => {
-                const btn = this.game.add.button(50+index*130, 200, "cardback", async () => {
-                    btns.forEach((btn) => btn.destroy());
+            // this.game.gui.hud.hide();
+            let selectedCardId = 0;
 
-                    let pre_stats = {...this.spellcrafterGame.stats};
-                    await interact(this.spellcrafterGame, cardId);
-                    this.game.managers.logic.vars["lastAddedItemName"] =  cards[cardId].name;
-                    this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
-                    this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
-                    this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
-                    this.game.managers.logic.vars["hotcoldDelta"] = this.spellcrafterGame.stats.hotCold - pre_stats.hotCold;
+            const updateCardDisplay = () => {
+                cardName.setText(cards[this.spellcrafterGame.cards[selectedCardId]].name);
+                cardText.setText(cards[this.spellcrafterGame.cards[selectedCardId]].description);
+            }
 
-                    resolve();
-                }, this, 0);
-                btns.push(btn);
-            });
+            const returnToStory = () => {
+                cardBack.destroy();
+                cardName.destroy();
+                cardText.destroy();
+                cancelButton.destroy();
+                leftButton.destroy();
+                rightButton.destroy();
+                addToSpellButton.destroy();
+                buttonText.destroy();
+
+                resolve();
+            }
+
+            const cardBack = this.game.add.image(195, 95, "cardback");
+            const cardName = this.game.add.text(300, 150, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
+            const cardText = this.game.add.text(300, 270, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
+
+            updateCardDisplay();
+
+            const cancelButton = this.game.add.button(875, 90, "cancel-button", () => {
+                this.game.managers.logic.vars["lastAddedItemName"] = "nothing";
+                this.game.managers.logic.vars["chaosDelta"] = 0;
+                this.game.managers.logic.vars["powerDelta"] = 0;
+                returnToStory();
+            }, this, 0);
+
+            const leftButton = this.game.add.button(43, 845, "back-button", () => {
+                selectedCardId = (selectedCardId - 1 + this.spellcrafterGame.cards.length) % this.spellcrafterGame.cards.length;
+                updateCardDisplay()
+            }, this, 0);
+            const rightButton = this.game.add.button(875+150, 845+150, "back-button", () => {
+                selectedCardId = (selectedCardId + 1) % this.spellcrafterGame.cards.length;
+                updateCardDisplay()
+            }, this, 0);
+            rightButton.rotation = Math.PI;
+
+            const addToSpellButton = this.game.add.button(40, 1025, "button", async () => {
+                let pre_stats = {...this.spellcrafterGame.stats};
+                await interact(this.spellcrafterGame, selectedCardId);
+                this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardId]].name;
+                this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
+                this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
+                this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
+                this.game.managers.logic.vars["hotcoldDelta"] = this.spellcrafterGame.stats.hotCold - pre_stats.hotCold;
+
+                returnToStory();
+            }, this, 0);
+            const buttonText = this.game.add.text(360, 1050, "Add To Spell", { font: "45px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle", boundsAlignH: "center" });
+
         });
     }
 
