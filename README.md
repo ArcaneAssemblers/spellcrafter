@@ -42,10 +42,10 @@ Play with cards at home or play on-chain in the Realms Autonomous World to showc
 - [ ] Web Client
     - [x] Basic client for rapid prototyping
     - [ ] Mobile first game interface
-        - [ ] Game loop design
+        - [x] Game loop design
         - [x] Music
         - [ ] Background/character art
-        - [ ] UI Art
+        - [x] UI Art
         - [ ] Phaser/Renjs Integration with Dojo/Starknet
 - [ ] Refine parameters for balance and fun
 ## Development
