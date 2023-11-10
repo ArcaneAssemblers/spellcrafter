@@ -42,7 +42,7 @@ fn get(card_id: u128) -> Option<(u32, bool)> {
         Option::None,
         Option::None,
         Option::None,
-        Option::None,
+        Option::Some((2, false)),
         Option::Some((5, false)),
         Option::Some((5, false)),
         Option::None,

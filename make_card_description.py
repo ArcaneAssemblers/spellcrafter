@@ -15,16 +15,16 @@ if "familiar" in card['card_type']:
 
 # Conditionals
 if card["requires_hot_gt"]:
-    print(f"If HOT > {card['requires_hot_gt']}:")
+    print(f"Requires {card['requires_hot_gt']} HOT:")
     prefix = "  "
 if card["requires_light_gt"]:
-    print(f"If LIGHT > {card['requires_light_gt']}:")
+    print(f"Requires {card['requires_light_gt']} LIGHT:")
     prefix = "  "
 if card["requires_cold_gt"]:
-    print(f"If COLD > {card['requires_cold_gt']}:")
+    print(f"Requires {card['requires_cold_gt']} COLD:")
     prefix = "  "
 if card["requires_dark_gt"]:
-    print(f"If DARK > {card['requires_dark_gt']}:")
+    print(f"Requires {card['requires_dark_gt']} DARK:")
     prefix = "  "
 
 # Power, Chaos, barriers deltas
