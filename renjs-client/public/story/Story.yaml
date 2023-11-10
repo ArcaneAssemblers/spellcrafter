@@ -1,5 +1,4 @@
 start:
-  - scene: manageActions
   - play mysterious: LOOPED
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
@@ -59,7 +58,7 @@ manageActions:
     - var familiarReturnedItem: false
 
   - text: The current spell power is {power}, and its chaos is {chaos}.
-  
+  - call SpellCrafter: showBarriers
   - if ({lightdark} > 0):
     - text: The spell is light level {lightdark}.
   - if ({lightdark} < 0):
@@ -71,8 +70,6 @@ manageActions:
   - if ({hotcold} < 0):
     - var cold: "{hotcold} * -1"
     - text: The spell is cold level {cold}.
-
-  - text: You have {barriers} barriers remaining
 
   - choice:
     - text: What would you like to do?
@@ -185,9 +182,8 @@ approaching:
     - show altar: WITH FADE
     - text: You see a barrier shatter and fall away. Only {barriers} remain holding the spell in place.
   - else:
-    - text: (color:#008900)PASS(end)
     - show altar: WITH FADE
-    - text: The spell appears to be stable for now
+    - text: (color:#008900)The spell appears to be stable for now(end)
   - scene: manageActions
 
 

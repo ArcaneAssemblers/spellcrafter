@@ -8,14 +8,15 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     spellcrafterGame: SpellcrafterGame;
     cardDisplayGroup;
     setCard;
+    barrierImages: any = [];
     
     // called when new game is started, just before interpreter is called
     onStart(): void {
         this.spellcrafterGame = newGame();
 
-        const cardBack = this.game.add.image(195, 95, "cardback");
-        const cardName = this.game.add.text(300, 150, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
-        const cardText = this.game.add.text(300, 270, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
+        const cardBack = this.game.add.image(195, 195, "cardback");
+        const cardName = this.game.add.text(300, 250, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
+        const cardText = this.game.add.text(300, 370, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
 
         this.cardDisplayGroup = this.game.add.group()
         this.cardDisplayGroup.add(cardBack);
@@ -28,8 +29,17 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             cardText.setText(cards[cardId].description);
         }
 
-        this.syncState();
+        this.barrierImages.push(this.game.add.image(700, 50, "barrier"));
+        this.barrierImages.push(this.game.add.image(800, 50, "barrier"));
+        this.barrierImages.push(this.game.add.image(900, 50, "barrier"));
+        this.barrierImages.forEach(img => { this.game.gui.hud.add(img) });
+
+        this.syncState()
 	}
+
+    onAction(action): void {
+        console.log("spellcrafter event: ", action);
+    }
 
     /// Called when the plugin is called from the story the `call spellcrafter` command
     // examples:
@@ -63,6 +73,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return this.showCard();
                 case "hideCard":
                     return this.hideCard();
+                case "showBarriers":
+                    // this.barrierImages.forEach(img => { img.visible = true });
+                    return Promise.resolve();
+                case "hideBarriers":
+                    // this.barrierImages.forEach(img => { img.visible = false });
+                    return Promise.resolve(); 
                 default:
                     throw new Error("invalid method: " + method);
             }
@@ -102,13 +118,13 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                 resolve();
             }
 
-            const cardBack = this.game.add.image(195, 95, "cardback");
-            const cardName = this.game.add.text(300, 150, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
-            const cardText = this.game.add.text(300, 270, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
+            const cardBack = this.game.add.image(195, 195, "cardback");
+            const cardName = this.game.add.text(300, 250, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
+            const cardText = this.game.add.text(300, 370, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
 
             updateCardDisplay();
 
-            const cancelButton = this.game.add.button(875, 90, "cancel-button", () => {
+            const cancelButton = this.game.add.button(875, 190, "cancel-button", () => {
                 this.game.managers.logic.vars["lastAddedItemName"] = "nothing";
                 this.game.managers.logic.vars["chaosDelta"] = 0;
                 this.game.managers.logic.vars["powerDelta"] = 0;
@@ -209,6 +225,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             this.game.managers.logic.vars["familiarIdle"] = this.spellcrafterGame.familiar.busyUntil <= this.spellcrafterGame.time;
         } else {
             this.game.managers.logic.vars["familiar"] = null;
+        }
+        for(let i = 0; i < 3; i++) {
+            if (stats.barriers >= (i+1))
+                this.barrierImages[2-i].loadTexture("barrier");
+            else
+                this.barrierImages[2-i].loadTexture("barrier-broken");
         }
     }
 }

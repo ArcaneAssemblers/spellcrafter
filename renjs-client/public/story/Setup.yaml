@@ -51,6 +51,8 @@ cgs:
   button: assets/objects/button.png
   cancel-button: assets/objects/cancel-button.png
   back-button: assets/objects/back-button.png
+  barrier: assets/objects/barrier.png
+  barrier-broken: assets/objects/barrier-broken.png
 
   
 music:
