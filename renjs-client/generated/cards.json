@@ -21,7 +21,7 @@
     "swaps_lightdark": "",
     "flavour": "A torn and bloodied wing membrane",
     "consumable": "TRUE",
-    "description": "If DARK > 3:\n  +3 POWER\nElse:\n  +1 POWER\n"
+    "description": "Requires 3 DARK:\n  +3 POWER\nElse:\n  +1 POWER\n"
   },
   {
     "card_id": "1",
@@ -60,7 +60,7 @@
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "",
-    "lightdark_delta": "-1",
+    "lightdark_delta": "-3",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -69,7 +69,7 @@
     "swaps_lightdark": "",
     "flavour": "Stringy sticky strands, gathered in your hair",
     "consumable": "TRUE",
-    "description": "-1 POWER\n+1 DARK\n"
+    "description": "-1 POWER\n+3 DARK\n"
   },
   {
     "card_id": "3",
@@ -81,19 +81,19 @@
     "requires_light_gt": "",
     "requires_dark_gt": "2",
     "power_delta": "1",
-    "chaos_delta": "1",
+    "chaos_delta": "-2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
     "power_delta_fallback": "1",
-    "chaos_delta_fallback": "2",
+    "chaos_delta_fallback": "1",
     "hotcold_delta_fallback": "",
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "A maggot that wiggles slightly, faking sunshine",
     "consumable": "TRUE",
-    "description": "If DARK > 2:\n  +1 POWER\n  +1 CHAOS\nElse:\n  +1 POWER\n  +2 CHAOS\n"
+    "description": "Requires 2 DARK:\n  +1 POWER\n  -2 CHAOS\nElse:\n  +1 POWER\n  +1 CHAOS\n"
   },
   {
     "card_id": "4",
@@ -141,7 +141,7 @@
     "swaps_lightdark": "",
     "flavour": "When cracked open the crystals are very sharp",
     "consumable": "TRUE",
-    "description": "If HOT > 4:\n  +2 POWER\n  +1 CHAOS\n  +2 DARK\n"
+    "description": "Requires 4 HOT:\n  +2 POWER\n  +1 CHAOS\n  +2 DARK\n"
   },
   {
     "card_id": "6",
@@ -153,7 +153,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "1",
-    "chaos_delta": "",
+    "chaos_delta": "-1",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "-1",
@@ -165,7 +165,7 @@
     "swaps_lightdark": "",
     "flavour": "A melted spike, heavier than it looks.",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+1 DARK\n"
+    "description": "+1 POWER\n-1 CHAOS\n+1 DARK\n"
   },
   {
     "card_id": "7",
@@ -210,10 +210,10 @@
     "hotcold_delta_fallback": "",
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "TRUE",
-    "swaps_lightdark": "",
+    "swaps_lightdark": "TRUE",
     "flavour": "Strange vibrations can be felt when held.",
     "consumable": "TRUE",
-    "description": "+1 CHAOS\nSwap HOT and COLD stats\n"
+    "description": "+1 CHAOS\nSwap LIGHT and DARK stats\nSwap HOT and COLD stats\n"
   },
   {
     "card_id": "9",
@@ -225,7 +225,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "5",
     "power_delta": "3",
-    "chaos_delta": "2",
+    "chaos_delta": "1",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -237,7 +237,7 @@
     "swaps_lightdark": "",
     "flavour": "An elegant jewel that will devour your flesh",
     "consumable": "TRUE",
-    "description": "If DARK > 5:\n  +3 POWER\n  +2 CHAOS\nElse:\n  +1 POWER\n  +5 CHAOS\n"
+    "description": "Requires 5 DARK:\n  +3 POWER\n  +1 CHAOS\nElse:\n  +1 POWER\n  +5 CHAOS\n"
   },
   {
     "card_id": "10",
@@ -247,7 +247,7 @@
     "requires_hot_gt": "",
     "requires_cold_gt": "",
     "requires_light_gt": "",
-    "requires_dark_gt": "8",
+    "requires_dark_gt": "7",
     "power_delta": "4",
     "chaos_delta": "",
     "barriers_delta": "",
@@ -261,7 +261,7 @@
     "swaps_lightdark": "",
     "flavour": "It contains the supernatural strength to contain planetary terrors.",
     "consumable": "TRUE",
-    "description": "If DARK > 8:\n  +4 POWER\nElse:\n  +1 POWER\n"
+    "description": "Requires 7 DARK:\n  +4 POWER\nElse:\n  +1 POWER\n"
   },
   {
     "card_id": "11",
@@ -271,7 +271,7 @@
     "requires_hot_gt": "",
     "requires_cold_gt": "",
     "requires_light_gt": "",
-    "requires_dark_gt": "5",
+    "requires_dark_gt": "4",
     "power_delta": "",
     "chaos_delta": "",
     "barriers_delta": "",
@@ -285,7 +285,7 @@
     "swaps_lightdark": "",
     "flavour": "If you find one of these scales, flee. ",
     "consumable": "TRUE",
-    "description": "If DARK > 5:\n  +2 COLD\n  +2 DARK\n"
+    "description": "Requires 4 DARK:\n  +2 COLD\n  +2 DARK\n"
   },
   {
     "card_id": "12",
@@ -345,7 +345,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "4",
     "power_delta": "3",
-    "chaos_delta": "3",
+    "chaos_delta": "1",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -357,7 +357,7 @@
     "swaps_lightdark": "",
     "flavour": "The paint has worn off its porcelain face",
     "consumable": "TRUE",
-    "description": "If DARK > 4:\n  +3 POWER\n  +3 CHAOS\nElse:\n  +1 POWER\n  +2 CHAOS\n"
+    "description": "Requires 4 DARK:\n  +3 POWER\n  +1 CHAOS\nElse:\n  +1 POWER\n  +2 CHAOS\n"
   },
   {
     "card_id": "15",
@@ -369,7 +369,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "-1",
-    "chaos_delta": "-1",
+    "chaos_delta": "-2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -381,7 +381,7 @@
     "swaps_lightdark": "",
     "flavour": "Did someone drop their rubbish in the cave??",
     "consumable": "TRUE",
-    "description": "-1 POWER\n-1 CHAOS\n"
+    "description": "-1 POWER\n-2 CHAOS\n"
   },
   {
     "card_id": "16",
@@ -417,7 +417,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "2",
-    "chaos_delta": "",
+    "chaos_delta": "-2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -429,7 +429,7 @@
     "swaps_lightdark": "",
     "flavour": "A calcified imprint of a sea creature",
     "consumable": "TRUE",
-    "description": "+2 POWER\n"
+    "description": "+2 POWER\n-2 CHAOS\n"
   },
   {
     "card_id": "18",
@@ -444,7 +444,7 @@
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "",
-    "lightdark_delta": "-1",
+    "lightdark_delta": "-3",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -453,7 +453,7 @@
     "swaps_lightdark": "",
     "flavour": "An ancient piece of skeleton",
     "consumable": "TRUE",
-    "description": "+1 DARK\n"
+    "description": "+3 DARK\n"
   },
   {
     "card_id": "19",
@@ -561,7 +561,7 @@
     "requires_light_gt": "2",
     "requires_dark_gt": "",
     "power_delta": "",
-    "chaos_delta": "-2",
+    "chaos_delta": "-3",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -573,7 +573,7 @@
     "swaps_lightdark": "",
     "flavour": "A chunk of quartz. It feels stabilising in some way",
     "consumable": "TRUE",
-    "description": "If LIGHT > 2:\n  -2 CHAOS\n"
+    "description": "Requires 2 LIGHT:\n  -3 CHAOS\n"
   },
   {
     "card_id": "24",
@@ -585,9 +585,9 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "-1",
-    "chaos_delta": "-1",
+    "chaos_delta": "-2",
     "barriers_delta": "",
-    "hotcold_delta": "",
+    "hotcold_delta": "1",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -597,7 +597,7 @@
     "swaps_lightdark": "",
     "flavour": "Sticky sap from a pine tree",
     "consumable": "TRUE",
-    "description": "-1 POWER\n-1 CHAOS\n"
+    "description": "-1 POWER\n-2 CHAOS\n+1 HOT\n"
   },
   {
     "card_id": "25",
@@ -609,9 +609,9 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "",
-    "chaos_delta": "-1",
+    "chaos_delta": "-2",
     "barriers_delta": "",
-    "hotcold_delta": "",
+    "hotcold_delta": "-1",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -621,7 +621,7 @@
     "swaps_lightdark": "",
     "flavour": "Soft green moss",
     "consumable": "TRUE",
-    "description": "-1 CHAOS\n"
+    "description": "-2 CHAOS\n+1 COLD\n"
   },
   {
     "card_id": "26",
@@ -633,10 +633,10 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "",
-    "chaos_delta": "-1",
+    "chaos_delta": "-2",
     "barriers_delta": "",
     "hotcold_delta": "",
-    "lightdark_delta": "",
+    "lightdark_delta": "1",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -645,7 +645,7 @@
     "swaps_lightdark": "",
     "flavour": "This holds great potential",
     "consumable": "TRUE",
-    "description": "-1 CHAOS\n"
+    "description": "-2 CHAOS\n+1 LIGHT\n"
   },
   {
     "card_id": "27",
@@ -707,7 +707,7 @@
     "power_delta": "",
     "chaos_delta": "2",
     "barriers_delta": "",
-    "hotcold_delta": "-3",
+    "hotcold_delta": "-4",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -717,7 +717,7 @@
     "swaps_lightdark": "",
     "flavour": "Be careful not to get stung",
     "consumable": "TRUE",
-    "description": "+2 CHAOS\n+3 COLD\n"
+    "description": "+2 CHAOS\n+4 COLD\n"
   },
   {
     "card_id": "30",
@@ -824,10 +824,10 @@
     "requires_cold_gt": "",
     "requires_light_gt": "",
     "requires_dark_gt": "",
-    "power_delta": "1",
-    "chaos_delta": "2",
+    "power_delta": "2",
+    "chaos_delta": "1",
     "barriers_delta": "",
-    "hotcold_delta": "",
+    "hotcold_delta": "1",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -837,7 +837,7 @@
     "swaps_lightdark": "",
     "flavour": "A chunk of wood, great for fires!",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+2 CHAOS\n"
+    "description": "+2 POWER\n+1 CHAOS\n+1 HOT\n"
   },
   {
     "card_id": "35",
@@ -845,7 +845,7 @@
     "card_type": "forest",
     "count": "1",
     "requires_hot_gt": "",
-    "requires_cold_gt": "",
+    "requires_cold_gt": "2",
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "2",
@@ -861,7 +861,7 @@
     "swaps_lightdark": "",
     "flavour": "It feels dangerous and sucks the heat from your hand.",
     "consumable": "TRUE",
-    "description": "+2 POWER\n+1 CHAOS\n+3 COLD\n"
+    "description": "Requires 2 COLD:\n  +2 POWER\n  +1 CHAOS\n  +3 COLD\n"
   },
   {
     "card_id": "36",
@@ -872,20 +872,20 @@
     "requires_cold_gt": "5",
     "requires_light_gt": "",
     "requires_dark_gt": "",
-    "power_delta": "3",
+    "power_delta": "4",
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
     "power_delta_fallback": "1",
-    "chaos_delta_fallback": "3",
+    "chaos_delta_fallback": "2",
     "hotcold_delta_fallback": "",
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "This branch bleeds bright red blood",
     "consumable": "TRUE",
-    "description": "If COLD > 5:\n  +3 POWER\nElse:\n  +1 POWER\n  +3 CHAOS\n"
+    "description": "Requires 5 COLD:\n  +4 POWER\nElse:\n  +1 POWER\n  +2 CHAOS\n"
   },
   {
     "card_id": "37",
@@ -897,7 +897,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "",
-    "chaos_delta": "-3",
+    "chaos_delta": "-4",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -909,7 +909,7 @@
     "swaps_lightdark": "",
     "flavour": "It stays cold in your hand and doesn't melt.",
     "consumable": "TRUE",
-    "description": "If COLD > 5:\n  -3 CHAOS\n"
+    "description": "Requires 5 COLD:\n  -4 CHAOS\n"
   },
   {
     "card_id": "38",
@@ -933,7 +933,7 @@
     "swaps_lightdark": "",
     "flavour": "Are these the poisonous ones?",
     "consumable": "TRUE",
-    "description": "If LIGHT > 2:\n  +1 POWER\n"
+    "description": "Requires 2 LIGHT:\n  +1 POWER\n"
   },
   {
     "card_id": "39",
@@ -969,7 +969,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "3",
-    "chaos_delta": "3",
+    "chaos_delta": "2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -981,7 +981,7 @@
     "swaps_lightdark": "",
     "flavour": "It pricks you every time you touch it",
     "consumable": "TRUE",
-    "description": "+3 POWER\n+3 CHAOS\n"
+    "description": "+3 POWER\n+2 CHAOS\n"
   },
   {
     "card_id": "41",
@@ -1014,7 +1014,79 @@
     "count": "1",
     "requires_hot_gt": "",
     "requires_cold_gt": "",
+    "requires_light_gt": "2",
+    "requires_dark_gt": "",
+    "power_delta": "2",
+    "chaos_delta": "",
+    "barriers_delta": "",
+    "hotcold_delta": "",
+    "lightdark_delta": "",
+    "power_delta_fallback": "1",
+    "chaos_delta_fallback": "",
+    "hotcold_delta_fallback": "",
+    "lightdark_delta_fallback": "",
+    "swaps_hotcold": "",
+    "swaps_lightdark": "",
+    "flavour": "A green little bug",
+    "consumable": "TRUE",
+    "description": "Requires 2 LIGHT:\n  +2 POWER\nElse:\n  +1 POWER\n"
+  },
+  {
+    "card_id": "43",
+    "name": "Daisy",
+    "card_type": "meadow",
+    "count": "1",
+    "requires_hot_gt": "",
+    "requires_cold_gt": "",
     "requires_light_gt": "3",
+    "requires_dark_gt": "",
+    "power_delta": "2",
+    "chaos_delta": "",
+    "barriers_delta": "",
+    "hotcold_delta": "1",
+    "lightdark_delta": "",
+    "power_delta_fallback": "1",
+    "chaos_delta_fallback": "",
+    "hotcold_delta_fallback": "",
+    "lightdark_delta_fallback": "1",
+    "swaps_hotcold": "",
+    "swaps_lightdark": "",
+    "flavour": "Pull off the petals one at a time and chant",
+    "consumable": "TRUE",
+    "description": "Requires 3 LIGHT:\n  +2 POWER\n  +1 HOT\nElse:\n  +1 POWER\n  +1 LIGHT\n"
+  },
+  {
+    "card_id": "44",
+    "name": "Butterfly",
+    "card_type": "meadow",
+    "count": "1",
+    "requires_hot_gt": "",
+    "requires_cold_gt": "",
+    "requires_light_gt": "6",
+    "requires_dark_gt": "",
+    "power_delta": "",
+    "chaos_delta": "-4",
+    "barriers_delta": "",
+    "hotcold_delta": "",
+    "lightdark_delta": "",
+    "power_delta_fallback": "1",
+    "chaos_delta_fallback": "1",
+    "hotcold_delta_fallback": "",
+    "lightdark_delta_fallback": "",
+    "swaps_hotcold": "",
+    "swaps_lightdark": "",
+    "flavour": "It spasms, one of the wings was torn off.",
+    "consumable": "TRUE",
+    "description": "Requires 6 LIGHT:\n  -4 CHAOS\nElse:\n  +1 POWER\n  +1 CHAOS\n"
+  },
+  {
+    "card_id": "45",
+    "name": "Bee Sting",
+    "card_type": "meadow",
+    "count": "1",
+    "requires_hot_gt": "",
+    "requires_cold_gt": "",
+    "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "2",
     "chaos_delta": "1",
@@ -1027,81 +1099,9 @@
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
-    "flavour": "A green little bug",
-    "consumable": "TRUE",
-    "description": "If LIGHT > 3:\n  +2 POWER\n  +1 CHAOS\n"
-  },
-  {
-    "card_id": "43",
-    "name": "Daisy",
-    "card_type": "meadow",
-    "count": "1",
-    "requires_hot_gt": "",
-    "requires_cold_gt": "",
-    "requires_light_gt": "3",
-    "requires_dark_gt": "",
-    "power_delta": "1",
-    "chaos_delta": "2",
-    "barriers_delta": "",
-    "hotcold_delta": "1",
-    "lightdark_delta": "",
-    "power_delta_fallback": "1",
-    "chaos_delta_fallback": "3",
-    "hotcold_delta_fallback": "",
-    "lightdark_delta_fallback": "",
-    "swaps_hotcold": "",
-    "swaps_lightdark": "",
-    "flavour": "Pull off the petals one at a time and chant",
-    "consumable": "TRUE",
-    "description": "If LIGHT > 3:\n  +1 POWER\n  +2 CHAOS\n  +1 HOT\nElse:\n  +1 POWER\n  +3 CHAOS\n"
-  },
-  {
-    "card_id": "44",
-    "name": "Butterfly",
-    "card_type": "meadow",
-    "count": "1",
-    "requires_hot_gt": "",
-    "requires_cold_gt": "",
-    "requires_light_gt": "6",
-    "requires_dark_gt": "",
-    "power_delta": "",
-    "chaos_delta": "-3",
-    "barriers_delta": "",
-    "hotcold_delta": "",
-    "lightdark_delta": "",
-    "power_delta_fallback": "",
-    "chaos_delta_fallback": "",
-    "hotcold_delta_fallback": "",
-    "lightdark_delta_fallback": "",
-    "swaps_hotcold": "",
-    "swaps_lightdark": "",
-    "flavour": "It spasms, one of the wings was torn off.",
-    "consumable": "TRUE",
-    "description": "If LIGHT > 6:\n  -3 CHAOS\n"
-  },
-  {
-    "card_id": "45",
-    "name": "Bee Sting",
-    "card_type": "meadow",
-    "count": "1",
-    "requires_hot_gt": "",
-    "requires_cold_gt": "",
-    "requires_light_gt": "",
-    "requires_dark_gt": "",
-    "power_delta": "1",
-    "chaos_delta": "3",
-    "barriers_delta": "",
-    "hotcold_delta": "",
-    "lightdark_delta": "",
-    "power_delta_fallback": "",
-    "chaos_delta_fallback": "",
-    "hotcold_delta_fallback": "",
-    "lightdark_delta_fallback": "",
-    "swaps_hotcold": "",
-    "swaps_lightdark": "",
     "flavour": "The stinger twitches, ready to inject poison",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+3 CHAOS\n"
+    "description": "+2 POWER\n+1 CHAOS\n"
   },
   {
     "card_id": "46",
@@ -1137,7 +1137,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "2",
-    "chaos_delta": "2",
+    "chaos_delta": "1",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "1",
@@ -1149,7 +1149,7 @@
     "swaps_lightdark": "",
     "flavour": "A nearly-perfect scaly molt",
     "consumable": "TRUE",
-    "description": "+2 POWER\n+2 CHAOS\n+1 LIGHT\n"
+    "description": "+2 POWER\n+1 CHAOS\n+1 LIGHT\n"
   },
   {
     "card_id": "48",
@@ -1160,12 +1160,12 @@
     "requires_cold_gt": "",
     "requires_light_gt": "3",
     "requires_dark_gt": "",
-    "power_delta": "",
+    "power_delta": "1",
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "2",
     "lightdark_delta": "2",
-    "power_delta_fallback": "",
+    "power_delta_fallback": "1",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
     "lightdark_delta_fallback": "",
@@ -1173,7 +1173,7 @@
     "swaps_lightdark": "",
     "flavour": "An ancient looking coin",
     "consumable": "TRUE",
-    "description": "If LIGHT > 3:\n  +2 HOT\n  +2 LIGHT\n"
+    "description": "Requires 3 LIGHT:\n  +1 POWER\n  +2 HOT\n  +2 LIGHT\nElse:\n  +1 POWER\n"
   },
   {
     "card_id": "49",
@@ -1187,8 +1187,8 @@
     "power_delta": "1",
     "chaos_delta": "",
     "barriers_delta": "",
-    "hotcold_delta": "",
-    "lightdark_delta": "1",
+    "hotcold_delta": "2",
+    "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -1197,7 +1197,7 @@
     "swaps_lightdark": "",
     "flavour": "A nugget of copper, feels warm.",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+1 LIGHT\n"
+    "description": "+1 POWER\n+2 HOT\n"
   },
   {
     "card_id": "50",
@@ -1209,10 +1209,10 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "1",
-    "chaos_delta": "3",
+    "chaos_delta": "1",
     "barriers_delta": "",
     "hotcold_delta": "",
-    "lightdark_delta": "",
+    "lightdark_delta": "3",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -1221,7 +1221,7 @@
     "swaps_lightdark": "TRUE",
     "flavour": "This nugget shines brightly.",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+3 CHAOS\nSwap LIGHT and DARK stats\n"
+    "description": "+1 POWER\n+1 CHAOS\n+3 LIGHT\nSwap LIGHT and DARK stats\n"
   },
   {
     "card_id": "51",
@@ -1236,7 +1236,7 @@
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "",
-    "lightdark_delta": "",
+    "lightdark_delta": "1",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -1245,7 +1245,7 @@
     "swaps_lightdark": "",
     "flavour": "They twinkle and make you wish for more",
     "consumable": "TRUE",
-    "description": "+2 POWER\n"
+    "description": "+2 POWER\n+1 LIGHT\n"
   },
   {
     "card_id": "52",
@@ -1254,14 +1254,14 @@
     "count": "1",
     "requires_hot_gt": "",
     "requires_cold_gt": "",
-    "requires_light_gt": "",
+    "requires_light_gt": "8",
     "requires_dark_gt": "",
     "power_delta": "",
     "chaos_delta": "",
-    "barriers_delta": "",
+    "barriers_delta": "1",
     "hotcold_delta": "",
     "lightdark_delta": "1",
-    "power_delta_fallback": "",
+    "power_delta_fallback": "1",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
     "lightdark_delta_fallback": "",
@@ -1269,7 +1269,7 @@
     "swaps_lightdark": "",
     "flavour": "It bends light against physics. You feel mesmerised.",
     "consumable": "TRUE",
-    "description": "+1 LIGHT\n"
+    "description": "Requires 8 LIGHT:\n  Rebuild 1 barrier up to a maximum of 3\n  +1 LIGHT\nElse:\n  +1 POWER\n"
   },
   {
     "card_id": "53",
@@ -1283,7 +1283,7 @@
     "power_delta": "3",
     "chaos_delta": "1",
     "barriers_delta": "",
-    "hotcold_delta": "",
+    "hotcold_delta": "-2",
     "lightdark_delta": "1",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -1293,7 +1293,7 @@
     "swaps_lightdark": "",
     "flavour": "A liquid from below a battlefield, full of potential energy.",
     "consumable": "TRUE",
-    "description": "If HOT > 4:\n  +3 POWER\n  +1 CHAOS\n  +1 LIGHT\n"
+    "description": "Requires 4 HOT:\n  +3 POWER\n  +1 CHAOS\n  +2 COLD\n  +1 LIGHT\n"
   },
   {
     "card_id": "54",
@@ -1305,10 +1305,10 @@
     "requires_light_gt": "10",
     "requires_dark_gt": "",
     "power_delta": "5",
-    "chaos_delta": "",
+    "chaos_delta": "1",
     "barriers_delta": "",
     "hotcold_delta": "",
-    "lightdark_delta": "2",
+    "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -1317,7 +1317,7 @@
     "swaps_lightdark": "",
     "flavour": "It floats slightly, and gives delusions of a rapturous apocalypse.",
     "consumable": "TRUE",
-    "description": "If LIGHT > 10:\n  +5 POWER\n  +2 LIGHT\n"
+    "description": "Requires 10 LIGHT:\n  +5 POWER\n  +1 CHAOS\n"
   },
   {
     "card_id": "55",
@@ -1329,7 +1329,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "1",
-    "chaos_delta": "1",
+    "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -1341,7 +1341,7 @@
     "swaps_lightdark": "",
     "flavour": "It crackles nicely and feels dry.",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+1 CHAOS\n"
+    "description": "+1 POWER\n"
   },
   {
     "card_id": "56",
@@ -1353,9 +1353,9 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "1",
-    "chaos_delta": "2",
+    "chaos_delta": "1",
     "barriers_delta": "",
-    "hotcold_delta": "",
+    "hotcold_delta": "-1",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -1365,7 +1365,7 @@
     "swaps_lightdark": "",
     "flavour": "The purple flowers have a strong scent.",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+2 CHAOS\n"
+    "description": "+1 POWER\n+1 CHAOS\n+1 COLD\n"
   },
   {
     "card_id": "57",
@@ -1376,20 +1376,20 @@
     "requires_cold_gt": "",
     "requires_light_gt": "3",
     "requires_dark_gt": "",
-    "power_delta": "1",
+    "power_delta": "2",
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "1",
-    "power_delta_fallback": "",
-    "chaos_delta_fallback": "",
+    "power_delta_fallback": "1",
+    "chaos_delta_fallback": "1",
     "hotcold_delta_fallback": "",
     "lightdark_delta_fallback": "-1",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The sap is milky and toxic",
     "consumable": "TRUE",
-    "description": "If LIGHT > 3:\n  +1 POWER\n  +1 LIGHT\nElse:\n  +1 DARK\n"
+    "description": "Requires 3 LIGHT:\n  +2 POWER\n  +1 LIGHT\nElse:\n  +1 POWER\n  +1 CHAOS\n  +1 DARK\n"
   },
   {
     "card_id": "58",
@@ -1413,7 +1413,7 @@
     "swaps_lightdark": "",
     "flavour": "Torn off at the base",
     "consumable": "TRUE",
-    "description": "If LIGHT > 2:\n  +2 POWER\n  +1 CHAOS\n"
+    "description": "Requires 2 LIGHT:\n  +2 POWER\n  +1 CHAOS\n"
   },
   {
     "card_id": "59",
@@ -1472,7 +1472,7 @@
     "requires_cold_gt": "",
     "requires_light_gt": "",
     "requires_dark_gt": "",
-    "power_delta": "",
+    "power_delta": "1",
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "",
@@ -1485,7 +1485,7 @@
     "swaps_lightdark": "",
     "flavour": "A strip of fluff, no tailbone inside.",
     "consumable": "TRUE",
-    "description": "+2 LIGHT\n"
+    "description": "+1 POWER\n+2 LIGHT\n"
   },
   {
     "card_id": "62",
@@ -1520,8 +1520,8 @@
     "requires_cold_gt": "",
     "requires_light_gt": "",
     "requires_dark_gt": "",
-    "power_delta": "",
-    "chaos_delta": "1",
+    "power_delta": "1",
+    "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "1",
     "lightdark_delta": "",
@@ -1533,7 +1533,7 @@
     "swaps_lightdark": "",
     "flavour": "A rock that is light as foam",
     "consumable": "TRUE",
-    "description": "+1 CHAOS\n+1 HOT\n"
+    "description": "+1 POWER\n+1 HOT\n"
   },
   {
     "card_id": "64",
@@ -1544,7 +1544,7 @@
     "requires_cold_gt": "",
     "requires_light_gt": "",
     "requires_dark_gt": "",
-    "power_delta": "3",
+    "power_delta": "2",
     "chaos_delta": "",
     "barriers_delta": "",
     "hotcold_delta": "2",
@@ -1557,7 +1557,7 @@
     "swaps_lightdark": "",
     "flavour": "Smells like? something",
     "consumable": "TRUE",
-    "description": "+3 POWER\n+2 HOT\n"
+    "description": "+2 POWER\n+2 HOT\n"
   },
   {
     "card_id": "65",
@@ -1569,9 +1569,9 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "",
-    "chaos_delta": "-1",
+    "chaos_delta": "-2",
     "barriers_delta": "",
-    "hotcold_delta": "",
+    "hotcold_delta": "-2",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -1581,7 +1581,7 @@
     "swaps_lightdark": "",
     "flavour": "Soothing, shiny and black",
     "consumable": "TRUE",
-    "description": "-1 CHAOS\n"
+    "description": "-2 CHAOS\n+2 COLD\n"
   },
   {
     "card_id": "66",
@@ -1605,7 +1605,7 @@
     "swaps_lightdark": "",
     "flavour": "A fiery arachnid",
     "consumable": "TRUE",
-    "description": "If HOT > 3:\n  +2 POWER\n  +1 CHAOS\n  +1 HOT\nElse:\n  +2 POWER\n  +3 CHAOS\n"
+    "description": "Requires 3 HOT:\n  +2 POWER\n  +1 CHAOS\n  +1 HOT\nElse:\n  +2 POWER\n  +3 CHAOS\n"
   },
   {
     "card_id": "67",
@@ -1641,7 +1641,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "",
-    "chaos_delta": "-1",
+    "chaos_delta": "-3",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -1653,7 +1653,7 @@
     "swaps_lightdark": "",
     "flavour": "Said to dispel evil spirits",
     "consumable": "TRUE",
-    "description": "-1 CHAOS\n"
+    "description": "-3 CHAOS\n"
   },
   {
     "card_id": "69",
@@ -1749,19 +1749,19 @@
     "swaps_lightdark": "",
     "flavour": "This twig seems somehow imbued with metal",
     "consumable": "TRUE",
-    "description": "If DARK > 4:\n  +2 POWER\n"
+    "description": "Requires 4 DARK:\n  +2 POWER\n"
   },
   {
     "card_id": "73",
     "name": "Sapphire",
     "card_type": "volcano",
     "count": "1",
-    "requires_hot_gt": "",
+    "requires_hot_gt": "7",
     "requires_cold_gt": "",
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "",
-    "chaos_delta": "3",
+    "chaos_delta": "",
     "barriers_delta": "1",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -1773,7 +1773,7 @@
     "swaps_lightdark": "",
     "flavour": "A gemstone accustomed to both pain and beauty.",
     "consumable": "TRUE",
-    "description": "+3 CHAOS\nRebuild 1 barrier up to a maximum of 3\n"
+    "description": "Requires 7 HOT:\n  Rebuild 1 barrier up to a maximum of 3\n"
   },
   {
     "card_id": "74",
@@ -1785,7 +1785,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "5",
-    "chaos_delta": "5",
+    "chaos_delta": "2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -1797,7 +1797,7 @@
     "swaps_lightdark": "",
     "flavour": "A chimeric fusion of metal alloys and oxygen.",
     "consumable": "TRUE",
-    "description": "If HOT > 4:\n  +5 POWER\n  +5 CHAOS\n"
+    "description": "Requires 4 HOT:\n  +5 POWER\n  +2 CHAOS\n"
   },
   {
     "card_id": "75",
@@ -1811,7 +1811,7 @@
     "power_delta": "",
     "chaos_delta": "2",
     "barriers_delta": "",
-    "hotcold_delta": "3",
+    "hotcold_delta": "4",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -1821,7 +1821,7 @@
     "swaps_lightdark": "",
     "flavour": "Handle carefully! Its infernal radiation evaporates water.",
     "consumable": "TRUE",
-    "description": "+2 CHAOS\n+3 HOT\n"
+    "description": "+2 CHAOS\n+4 HOT\n"
   },
   {
     "card_id": "76",
@@ -1832,10 +1832,10 @@
     "requires_cold_gt": "",
     "requires_light_gt": "",
     "requires_dark_gt": "",
-    "power_delta": "",
-    "chaos_delta": "3",
+    "power_delta": "1",
+    "chaos_delta": "1",
     "barriers_delta": "",
-    "hotcold_delta": "3",
+    "hotcold_delta": "2",
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
@@ -1845,7 +1845,7 @@
     "swaps_lightdark": "",
     "flavour": "Its unclear if this is alive or dead",
     "consumable": "TRUE",
-    "description": "+3 CHAOS\n+3 HOT\n"
+    "description": "+1 POWER\n+1 CHAOS\n+2 HOT\n"
   },
   {
     "card_id": "77",
@@ -1857,7 +1857,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "1",
-    "chaos_delta": "2",
+    "chaos_delta": "1",
     "barriers_delta": "",
     "hotcold_delta": "1",
     "lightdark_delta": "",
@@ -1869,7 +1869,7 @@
     "swaps_lightdark": "",
     "flavour": "Very wriggly and tough, resistant to heat",
     "consumable": "TRUE",
-    "description": "+1 POWER\n+2 CHAOS\n+1 HOT\n"
+    "description": "+1 POWER\n+1 CHAOS\n+1 HOT\n"
   },
   {
     "card_id": "78",
@@ -1941,7 +1941,7 @@
     "swaps_lightdark": "",
     "flavour": "Grainy, black, and still warm in your hand.",
     "consumable": "TRUE",
-    "description": "If HOT > 6:\n  +4 POWER\n  +1 CHAOS\nElse:\n  +2 POWER\n  +2 CHAOS\n"
+    "description": "Requires 6 HOT:\n  +4 POWER\n  +1 CHAOS\nElse:\n  +2 POWER\n  +2 CHAOS\n"
   },
   {
     "card_id": "81",
@@ -1965,7 +1965,7 @@
     "swaps_lightdark": "",
     "flavour": "Slimy and adapted to extreme temperatures",
     "consumable": "TRUE",
-    "description": "If LIGHT > 3:\n  +3 POWER\n  +1 CHAOS\nElse:\n  +1 POWER\n  +2 CHAOS\n"
+    "description": "Requires 3 LIGHT:\n  +3 POWER\n  +1 CHAOS\nElse:\n  +1 POWER\n  +2 CHAOS\n"
   },
   {
     "card_id": "82",
@@ -2049,10 +2049,10 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "2",
-    "chaos_delta": "3",
+    "chaos_delta": "2",
     "barriers_delta": "",
     "hotcold_delta": "",
-    "lightdark_delta": "",
+    "lightdark_delta": "-2",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
     "hotcold_delta_fallback": "",
@@ -2061,7 +2061,7 @@
     "swaps_lightdark": "",
     "flavour": "Your journey with the Void begins",
     "consumable": "FALSE",
-    "description": "+2 POWER\n+3 CHAOS\n"
+    "description": "+2 POWER\n+2 CHAOS\n+2 DARK\n"
   },
   {
     "card_id": "86",
@@ -2073,7 +2073,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "5",
-    "chaos_delta": "3",
+    "chaos_delta": "2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2085,7 +2085,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Stare into the Void",
     "consumable": "FALSE",
-    "description": "+5 POWER\n+3 CHAOS\n"
+    "description": "+5 POWER\n+2 CHAOS\n"
   },
   {
     "card_id": "87",
@@ -2097,7 +2097,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "7",
-    "chaos_delta": "4",
+    "chaos_delta": "3",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2109,7 +2109,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Speak to the Void",
     "consumable": "FALSE",
-    "description": "+7 POWER\n+4 CHAOS\n"
+    "description": "+7 POWER\n+3 CHAOS\n"
   },
   {
     "card_id": "88",
@@ -2121,7 +2121,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "9",
-    "chaos_delta": "5",
+    "chaos_delta": "4",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2133,7 +2133,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Speak to the Void",
     "consumable": "FALSE",
-    "description": "+9 POWER\n+5 CHAOS\n"
+    "description": "+9 POWER\n+4 CHAOS\n"
   },
   {
     "card_id": "89",
@@ -2145,7 +2145,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "2",
-    "chaos_delta": "2",
+    "chaos_delta": "1",
     "barriers_delta": "",
     "hotcold_delta": "-2",
     "lightdark_delta": "",
@@ -2157,7 +2157,7 @@
     "swaps_lightdark": "",
     "flavour": "Your journey with Decay begins",
     "consumable": "FALSE",
-    "description": "+2 POWER\n+2 CHAOS\n+2 COLD\n"
+    "description": "+2 POWER\n+1 CHAOS\n+2 COLD\n"
   },
   {
     "card_id": "90",
@@ -2169,7 +2169,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "4",
-    "chaos_delta": "3",
+    "chaos_delta": "2",
     "barriers_delta": "",
     "hotcold_delta": "-1",
     "lightdark_delta": "",
@@ -2181,7 +2181,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Meditate on Decay",
     "consumable": "FALSE",
-    "description": "+4 POWER\n+3 CHAOS\n+1 COLD\n"
+    "description": "+4 POWER\n+2 CHAOS\n+1 COLD\n"
   },
   {
     "card_id": "91",
@@ -2193,7 +2193,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "5",
-    "chaos_delta": "4",
+    "chaos_delta": "3",
     "barriers_delta": "",
     "hotcold_delta": "-2",
     "lightdark_delta": "",
@@ -2205,7 +2205,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Initiate Self Digestion",
     "consumable": "FALSE",
-    "description": "+5 POWER\n+4 CHAOS\n+2 COLD\n"
+    "description": "+5 POWER\n+3 CHAOS\n+2 COLD\n"
   },
   {
     "card_id": "92",
@@ -2217,7 +2217,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "8",
-    "chaos_delta": "5",
+    "chaos_delta": "4",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2227,9 +2227,9 @@
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
-    "flavour": "Requires Initiate Self Digestion",
+    "flavour": "Requires Undertake Active Decay",
     "consumable": "FALSE",
-    "description": "+8 POWER\n+5 CHAOS\n"
+    "description": "+8 POWER\n+4 CHAOS\n"
   },
   {
     "card_id": "93",
@@ -2253,7 +2253,7 @@
     "swaps_lightdark": "",
     "flavour": "Your journey with Hypnotism begins",
     "consumable": "FALSE",
-    "description": "If LIGHT > 2:\n  +1 POWER\n  +2 CHAOS\n"
+    "description": "Requires 2 LIGHT:\n  +1 POWER\n  +2 CHAOS\n"
   },
   {
     "card_id": "94",
@@ -2265,7 +2265,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "3",
-    "chaos_delta": "3",
+    "chaos_delta": "2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2277,7 +2277,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Study Hypnotism",
     "consumable": "FALSE",
-    "description": "+3 POWER\n+3 CHAOS\n"
+    "description": "+3 POWER\n+2 CHAOS\n"
   },
   {
     "card_id": "95",
@@ -2313,7 +2313,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "6",
-    "chaos_delta": "5",
+    "chaos_delta": "3",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2323,9 +2323,9 @@
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
-    "flavour": "Requires Somnambulism",
+    "flavour": "Requires Mastery of the Coma",
     "consumable": "FALSE",
-    "description": "+6 POWER\n+5 CHAOS\n"
+    "description": "+6 POWER\n+3 CHAOS\n"
   },
   {
     "card_id": "97",
@@ -2337,7 +2337,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "1",
-    "chaos_delta": "3",
+    "chaos_delta": "2",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2349,7 +2349,7 @@
     "swaps_lightdark": "",
     "flavour": "Your journey with the Inferno begins",
     "consumable": "FALSE",
-    "description": "If HOT > 1:\n  +1 POWER\n  +3 CHAOS\n"
+    "description": "Requires 1 HOT:\n  +1 POWER\n  +2 CHAOS\n"
   },
   {
     "card_id": "98",
@@ -2361,7 +2361,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "6",
-    "chaos_delta": "4",
+    "chaos_delta": "3",
     "barriers_delta": "",
     "hotcold_delta": "2",
     "lightdark_delta": "",
@@ -2373,7 +2373,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Ignite the Inferno",
     "consumable": "FALSE",
-    "description": "+6 POWER\n+4 CHAOS\n+2 HOT\n"
+    "description": "+6 POWER\n+3 CHAOS\n+2 HOT\n"
   },
   {
     "card_id": "99",
@@ -2385,7 +2385,7 @@
     "requires_light_gt": "",
     "requires_dark_gt": "",
     "power_delta": "8",
-    "chaos_delta": "5",
+    "chaos_delta": "4",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2397,7 +2397,7 @@
     "swaps_lightdark": "",
     "flavour": "Requires Fuel the Fire Inside",
     "consumable": "FALSE",
-    "description": "+8 POWER\n+5 CHAOS\n"
+    "description": "+8 POWER\n+4 CHAOS\n"
   },
   {
     "card_id": "100",
@@ -2408,8 +2408,8 @@
     "requires_cold_gt": "",
     "requires_light_gt": "",
     "requires_dark_gt": "",
-    "power_delta": "10",
-    "chaos_delta": "6",
+    "power_delta": "11",
+    "chaos_delta": "5",
     "barriers_delta": "",
     "hotcold_delta": "",
     "lightdark_delta": "",
@@ -2421,6 +2421,6 @@
     "swaps_lightdark": "",
     "flavour": "Requires Investigate Immolation",
     "consumable": "FALSE",
-    "description": "+10 POWER\n+6 CHAOS\n"
+    "description": "+11 POWER\n+5 CHAOS\n"
   }
 ]
