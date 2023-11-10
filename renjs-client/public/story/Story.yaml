@@ -1,5 +1,4 @@
 start:
-  - scene: manageActions
   - play mysterious: LOOPED
   - show tower: WITH FADE CONTINUE
   - show deuzi: happy AT CENTER WITH FADE
@@ -183,9 +182,8 @@ approaching:
     - show altar: WITH FADE
     - text: You see a barrier shatter and fall away. Only {barriers} remain holding the spell in place.
   - else:
-    - text: (color:#008900)PASS(end)
     - show altar: WITH FADE
-    - text: The spell appears to be stable for now
+    - text: (color:#008900)The spell appears to be stable for now(end)
   - scene: manageActions
 
 
