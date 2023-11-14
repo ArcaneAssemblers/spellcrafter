@@ -86,10 +86,15 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 
         decodeCall(method, ...args).then(() => {
             this.syncState();
-            this.game.resolveAction(); // must call this to return control to the story
-        }).catch((err) => {
+        }).catch(async (err) => {
             console.error(err.message);
+            this.syncState();
+            await this.game.managers.text.display(err.message, "default");
+            this.game.managers.story.startScene("manageActions");
             // hang forever
+        }).finally(async () => {
+            await this.hideCard();
+            this.game.resolveAction(); // must call this to return control to the story
         });
 	}
 

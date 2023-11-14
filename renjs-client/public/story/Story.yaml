@@ -154,10 +154,6 @@ manageActions:
     - Sacrifice Familiar !if ({familiar} && {familiarIdle}):
       - scene: sacrifice
 
-    - "Study":
-      - text: This action is not available yet
-      - scene: manageActions
-
     - "Add Components":
       - scene: addComponents
 
