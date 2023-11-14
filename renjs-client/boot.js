@@ -2,6 +2,8 @@ import { SpellcrafterPlugin } from './plugins/spellcrafter_plugin';
 
 const BASE_URL = import.meta.env.BASE_URL;
 
+document.head.innerHTML = document.head.innerHTML + "<base href='" + BASE_URL + "' />";
+
 const RenJSConfig =  {
   'name': 'Quickstart',
   'w': 1080,
