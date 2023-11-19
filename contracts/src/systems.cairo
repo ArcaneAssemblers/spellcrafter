@@ -225,3 +225,34 @@ mod interact_tests {
         system.interact(game_id, CARD_ID);
     }
 }
+
+#[cfg(test)]
+mod summon_tests {
+    use traits::{Into, TryInto};
+    use result::ResultTrait;
+    use array::ArrayTrait;
+    use option::OptionTrait;
+    use serde::Serde;
+
+    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::test_utils::deploy_contract;
+
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
+    use spellcrafter::components::{Owner, ValueInGame};
+    use spellcrafter::types::FamiliarType;
+    use spellcrafter::constants::{FAMILIARS_HELD};
+
+    use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+
+    #[test]
+    #[available_gas(300000000000)]
+    fn can_summon_on_new_game() {
+        let SpellcraftDeployment{world, system } = deploy_game();
+        let game_id = system.new_game();
+        let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
+
+        // post conditions
+        let familiars = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        assert(familiars == 1, 'familiars_held not incremented');
+    }
+}

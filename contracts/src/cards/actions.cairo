@@ -136,7 +136,7 @@ fn decrease_stat(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u
     );
 }
 
-// increase the value of the stat given by stat_id by delta
+// Return if a given stat meets or exceeds the threhshold
 fn stat_meets_threshold(
     world: IWorldDispatcher, game_id: u128, stat_id: u128, threshold: Option<(u32, bool)>
 ) -> bool {

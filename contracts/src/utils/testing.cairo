@@ -6,7 +6,8 @@ use dojo::test_utils::spawn_test_world;
 use spellcrafter::components::{
     owner::owner,
     value_in_game::value_in_game,
-    occupied::occupied
+    occupied::occupied,
+    familiar::familiar,
 };
 use spellcrafter::systems::{spellcrafter_system, ISpellCrafterDispatcher};
 
@@ -22,6 +23,7 @@ fn deploy_game() -> SpellcraftDeployment {
         owner::TEST_CLASS_HASH,
         value_in_game::TEST_CLASS_HASH,
         occupied::TEST_CLASS_HASH,
+        familiar::TEST_CLASS_HASH,
     ];
     
     let world = spawn_test_world(models);

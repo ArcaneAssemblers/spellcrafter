@@ -25,8 +25,8 @@ const TICKS: u128 = 10005;
 const POLAR_STAT_MIDPOINT: u32 = 2_147_483_647;
 
 // polar stats
-const HOTCOLD_STAT: u128 = 10004;
-const LIGHTDARK_STAT: u128 = 10005;
+const HOTCOLD_STAT: u128 = 20004;
+const LIGHTDARK_STAT: u128 = 20005;
 
 // familiars
 const RAVENS: u128 = 30001;
