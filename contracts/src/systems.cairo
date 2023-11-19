@@ -238,9 +238,9 @@ mod summon_tests {
     use dojo::test_utils::deploy_contract;
 
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
-    use spellcrafter::components::{Owner, ValueInGame};
-    use spellcrafter::types::FamiliarType;
-    use spellcrafter::constants::{FAMILIARS_HELD};
+    use spellcrafter::components::{Owner, ValueInGame, Familiar};
+    use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
+    use spellcrafter::constants::{FAMILIARS_HELD, FAMILIAR_LIMIT};
 
     use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
 
@@ -252,7 +252,33 @@ mod summon_tests {
         let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
 
         // post conditions
-        let familiars = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
-        assert(familiars == 1, 'familiars_held not incremented');
+        let familiar = get!(world, (familiar_entity_id), Familiar);
+        assert(familiar.familiar_type_id == FamiliarType::Cat.stat_id(), 'familiar type not set');
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        assert(familiars_held == 1, 'familiars_held not incremented');
     }
+
+    #[test]
+    #[should_panic(expected: ('Too many familiars', 'ENTRYPOINT_FAILED'))]
+    #[available_gas(300000000000)]
+    fn cannot_exceed_limit() {
+        let SpellcraftDeployment{world, system } = deploy_game();
+        let game_id = system.new_game();
+
+        let mut i = 0;
+        loop {
+            if i >= FAMILIAR_LIMIT {
+                break;
+            }
+            system.summon(game_id, FamiliarType::Raven);
+            i += 1;
+        };
+
+        // post conditions
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        assert(familiars_held == 1, 'familiars_held not incremented');
+
+        // should panic
+        system.summon(game_id, FamiliarType::Raven);
+    }    
 }
