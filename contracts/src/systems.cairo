@@ -1,10 +1,11 @@
-use spellcrafter::types::Region;
+use spellcrafter::types::{Region, FamiliarType};
 
 #[starknet::interface]
 trait ISpellCrafter<TContractState> {
     fn new_game(self: @TContractState) -> u128;
     fn forage(self: @TContractState, game_id: u128, region: Region) -> u128;
     fn interact(self: @TContractState, game_id: u128, item_id: u128);
+    fn summon(self: @TContractState, game_id: u128, familiar_type: FamiliarType) -> u128;
 }
 
 #[dojo::contract]
@@ -12,17 +13,22 @@ mod spellcrafter_system {
     use super::ISpellCrafter;
     use starknet::get_caller_address;
 
-    use spellcrafter::constants::{INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT, CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT};
-    use spellcrafter::types::Region;
-    use spellcrafter::components::{Owner, ValueInGame};
+    use spellcrafter::constants::{
+        INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT,
+        CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT, FAMILIAR_LIMIT, FAMILIARS_HELD,
+        TICKS_PER_SUMMON,
+    };
+    use spellcrafter::types::{Region, FamiliarType, FamiliarTypeTrait};
+    use spellcrafter::components::{Owner, ValueInGame, Familiar};
     use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive};
     use spellcrafter::utils::random::pass_check;
     use spellcrafter::cards::selection::random_card_from_region;
-    use spellcrafter::cards::actions::{increase_stat, stat_meets_threshold, enact_card, is_dead, bust_barrier};
+    use spellcrafter::cards::actions::{
+        increase_stat, stat_meets_threshold, enact_card, is_dead, bust_barrier, tick,
+    };
 
     #[external(v0)]
     impl SpellCrafterImpl of ISpellCrafter<ContractState> {
-
         fn new_game(self: @ContractState) -> u128 {
             let world = self.world_dispatcher.read();
             let game_id: u128 = world.uuid().into();
@@ -44,8 +50,13 @@ mod spellcrafter_system {
             let world = self.world_dispatcher.read();
             assert_caller_is_owner(world, get_caller_address(), game_id);
             assert_is_alive(world, game_id);
-            assert(!stat_meets_threshold(world, game_id, ITEMS_HELD, Option::Some((ITEM_LIMIT, false))), 'Too many items held');
-            
+            assert(
+                !stat_meets_threshold(
+                    world, game_id, ITEMS_HELD, Option::Some((ITEM_LIMIT, false))
+                ),
+                'Too many items held'
+            );
+
             // TODO This is not simulation safe. Ok for quick protyping only
             let tx_info = starknet::get_tx_info().unbox();
             let seed = tx_info.transaction_hash;
@@ -62,6 +73,7 @@ mod spellcrafter_system {
             return card_id;
         }
 
+        // Place a card owned by the player in this game into the spell
         fn interact(self: @ContractState, game_id: u128, item_id: u128) {
             let world = self.world_dispatcher.read();
             assert_caller_is_owner(world, get_caller_address(), game_id);
@@ -73,7 +85,7 @@ mod spellcrafter_system {
 
             let owned = get!(world, (item_id, game_id), ValueInGame).value;
             assert(owned > 0, 'Item is not owned');
-            
+
             let chaos = get!(world, (CHAOS_STAT, game_id), ValueInGame).value;
 
             if !pass_check(seed, chaos) {
@@ -84,13 +96,43 @@ mod spellcrafter_system {
                 enact_card(world, game_id, item_id);
             }
         }
+
+        // summon a familiar which can be sent to retrieve items
+        fn summon(self: @ContractState, game_id: u128, familiar_type: FamiliarType) -> u128 {
+            let world = self.world_dispatcher.read();
+            assert_caller_is_owner(world, get_caller_address(), game_id);
+            assert_is_alive(world, game_id);
+            assert(
+                !stat_meets_threshold(
+                    world, game_id, FAMILIARS_HELD, Option::Some((FAMILIAR_LIMIT, false))
+                ),
+                'Too many familiars'
+            );
+            // Move time forward, also increase chaos
+            tick(world, game_id, TICKS_PER_SUMMON);
+
+            // create a new entity for the familiar
+            let entity_id: u128 = world.uuid().into();
+            set!(
+                world,
+                (
+                    Familiar { entity_id, game_id, familiar_type_id: familiar_type.stat_id() },
+                    Owner { entity_id, address: get_caller_address() },
+                )
+            );
+
+            // increase the total number of familiars held in this game
+            increase_stat(world, game_id, FAMILIARS_HELD, 1);
+
+            return entity_id;
+        }
     }
 }
 
 
 #[cfg(test)]
-mod forage_tests {    
-    use dojo::world::{ IWorldDispatcher, IWorldDispatcherTrait};
+mod forage_tests {
+    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
     use spellcrafter::types::Region;
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
@@ -102,10 +144,7 @@ mod forage_tests {
     #[test]
     #[available_gas(300000000000)]
     fn test_forage() {
-        let SpellcraftDeployment {
-            world,
-            system,
-        } = deploy_game();
+        let SpellcraftDeployment{world, system, } = deploy_game();
 
         let game_id = system.new_game();
         let card_id = system.forage(game_id, Region::Forest);
@@ -117,13 +156,10 @@ mod forage_tests {
 
     #[test]
     #[available_gas(300000000000)]
-    #[should_panic(expected: ('Too many items held', 'ENTRYPOINT_FAILED') )]
+    #[should_panic(expected: ('Too many items held', 'ENTRYPOINT_FAILED'))]
     fn cannot_exceed_max_items() {
-        let SpellcraftDeployment {
-            world,
-            system
-        } = deploy_game();
-        
+        let SpellcraftDeployment{world, system } = deploy_game();
+
         let game_id = system.new_game();
 
         // // pre conditions
@@ -155,7 +191,7 @@ mod interact_tests {
     use array::ArrayTrait;
     use option::OptionTrait;
     use serde::Serde;
-    
+
     use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
     use dojo::test_utils::deploy_contract;
 
@@ -165,15 +201,12 @@ mod interact_tests {
     use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
 
     #[test]
-    #[should_panic(expected: ('Item is not owned', 'ENTRYPOINT_FAILED') )]
+    #[should_panic(expected: ('Item is not owned', 'ENTRYPOINT_FAILED'))]
     #[available_gas(300000000000)]
     fn reverts_if_card_not_owned() {
         let CARD_ID: u128 = 1;
 
-        let SpellcraftDeployment {
-            world,
-            system,
-        } = deploy_game();
+        let SpellcraftDeployment{world, system, } = deploy_game();
 
         let game_id = system.new_game();
         system.interact(game_id, CARD_ID);
@@ -184,14 +217,11 @@ mod interact_tests {
     fn works_if_card_owned() {
         let CARD_ID: u128 = 1;
 
-        let SpellcraftDeployment {
-            world,
-            system
-        } = deploy_game();
+        let SpellcraftDeployment{world, system } = deploy_game();
 
         let game_id = system.new_game();
 
-        set!(world, ValueInGame{ entity_id: CARD_ID, game_id: game_id, value: 1 });
+        set!(world, ValueInGame { entity_id: CARD_ID, game_id: game_id, value: 1 });
         system.interact(game_id, CARD_ID);
     }
 }

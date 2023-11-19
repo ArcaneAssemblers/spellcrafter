@@ -7,7 +7,7 @@ use spellcrafter::cards::properties::{
     requires_hot_gt, requires_light_gt, requires_dark_gt, chaos_delta_fallback,
     power_delta_fallback, hotcold_delta_fallback, lightdark_delta_fallback
 };
-use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT, POLAR_STAT_MIDPOINT};
+use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT, POLAR_STAT_MIDPOINT, TICKS, CHAOS_PER_TICK};
 
 
 // modify the game state as demanded by this card
@@ -84,6 +84,13 @@ fn make_fallback_stat_changes(world: IWorldDispatcher, game_id: u128, card_id: u
         },
         Option::None => {},
     }
+}
+
+/// Move time forward for the game by this number of ticks
+/// Chaos increases by one point per tick
+fn tick(world: IWorldDispatcher, game_id: u128, amount: u32) {
+    increase_stat(world, game_id, TICKS, amount);
+    increase_stat(world, game_id, CHAOS_STAT, amount * CHAOS_PER_TICK);
 }
 
 fn bust_barrier(world: IWorldDispatcher, game_id: u128) {
