@@ -7,6 +7,8 @@ trait ISpellCrafter<TContractState> {
     fn interact(self: @TContractState, game_id: u128, item_id: u128);
     fn summon(self: @TContractState, game_id: u128, familiar_type: FamiliarType) -> u128;
     fn sacrifice(self: @TContractState, game_id: u128, familiar_id: u128);
+    fn send(self: @TContractState, game_id: u128, familiar_id: u128);
+
 }
 
 #[dojo::contract]
@@ -17,10 +19,10 @@ mod spellcrafter_system {
     use spellcrafter::constants::{
         INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT,
         CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT, FAMILIAR_LIMIT, FAMILIARS_HELD,
-        TICKS_PER_SUMMON, BARRIERS_LIMIT,
+        TICKS_PER_SUMMON, BARRIERS_LIMIT, TICKS, TICKS_PER_SEND,
     };
-    use spellcrafter::types::{Region, FamiliarType, FamiliarTypeTrait};
-    use spellcrafter::components::{Owner, ValueInGame, Familiar};
+    use spellcrafter::types::{Region, FamiliarType, FamiliarTypeTrait, Action};
+    use spellcrafter::components::{Owner, ValueInGame, Familiar, Occupied};
     use spellcrafter::utils::assertions::{
         assert_caller_is_owner, assert_is_alive, assert_is_familiar, assert_is_unoccupied
     };
@@ -131,6 +133,7 @@ mod spellcrafter_system {
             return entity_id;
         }
 
+        // Sacrifice a familiar to rebuild one barrier
         fn sacrifice(self: @ContractState, game_id: u128, familiar_id: u128) {
             let world = self.world_dispatcher.read();
             assert_caller_is_owner(world, get_caller_address(), game_id);
@@ -148,6 +151,29 @@ mod spellcrafter_system {
 
             increase_stat_clamped(world, game_id, BARRIERS_STAT, 1, BARRIERS_LIMIT);
             decrease_stat(world, game_id, FAMILIARS_HELD, 1);
+        }
+
+        // Send a familiar to forage
+        fn send(self: @ContractState, game_id: u128, familiar_id: u128) {
+            let world = self.world_dispatcher.read();
+            assert_caller_is_owner(world, get_caller_address(), game_id);
+            assert_is_alive(world, game_id);
+            assert_is_familiar(world, game_id, familiar_id); // can only send familiar entities
+            assert_caller_is_owner(
+                world, get_caller_address(), familiar_id
+            ); // can only send familiars you own
+            assert_is_unoccupied(
+                world, game_id, familiar_id
+            ); // can only send them if they are unoccupied
+
+            let current_ticks = get!(world, (TICKS, game_id), ValueInGame).value;
+
+            set!(
+                world,
+                (
+                    Occupied { entity_id: familiar_id, until: current_ticks + TICKS_PER_SEND, doing: Action::ForageForest }, // TODO: Make familiars do their default action based on type
+                )
+            );
         }
     }
 }
