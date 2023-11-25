@@ -4,6 +4,7 @@ const INITIAL_BARRIERS: u32 = 3;
 const CHAOS_PER_FORAGE: u32 = 3;
 const ITEM_LIMIT: u32 = 7;
 const FAMILIAR_LIMIT: u32 = 1;
+const BARRIERS_LIMIT: u32 = 3;
 
 // How many ticks each kind of action takes
 const TICKS_PER_FORAGE: u32 = 3;

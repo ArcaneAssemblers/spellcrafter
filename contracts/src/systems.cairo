@@ -6,25 +6,26 @@ trait ISpellCrafter<TContractState> {
     fn forage(self: @TContractState, game_id: u128, region: Region) -> u128;
     fn interact(self: @TContractState, game_id: u128, item_id: u128);
     fn summon(self: @TContractState, game_id: u128, familiar_type: FamiliarType) -> u128;
+    fn sacrifice(self: @TContractState, game_id: u128, familiar_id: u128);
 }
 
 #[dojo::contract]
 mod spellcrafter_system {
     use super::ISpellCrafter;
-    use starknet::get_caller_address;
-
+    use starknet::{get_caller_address};
+    use core::zeroable::Zeroable;
     use spellcrafter::constants::{
         INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT,
         CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT, FAMILIAR_LIMIT, FAMILIARS_HELD,
-        TICKS_PER_SUMMON,
+        TICKS_PER_SUMMON, BARRIERS_LIMIT,
     };
     use spellcrafter::types::{Region, FamiliarType, FamiliarTypeTrait};
     use spellcrafter::components::{Owner, ValueInGame, Familiar};
-    use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive};
+    use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive, assert_is_familiar, assert_is_unoccupied};
     use spellcrafter::utils::random::pass_check;
     use spellcrafter::cards::selection::random_card_from_region;
     use spellcrafter::cards::actions::{
-        increase_stat, stat_meets_threshold, enact_card, is_dead, bust_barrier, tick,
+        increase_stat, decrease_stat, stat_meets_threshold, enact_card, is_dead, bust_barrier, tick,
     };
 
     #[external(v0)]
@@ -97,7 +98,7 @@ mod spellcrafter_system {
             }
         }
 
-        // summon a familiar which can be sent to retrieve items
+        // summon a familiar which can be sent to retrieve items. Returns the entity ID of the familiar
         fn summon(self: @ContractState, game_id: u128, familiar_type: FamiliarType) -> u128 {
             let world = self.world_dispatcher.read();
             assert_caller_is_owner(world, get_caller_address(), game_id);
@@ -125,6 +126,29 @@ mod spellcrafter_system {
             increase_stat(world, game_id, FAMILIARS_HELD, 1);
 
             return entity_id;
+        }
+
+        fn sacrifice(self: @ContractState, game_id: u128, familiar_id: u128) {
+            let world = self.world_dispatcher.read();
+            assert_caller_is_owner(world, get_caller_address(), game_id);
+            assert_is_alive(world, game_id);
+            assert_is_familiar(world, game_id, familiar_id); // can only sacrifice familiar entities
+            assert_caller_is_owner(world, get_caller_address(), familiar_id); // can only sacrifice familiars you own
+            assert_is_unoccupied(world, game_id, familiar_id); // can only sacrifice them if they are unoccupied
+
+            // set the owner of a familiar to the zero address to mark it as sacrificed
+            set!(
+                world,
+                (
+                    Owner { entity_id: familiar_id, address: Zeroable::zero() },
+                )
+            );
+
+            if !stat_meets_threshold(world, game_id, BARRIERS_STAT, Option::Some((BARRIERS_LIMIT, true))) {
+                increase_stat(world, game_id, BARRIERS_STAT, 1);
+            }
+            decrease_stat(world, game_id, FAMILIARS_HELD, 1);
+
         }
     }
 }

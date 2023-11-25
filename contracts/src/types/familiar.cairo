@@ -3,10 +3,10 @@ use spellcrafter::types::{Action, ActionTrait};
 
 #[derive(Serde, Copy, Drop, Introspect)]
 enum FamiliarType {
-    Raven: (),
-    Cat: (),
-    Salamanger: (),
-    WolfSpider: (),
+    Raven,
+    Cat,
+    Salamanger,
+    WolfSpider,
 }
 
 #[generate_trait]

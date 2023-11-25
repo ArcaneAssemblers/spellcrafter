@@ -1,11 +1,11 @@
 /// An action that an entity can be performing while time passes
 #[derive(Serde, Copy, Drop, Introspect)]
 enum Action {
-    None: (),
-    ForageForest: (),
-    ForageMeadow: (),
-    ForageVolcano: (),
-    ForageCave: (),
+    None,
+    ForageForest,
+    ForageMeadow,
+    ForageVolcano,
+    ForageCave,
 }
 
 #[generate_trait]
