@@ -390,3 +390,35 @@ mod sacrifice_tests {
         assert(barriers == INITIAL_BARRIERS, 'barrier count not clamped');
     }
 }
+
+#[cfg(test)]
+mod send_tests {
+    use traits::{Into, TryInto};
+    use result::ResultTrait;
+    use array::ArrayTrait;
+    use option::OptionTrait;
+    use serde::Serde;
+
+    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::test_utils::deploy_contract;
+
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
+    use spellcrafter::components::{ValueInGame, Familiar, Occupied};
+    use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
+    use spellcrafter::constants::{FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS, TICKS, TICKS_PER_SEND};
+
+    use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+
+    #[test]
+    #[available_gas(300000000000)]
+    fn can_summon_then_send() {
+        let SpellcraftDeployment{world, system } = deploy_game();
+        let game_id = system.new_game();
+        let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
+        system.send(game_id, familiar_entity_id);
+
+        let occupied = get!(world, familiar_entity_id, Occupied);
+        let time = get!(world, (TICKS, game_id), ValueInGame);
+        assert(occupied.until == time.value + TICKS_PER_SEND, 'entity is occupied');
+    }
+}
