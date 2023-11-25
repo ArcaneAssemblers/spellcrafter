@@ -122,6 +122,20 @@ fn increase_stat(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u
     );
 }
 
+// increase the value of the stat given by stat_id by delta. Clamps at max
+fn increase_stat_clamped(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u32, max: u32) {
+    let value = get!(world, (stat_id, game_id), ValueInGame).value;
+    let result_value = if value + delta >= max {
+        max // clamp at max to avoid overflow panics
+    } else {
+        value + delta
+    };
+    set!(
+        world,
+        ValueInGame { entity_id: stat_id, game_id, value: result_value }
+    );
+}
+
 // decrease the value of the stat given by stat_id by delta
 fn decrease_stat(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u32) {
     let value = get!(world, (stat_id, game_id), ValueInGame).value;

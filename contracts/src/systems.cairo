@@ -21,11 +21,14 @@ mod spellcrafter_system {
     };
     use spellcrafter::types::{Region, FamiliarType, FamiliarTypeTrait};
     use spellcrafter::components::{Owner, ValueInGame, Familiar};
-    use spellcrafter::utils::assertions::{assert_caller_is_owner, assert_is_alive, assert_is_familiar, assert_is_unoccupied};
+    use spellcrafter::utils::assertions::{
+        assert_caller_is_owner, assert_is_alive, assert_is_familiar, assert_is_unoccupied
+    };
     use spellcrafter::utils::random::pass_check;
     use spellcrafter::cards::selection::random_card_from_region;
     use spellcrafter::cards::actions::{
         increase_stat, decrease_stat, stat_meets_threshold, enact_card, is_dead, bust_barrier, tick,
+        increase_stat_clamped
     };
 
     #[external(v0)]
@@ -133,22 +136,18 @@ mod spellcrafter_system {
             assert_caller_is_owner(world, get_caller_address(), game_id);
             assert_is_alive(world, game_id);
             assert_is_familiar(world, game_id, familiar_id); // can only sacrifice familiar entities
-            assert_caller_is_owner(world, get_caller_address(), familiar_id); // can only sacrifice familiars you own
-            assert_is_unoccupied(world, game_id, familiar_id); // can only sacrifice them if they are unoccupied
+            assert_caller_is_owner(
+                world, get_caller_address(), familiar_id
+            ); // can only sacrifice familiars you own
+            assert_is_unoccupied(
+                world, game_id, familiar_id
+            ); // can only sacrifice them if they are unoccupied
 
             // set the owner of a familiar to the zero address to mark it as sacrificed
-            set!(
-                world,
-                (
-                    Owner { entity_id: familiar_id, address: Zeroable::zero() },
-                )
-            );
+            set!(world, (Owner { entity_id: familiar_id, address: Zeroable::zero() },));
 
-            if !stat_meets_threshold(world, game_id, BARRIERS_STAT, Option::Some((BARRIERS_LIMIT, true))) {
-                increase_stat(world, game_id, BARRIERS_STAT, 1);
-            }
+            increase_stat_clamped(world, game_id, BARRIERS_STAT, 1, BARRIERS_LIMIT);
             decrease_stat(world, game_id, FAMILIARS_HELD, 1);
-
         }
     }
 }
@@ -304,5 +303,64 @@ mod summon_tests {
 
         // should panic
         system.summon(game_id, FamiliarType::Raven);
-    }    
+    }
+}
+
+#[cfg(test)]
+mod sacrifice_tests {
+    use traits::{Into, TryInto};
+    use result::ResultTrait;
+    use array::ArrayTrait;
+    use option::OptionTrait;
+    use serde::Serde;
+
+    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::test_utils::deploy_contract;
+
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
+    use spellcrafter::components::{Owner, ValueInGame, Familiar};
+    use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
+    use spellcrafter::constants::{FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS};
+    use spellcrafter::cards::actions::bust_barrier;
+
+    use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+
+    #[test]
+    #[available_gas(300000000000)]
+    fn can_summon_then_sacrifice() {
+        let SpellcraftDeployment{world, system } = deploy_game();
+        let game_id = system.new_game();
+        let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
+        system.sacrifice(game_id, familiar_entity_id);
+
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        assert(familiars_held == 0, 'familiars_held not incremented');
+    }
+
+    #[test]
+    #[available_gas(300000000000)]
+    fn sacrificing_rebuilds_barrier() {
+        let SpellcraftDeployment{world, system } = deploy_game();
+        let game_id = system.new_game();
+        bust_barrier(world, game_id);
+
+        // pre conditions
+        let barriers = get!(world, (BARRIERS_STAT, game_id), ValueInGame).value;
+        assert(barriers == INITIAL_BARRIERS - 1, 'did not bust barrier');
+
+        let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
+        system.sacrifice(game_id, familiar_entity_id);
+
+        // post conditions
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        let barriers = get!(world, (BARRIERS_STAT, game_id), ValueInGame).value;
+        assert(barriers == INITIAL_BARRIERS, 'barrier not rebuild');
+        assert(familiars_held == 0, 'familiars_held not incremented');
+
+        // cannot build barriers past
+        let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
+        system.sacrifice(game_id, familiar_entity_id);
+        let barriers = get!(world, (BARRIERS_STAT, game_id), ValueInGame).value;
+        assert(barriers == INITIAL_BARRIERS, 'barrier count not clamped');
+    }
 }
