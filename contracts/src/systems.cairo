@@ -8,7 +8,7 @@ trait ISpellCrafter<TContractState> {
     fn summon(self: @TContractState, game_id: u128, familiar_type: FamiliarType) -> u128;
     fn sacrifice(self: @TContractState, game_id: u128, familiar_id: u128);
     fn send(self: @TContractState, game_id: u128, familiar_id: u128);
-
+    fn reap_action(self: @TContractState, game_id: u128, entity_id: u128) -> u128;
 }
 
 #[dojo::contract]
@@ -30,7 +30,7 @@ mod spellcrafter_system {
     use spellcrafter::cards::selection::random_card_from_region;
     use spellcrafter::cards::actions::{
         increase_stat, decrease_stat, stat_meets_threshold, enact_card, is_dead, bust_barrier, tick,
-        increase_stat_clamped
+        increase_stat_clamped, draw_from_region
     };
 
     #[external(v0)]
@@ -56,25 +56,11 @@ mod spellcrafter_system {
             let world = self.world_dispatcher.read();
             assert_caller_is_owner(world, get_caller_address(), game_id);
             assert_is_alive(world, game_id);
-            assert(
-                !stat_meets_threshold(
-                    world, game_id, ITEMS_HELD, Option::Some((ITEM_LIMIT, false))
-                ),
-                'Too many items held'
-            );
 
-            // TODO This is not simulation safe. Ok for quick protyping only
-            let tx_info = starknet::get_tx_info().unbox();
-            let seed = tx_info.transaction_hash;
-
-            let card_id = random_card_from_region(seed, region);
+            let card_id = draw_from_region(world, game_id, region);
 
             // increase chaos by a fixed amount. In the future this will be a function of time
             increase_stat(world, game_id, CHAOS_STAT, CHAOS_PER_FORAGE);
-            // increase the number of that card
-            increase_stat(world, game_id, card_id, 1);
-            // increase the total number of items held
-            increase_stat(world, game_id, ITEMS_HELD, 1);
 
             return card_id;
         }
@@ -171,9 +157,46 @@ mod spellcrafter_system {
             set!(
                 world,
                 (
-                    Occupied { entity_id: familiar_id, until: current_ticks + TICKS_PER_SEND, doing: Action::ForageForest }, // TODO: Make familiars do their default action based on type
+                    Occupied {
+                        entity_id: familiar_id,
+                        until: current_ticks + TICKS_PER_SEND,
+                        doing: Action::ForageForest,
+                        reaped: false
+                    }, // TODO: Make familiars do their default action based on type
                 )
             );
+        }
+
+        // Reap a completed action
+        fn reap_action(self: @ContractState, game_id: u128, entity_id: u128) -> u128 {
+            let world = self.world_dispatcher.read();
+            assert_caller_is_owner(world, get_caller_address(), game_id);
+
+            let occupied = get!(world, entity_id, Occupied);
+
+            assert(occupied.reaped == false, 'Action already reaped');
+            assert(
+                occupied.until <= get!(world, (TICKS, game_id), ValueInGame).value,
+                'Action not complete'
+            );
+
+            let region = match occupied.doing {
+                Action::None => {
+                    assert(0 == 1, 'cannot enact None action');
+                    Region::Cave // Unreachable. Required to make return types match.
+                },
+                Action::ForageForest => { Region::Forest },
+                Action::ForageMeadow => { Region::Meadow },
+                Action::ForageVolcano => { Region::Volcano },
+                Action::ForageCave => { Region::Cave },
+            };
+
+            let card_id = draw_from_region(world, game_id, region);
+
+            // ensure action cannot be reaped again
+            set!(world, (Occupied { entity_id, until: 0, doing: Action::None, reaped: true },));
+
+            card_id
         }
     }
 }
@@ -405,7 +428,9 @@ mod send_tests {
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
     use spellcrafter::components::{ValueInGame, Familiar, Occupied};
     use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
-    use spellcrafter::constants::{FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS, TICKS, TICKS_PER_SEND};
+    use spellcrafter::constants::{
+        FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS, TICKS, TICKS_PER_SEND
+    };
 
     use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
 
