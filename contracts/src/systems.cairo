@@ -9,6 +9,7 @@ trait ISpellCrafter<TContractState> {
     fn sacrifice(self: @TContractState, game_id: u128, familiar_id: u128);
     fn send(self: @TContractState, game_id: u128, familiar_id: u128);
     fn reap_action(self: @TContractState, game_id: u128, entity_id: u128) -> u128;
+    fn wait(self: @TContractState, game_id: u128);
 }
 
 #[dojo::contract]
@@ -197,6 +198,15 @@ mod spellcrafter_system {
             set!(world, (Occupied { entity_id, until: 0, doing: Action::None, reaped: true },));
 
             card_id
+        }
+
+        // wait one tick in the game
+        fn wait(self: @ContractState, game_id: u128) {
+            let world = self.world_dispatcher.read();
+            assert_caller_is_owner(world, get_caller_address(), game_id);
+            assert_is_alive(world, game_id);
+
+            tick(world, game_id, 1);
         }
     }
 }
@@ -437,7 +447,7 @@ mod send_tests {
     #[test]
     #[available_gas(300000000000)]
     fn can_summon_then_send() {
-        let SpellcraftDeployment{world, system } = deploy_game();
+        let SpellcraftDeployment{ world, system } = deploy_game();
         let game_id = system.new_game();
         let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
         system.send(game_id, familiar_entity_id);
@@ -445,5 +455,44 @@ mod send_tests {
         let occupied = get!(world, familiar_entity_id, Occupied);
         let time = get!(world, (TICKS, game_id), ValueInGame);
         assert(occupied.until == time.value + TICKS_PER_SEND, 'entity is occupied');
+    }
+}
+
+#[cfg(test)]
+mod reap_action_tests {
+    use traits::{Into, TryInto};
+    use result::ResultTrait;
+    use array::ArrayTrait;
+    use option::OptionTrait;
+    use serde::Serde;
+
+    use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
+    use dojo::test_utils::deploy_contract;
+
+    use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
+    use spellcrafter::components::{ValueInGame, Familiar, Occupied};
+    use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
+    use spellcrafter::constants::{
+        FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS, TICKS, TICKS_PER_SEND, TICKS_PER_FORAGE,
+    };
+
+    use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
+
+    #[test]
+    #[available_gas(300000000000)]
+    fn can_reap_an_action() {
+        let SpellcraftDeployment{ world, system } = deploy_game();
+        let game_id = system.new_game();
+        let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
+        system.send(game_id, familiar_entity_id);
+        let mut i = 0;
+        loop {
+            if i >= TICKS_PER_FORAGE {
+                break;
+            }
+            system.wait(game_id);
+            i += 1;
+        };
+        let card_id = system.reap_action(game_id, familiar_entity_id);
     }
 }
