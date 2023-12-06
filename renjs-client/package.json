@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@dojoengine/core": "^0.1.56",
     "renjs": "^2.9.3"
   },
   "devDependencies": {
