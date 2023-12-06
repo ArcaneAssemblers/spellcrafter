@@ -165,7 +165,6 @@ approaching:
     - text: The chaos increased by {chaosDelta} while you were away.
     - var chaosDelta: 0
   - text: "You approach the spell(pause: 500).(pause: 500).(pause: 500)."
-  - call SpellCrafter: checkApproachSpell # this will set the {dead} and {barriersDelta} variable to be used in this section
   - if ({dead}):
     - effect SHAKE:
     - text: (color:#c40000)FAIL(end)

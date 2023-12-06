@@ -57,8 +57,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return Promise.resolve();
                 case "forage":
                     return this.forage(args[0]);
-                case "checkApproachSpell":
-                    return this.checkApproachSpell();
                 case "selectAndAddIngredient":
                     return this.selectAndAddIngredient();
                 case "summonFamiliar":
@@ -162,22 +160,24 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         });
     }
 
-    async checkApproachSpell(): Promise<void> {
-        let pre_barriers = this.spellcrafterGame.stats.barriers;
-        // await this.spellcrafterGame.approachSpell();
-        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
-    }
-
     async forage(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
+        let pre_barriers = this.spellcrafterGame.stats.barriers;
+
         await this.spellcrafterGame.forage(region);
+
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
+        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
     }
 
     async summonFamiliar(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
+        let pre_barriers = this.spellcrafterGame.stats.barriers;
+
         await this.spellcrafterGame.summonFamiliar(region);
+
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
+        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
     }
 
     async sendFamiliar(): Promise<void> {

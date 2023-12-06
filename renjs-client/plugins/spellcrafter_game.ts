@@ -68,6 +68,8 @@ export class LocalSpellcrafterGame implements ISpellcrafterGame {
         this._stats.chaos += CHAOS_PER_FORAGE;
         this._stats.power += POWER_PER_FORAGE;
         this._time += TICKS_PER_FORAGE;
+        
+        this.approachSpell();
         return Promise.resolve();
     }
 
@@ -85,6 +87,7 @@ export class LocalSpellcrafterGame implements ISpellcrafterGame {
         } else {
             throw new Error("failed to find familiar for region")
         }
+        this.approachSpell();
         return Promise.resolve();
     }
 
@@ -135,12 +138,11 @@ export class LocalSpellcrafterGame implements ISpellcrafterGame {
         return Promise.resolve();
     }
 
-    approachSpell(): Promise<void> {
+    private approachSpell() {
         let roll = 2 * randomInteger(1, 20);
         if (roll < this._stats.chaos) {
             this._stats.barriers -= 1;
         }
-        return Promise.resolve();
     }
 }
 
