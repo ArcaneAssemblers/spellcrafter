@@ -1,7 +1,7 @@
 import cards from "../generated/cards.json";
 import { Plugin } from "renjs";
 import { ISpellcrafterGame } from "../interfaces/spellcrafter_game";
-import { LocalSpellcrafterGame } from "./spellcrafter_game";
+import { LocalSpellcrafterGame } from "./local_spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
