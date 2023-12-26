@@ -19,7 +19,7 @@ export const useDojo = () => {
         {
             masterAccount: masterAccount,
             accountClassHash: import.meta.env.VITE_PUBLIC_ACCOUNT_CLASS_HASH!,
-            nodeUrl: "https://api.cartridge.gg/x/rr-demo/katana"
+            nodeUrl: "http://0.0.0.0:5050"
         }
     );
 
