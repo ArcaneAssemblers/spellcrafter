@@ -34,10 +34,6 @@ export const LoginComponent: React.FC<LoginPageProps> = ({ setUIState }) => {
   return (
     <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
 
-      <div style={{ fontFamily: "Zelda", fontWeight: "100", backgroundColor: "white", padding: "5px 10px", fontSize: "3.5cqw", borderRadius: "5px", textAlign: "center", marginBottom: "20px" }}>
-        Rising Revenant
-      </div>
-
       <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { createGameClient(false)}}>
           Wallet Login {truncateString(account.address,5)}
       </div>
