@@ -4,7 +4,7 @@ import { MAP_HEIGHT,MAP_WIDTH } from "../utils/settingsConstants";
 import { ClickWrapper } from "./clickWrapper";
 import { Phase } from "./phaseManager";
 import { useDojo } from "../hooks/useDojo";
-import { setClientCameraComponent, setClientCameraEntityIndex, setClientClickPositionComponent, setClientGameComponent, truncateString } from "../utils";
+import { truncateString } from "../utils";
 
 
 interface LoginPageProps {
@@ -23,10 +23,6 @@ export const LoginComponent: React.FC<LoginPageProps> = ({ setUIState }) => {
 
   //create the client game comp for the start of the loading
   const createGameClient = async (guest: boolean) => {
-    setClientGameComponent(1, 1, 1, guest, 0, clientComponents);
-    setClientClickPositionComponent(1, 1, 1, 1, clientComponents);
-    setClientCameraComponent(MAP_WIDTH / 2, MAP_HEIGHT / 2, clientComponents);
-    setClientCameraEntityIndex(MAP_WIDTH / 2, MAP_HEIGHT / 2, clientComponents);
     setUIState(Phase.LOADING); 
   }
 
