@@ -1,7 +1,7 @@
 use starknet::ContractAddress;
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
-use spellcrafter::components::{Owner, Occupied, Familiar, ValueInGame};
+use spellcrafter::components::{Owner, Occupied, Familiar, Valueingame};
 use spellcrafter::cards::actions::is_dead;
 use spellcrafter::constants::{TICKS, RAVENS, CATS, SALAMANDERS, WOLF_SPIDERS};
 
@@ -16,7 +16,7 @@ fn assert_is_alive(world: IWorldDispatcher, game_id: u128) {
 
 fn assert_is_unoccupied(world: IWorldDispatcher, game_id: u128, entity_id: u128) {
     let occupied = get!(world, entity_id, Occupied);
-    let time = get!(world, (TICKS, game_id), ValueInGame);
+    let time = get!(world, (TICKS, game_id), Valueingame);
     assert(occupied.until < time.value, 'entity is occupied');
 }
 
