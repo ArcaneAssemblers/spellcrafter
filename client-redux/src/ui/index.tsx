@@ -12,7 +12,7 @@ export const UI = () => {
     };
   });
 
-  if (!layers.networkLayer || !layers.phaserLayer) return <></>;
+  if (!layers.networkLayer ) return <></>;
 
   //main index that loads the layers we need to this before we do any operations 
 

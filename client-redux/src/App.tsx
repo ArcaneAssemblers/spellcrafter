@@ -24,7 +24,7 @@ function App() {
 
   return (
     <div>
-      <PhaserLayer networkLayer={networkLayer} />
+      {/* <PhaserLayer networkLayer={networkLayer} /> */}
 
       <UI />
 

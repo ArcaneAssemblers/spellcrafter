@@ -11,9 +11,6 @@ interface LoginPageProps {
   setUIState: React.Dispatch<Phase>;
 }
 
-
-// this needs to set the and prob create the client game comp at least
-
 export const LoginComponent: React.FC<LoginPageProps> = ({ setUIState }) => {
 
   //for now we use a burner account

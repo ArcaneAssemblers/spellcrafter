@@ -26,36 +26,6 @@ export enum Phase {
 export const PhaseManager = () => {
   const [phase, setPhase] = useState<Phase>(Phase.LOGIN);
 
-  //phase is right nwo dealt i think by the wrong component, i think after lloading should be the deciding factor
-
-  //to delete
-  // useEffect(() => {
-  //   const handleKeyPress = (event: KeyboardEvent) => {
-  //     switch (event.key) {
-  //       case "1":
-  //         setPhase(Phase.LOGIN);
-  //         break;
-  //       case "2":
-  //         setPhase(Phase.LOADING);
-  //         break;
-  //       case "3":
-  //         setPhase(Phase.PREP);
-  //         break;
-  //       case "4":
-  //         setPhase(Phase.GAME);
-  //         break;
-  //       default:
-  //         break;
-  //     }
-  //   };
-
-  //   window.addEventListener("keydown", handleKeyPress);
-
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyPress);
-  //   };
-  // }, [phase]);
-
   const setUIState = (state: Phase) => {
     setPhase(state);
   }
@@ -63,8 +33,6 @@ export const PhaseManager = () => {
   return (
     <>
       {phase === Phase.LOGIN && <LoginComponent setUIState={setUIState}/>}
-      {phase === Phase.LOADING && <LoadingComponent setUIState={setUIState}/>}
-      {phase === Phase.PREP && <PrepPhaseManager setUIState={setUIState}/>}
       {phase === Phase.GAME && <GamePhaseManager />}
     </>
   );

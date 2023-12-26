@@ -4,11 +4,9 @@ import { PhaserLayer } from "../phaser";
 
 export type Store = {
     networkLayer: NetworkLayer | null;
-    phaserLayer: PhaserLayer | null;
 };
 
 export const store = create<Store>(() => ({
     networkLayer: null,
-    phaserLayer: null
 }));
 
