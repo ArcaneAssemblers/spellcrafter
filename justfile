@@ -1,7 +1,13 @@
 set positional-arguments
+set export
+
+DOJO_VERSION := "0.3.15"
 
 default:
   just --list
+
+install_dojo:
+	dojoup --version $DOJO_VERSION
 
 cardgen:
 	sh ./scripts/gen-cards.sh
@@ -39,7 +45,7 @@ start_client:
 
 # start a katana devnet
 start_devnet:
-	katana --seed=0
+	katana --disable-fee --seed=0
 
 # migrates, authorizes, then start the indexer. Requires a devnet running on localhost:5050
 start_indexer:
@@ -47,5 +53,5 @@ start_indexer:
 	set -euxo pipefail
 	just build_contracts
 	WORLD_ADDRESS=$(just migrate | grep "at address" | grep -oE9 '(0x[a-fA-F0-9]{63})')
-	just set_auth
+	# just set_auth
 	cd contracts && torii --world ${WORLD_ADDRESS}
