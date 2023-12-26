@@ -6,7 +6,6 @@ import { Phase } from "./phaseManager";
 import { useDojo } from "../hooks/useDojo";
 import { truncateString } from "../utils";
 
-
 interface LoginPageProps {
   setUIState: React.Dispatch<Phase>;
 }
@@ -17,13 +16,19 @@ export const LoginComponent: React.FC<LoginPageProps> = ({ setUIState }) => {
   const {
     account: { account, create, isDeploying, clear,select,list },
     networkLayer: {
-      network: { clientComponents },
+      systemCalls: { create_game }
     },
   } = useDojo();
 
   //create the client game comp for the start of the loading
-  const createGameClient = async (guest: boolean) => {
+  const createGameClient = async () => {
     setUIState(Phase.LOADING); 
+  }
+
+  const newGame = async () => {
+    //create a new game
+    const game = await create_game(account);
+    console.log(game);
   }
 
 
@@ -49,9 +54,13 @@ export const LoginComponent: React.FC<LoginPageProps> = ({ setUIState }) => {
         delete burners
       </div>
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { createGameClient(false)}}>
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { createGameClient()}}>
           Login as {truncateString(account.address,5)}
       </div>
+
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { newGame()}}>
+          Create Game
+      </div>      
 
     </ClickWrapper>
   );
