@@ -6,7 +6,7 @@ import { Account, num } from "starknet";
 import { GraphQLClient } from 'graphql-request';
 import { getSdk } from '../generated/graphql';
 
-import manifest from "../../manifest.json";
+import manifest from "../../../contracts/target/dev/manifest.json";
 
 export type SetupNetworkResult = Awaited<ReturnType<typeof setupNetwork>>;
 
