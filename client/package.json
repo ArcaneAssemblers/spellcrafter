@@ -1,5 +1,5 @@
 {
-  "name": "ArcaneAssembler",
+  "name": "arcane-assembler-client",
   "private": true,
   "version": "0.1.0",
   "type": "module",
