@@ -1,67 +1,14 @@
-query fetchSpecificOutRev($game_id: String!, $entity_id: String!) {
-  entities(keys: [$game_id, $entity_id]) {
-    edges {
-      node {
-        keys
-        models {
-          __typename
-          ... on Revenant {
-            game_id
-            entity_id
-            owner
-            first_name_idx
-            last_name_idx
-            outpost_count
-            status
-          }
-          ... on Outpost {
-            game_id
-            entity_id
-            owner
-            name_outpost
-            x
-            y
-            lifes
-            shield
-            reinforcement_count
-            status
-            last_affect_event_id
-          }
-        }
-      }
-    }
-  }
-}
-
-query getAllOutRev($game_id: u32!, $outpostCount: Int!) {
-  outpostModels(first: $outpostCount, where: { game_id: $game_id }) {
+query getGameValues($game_id: u128!) {
+  valueingameModels(where: {game_id: $game_id}) {
     edges {
       node {
         entity {
           keys
           models {
             __typename
-            ... on Outpost {
-              game_id
+            ... on Valueingame {
               entity_id
-              owner
-              name_outpost
-              x
-              y
-              lifes
-              shield
-              reinforcement_count
-              status
-              last_affect_event_id
-            }
-            ... on Revenant {
-              game_id
-              entity_id
-              owner
-              first_name_idx
-              last_name_idx
-              outpost_count
-              status
+              value
             }
           }
         }
@@ -70,228 +17,18 @@ query getAllOutRev($game_id: u32!, $outpostCount: Int!) {
   }
 }
 
-query getAllOwnRevOut($game_id: u32!, $outpostCount: Int!, $owner: ContractAddress!) {
-  outpostModels(first: $outpostCount, where: { game_id: $game_id, owner: $owner}) {
+query getPlayersGames($address: ContractAddress!) {
+  ownerModels(where: {address: $address}) {
     edges {
       node {
         entity {
           keys
           models {
             __typename
-            ... on Outpost {
-              game_id
+            ... on Owner {
               entity_id
-              owner
-              name_outpost
-              x
-              y
-              lifes
-              shield
-              reinforcement_count
-              status
-              last_affect_event_id
+              address
             }
-            ... on Revenant {
-              game_id
-              entity_id
-              owner
-              first_name_idx
-              last_name_idx
-              outpost_count
-              status
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-query getTradesAvailable($game_id: u32!, $tradeStatus: u32!) {
-  tradeModels(where: { game_id: $game_id, status: $tradeStatus }) {
-    edges {
-      node {
-        entity {
-          keys
-          models {
-            __typename
-            ... on Trade {
-              game_id
-              entity_id
-              seller
-              price
-              count
-              buyer
-              status
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-
-query getSortedPlayerReinforcements($game_id: u32!, $playersNum: Int!) {
-  playerinfoModels(
-    where: { game_id: $game_id }
-    first: $playersNum
-    order: { direction: DESC, field: REINFORCEMENT_COUNT }
-  ) {
-    edges {
-      node {
-        entity {
-          keys
-          models {
-            __typename
-            ... on PlayerInfo {
-              game_id
-              owner
-              score
-              score_claim_status
-              earned_prize
-              revenant_count
-              outpost_count
-              reinforcement_count
-              inited
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query fetchSpecificEvent($game_id: String!, $entity_id: String!) {
-  entities(keys: [$game_id, $entity_id]) {
-    edges {
-      node {
-        keys
-        models {
-          __typename
-          ... on WorldEvent {
-            game_id
-            entity_id
-            x
-            y
-            radius
-            destroy_count
-            block_number
-          }
-        }
-      }
-    }
-  }
-}
-
-query getAllEvents($game_id: u32!, $eventsNumber: Int!) {
-  worldeventModels(first: $eventsNumber, where: { game_id: $game_id }) {
-    edges {
-      node {
-        entity {
-          keys
-          models {
-            __typename
-            ... on WorldEvent {
-              game_id
-              entity_id
-              x
-              y
-              radius
-              destroy_count
-              block_number
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getPlayerInfo($game_id: String!, $owner: String!) {
-  entities(keys: [$game_id, $owner]) {
-    edges {
-      node {
-        keys
-        models {
-          __typename
-          ... on PlayerInfo {
-            game_id
-            owner
-            score
-            score_claim_status
-            earned_prize
-            revenant_count
-            outpost_count
-            reinforcement_count
-            inited
-          }
-        }
-      }
-    }
-  }
-}
-
-query getGameTracker($config: String!) {
-  entities(keys: [$config]) {
-    edges {
-      node {
-        keys
-        models {
-          __typename
-          ... on GameTracker {
-            entity_id
-            count
-          }
-        }
-      }
-    }
-  }
-}
-
-query getGameData($game_id: String!) {
-  entities(keys: [$game_id]) {
-    edges {
-      node {
-        keys
-        models {
-          __typename
-          ... on Game {
-            game_id
-            start_block_number
-            prize
-            preparation_phase_interval
-            event_interval
-            erc_addr
-            reward_pool_addr
-            revenant_init_price
-            rewards_claim_status
-            status
-            max_amount_of_revenants
-          }
-          ... on GameEntityCounter {
-            game_id
-            revenant_count
-            outpost_count
-            event_count
-            outpost_exists_count
-            remain_life_count
-            reinforcement_count
-            trade_count
-            score_count
           }
         }
       }
