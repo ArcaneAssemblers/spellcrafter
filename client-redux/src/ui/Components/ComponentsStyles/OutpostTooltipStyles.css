@@ -1,0 +1,100 @@
+.outpost-tooltip-container {
+  position: absolute;
+
+  top: 15%;
+  left: 5%;
+
+  height: fit-content;
+  width: 350px;
+
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 3;
+
+  border: 5px solid var(--borderColour);
+  border-radius: 5px;
+  box-sizing: border-box;
+
+  color: white;
+
+  padding: 10px 10px;
+}
+
+
+
+.outpost-data-container-grid {
+  position: relative;
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+}
+
+.outpost-grid-container-text-style{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.outpost-data-title-grid-element{
+  grid-row: 1;
+  grid-column: 1/6; 
+}
+
+.outpost-data-x-grid-element{
+  grid-row: 1;
+  grid-column: 6/7; 
+}
+
+.outpost-data-out-pic-grid-element{
+  grid-row: 2/5;
+  grid-column: 1/7; 
+}
+
+.outpost-data-shield-grid-element{
+  grid-row: 5/6;
+  grid-column: 1/6;
+  
+  padding: 5px 2px
+}
+
+.outpost-data-id-pos-grid-element{
+  grid-row: 6/7;
+  grid-column: 1/7; 
+}
+
+.outpost-data-reinf-grid-element{
+  grid-row: 7/8;
+  grid-column: 1/7; 
+}
+
+.outpost-data-state-grid-element{
+  grid-row: 8/9;
+  grid-column: 1/7; 
+}
+
+.outpost-data-conf-button-grid-element{
+  grid-row: 9/10;
+  grid-column: 1/7; 
+}
+
+
+
+.revenant-data-container {
+  margin-top: 5%;
+  height: 25%;
+  position: relative;
+}
+
+.multi-out-container {
+  margin-top: 5%;
+  height: 10%;
+  width: 100%;
+  display: grid;
+  gap: 2%;
+  grid-template-columns: repeat(4,1fr);
+}
+
+
+
+

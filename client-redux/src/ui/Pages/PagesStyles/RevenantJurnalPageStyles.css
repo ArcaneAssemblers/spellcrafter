@@ -1,0 +1,60 @@
+.rev-jurn-page-grid-container
+{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows:  repeat(9, 1fr);
+
+  /* background-color: red; */
+
+  height: 100%;
+  width: 52%;
+}
+
+.rev-jurn-page-grid-event-data-count{
+  grid-column: 2 ;
+  grid-row: 1;
+}
+
+.rev-jurn-page-grid-left-arrow{
+  grid-column: 1 ;
+  grid-row: 1 ;
+}
+
+.rev-jurn-page-grid-right-arrow{
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.rev-jurn-page-grid-position-data{
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.rev-jurn-page-grid-type-data{
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.rev-jurn-page-grid-radius-data{
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.rev-jurn-page-grid-outpost-hit-table{
+  grid-column: 1/4;
+  grid-row: 3/10;
+}
+
+.rev-jurn-outpost-element-grid-container
+{
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  width: 100%;
+  height: fit-content;
+  font-family: "OL";
+  font-weight: 100;
+  font-size: 0.7vw;
+  color: white;
+  text-align: center;
+  justify-items: center;
+}

@@ -1,0 +1,180 @@
+.button-container-outpost-sale
+{
+  width: 100%;
+  height: 10%;
+
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+
+  gap: 2%;
+}
+
+.button-container-outpost-grid-searchbox
+{
+  grid-column: 1/5;
+}
+
+.button-container-outpost-grid-sort
+{
+  grid-column: 8/10;
+}
+
+.grid-searchbox-custom-input {
+  width: 100%;
+  height: 100%;
+  border: 2px solid var(--borderColour); 
+  border-radius: 5px;
+  box-sizing: border-box;
+  padding: 5px; 
+
+  background-color: #202020;
+  outline: none; 
+  color: var(--borderColour);
+
+  font-weight: 100;
+  font-family: "OL";
+  font-size: 1.2cqw;
+}
+
+.grid-sort-text{
+  color: white;
+  font-weight: 100;
+  font-family: "OL";
+  font-size: 1.2cqw;
+  padding: "3px 6px";
+  width: 100%;
+  height: 100%;
+
+  background-color: #20202057;
+  border: 2px solid var(--borderColour);
+
+  box-sizing: border-box;
+} 
+
+.grid-change-view-box{
+  color: white;
+  padding: "3px 6px";
+  width: 100%;
+  height: 100%;
+
+  background-color: #20202057;
+  border: 2px solid var(--borderColour);
+
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+} 
+
+
+
+/* stuff for the outpos sale item */
+
+.outpost-flex-layout {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.outpost-sale-element-container {
+  display: grid;
+  grid-template-columns: repeat(6, 40px);
+  grid-template-rows: repeat(8, 40px);
+  width: 240px;
+  height: 320px;
+  background-color: #202020;
+  border: 4px #717171 solid;
+  border-radius: 3px;
+ 
+  color: white;
+}
+
+.outpost-grid-pic{
+  grid-column: 1/7;
+  grid-row: 1/4;
+  padding: 2px;
+}
+
+.outpost-grid-shield{
+  grid-column: 1/4;
+  grid-row: 4;
+  padding-left: 5px;
+}
+
+.outpost-grid-id{
+  grid-column: 6/7;
+  grid-row: 4;
+}
+
+.outpost-grid-reinf-amount{
+  grid-column: 1/7;
+  grid-row: 5;
+  padding-left: 5px;
+}
+
+.outpost-grid-owner{
+  grid-column: 1/7;
+  grid-row: 6;
+  padding-left: 5px;
+}
+
+.outpost-grid-show{
+  grid-column: 1/7;
+  grid-row: 7;
+  margin-left: 5px;
+}
+
+.outpost-grid-cost{
+  grid-column: 1/7;
+  grid-row: 8;
+  padding-left: 5px;
+}
+
+.outpost-grid-buy-button {
+  grid-column: 5/7;
+  grid-row: 8;
+  margin: 5px;
+  background-color: #D0D0D0;
+  font-weight: 100;
+  font-size: 0.8rem;
+  border-radius: 2px;
+}
+
+/* stuff for the sale element of the reinforcements */
+.reinforcement-sale-element-container {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); 
+  width: 98%;
+  height: 45px;
+  background-color: #2F2F2F;
+  border: 3px #C0C0C0 solid;
+  margin-bottom: 25px;
+  box-sizing: border-box;
+  color: white;
+}
+
+.reinf-grid-wallet
+{
+  grid-column: 1/3;
+}
+
+.reinf-grid-reinf-amount
+{
+  grid-column: 4/7;
+}
+
+.reinf-grid-cost
+{
+  grid-column: 9/11;
+}
+
+.reinf-grid-buy-button
+{
+  grid-column: 11/13;
+  background-color: blue;
+  color: black;
+  background-color: #D0D0D0;
+  margin: 5px 5px;
+}
+
+

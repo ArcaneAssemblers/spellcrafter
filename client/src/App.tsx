@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useDojo } from './DojoContext';
 import { useSpellcrafter } from './SpellcrafterContext';
-import { Region, RegionDisplay } from './dojo/gameConfig';
 import cardDefs from './generated/cards.json';
 
 function App() {

@@ -9,15 +9,18 @@
     ],
     "module": "ESNext",
     "skipLibCheck": true,
+    /* Bundler mode */
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
+    "noImplicitAny": false,
+    /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // "noUnusedLocals": false,
+    // "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
   "include": [
