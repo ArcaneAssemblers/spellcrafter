@@ -8,7 +8,6 @@ export const UI = () => {
   const layers = store((state) => {
     return {
       networkLayer: state.networkLayer,
-      phaserLayer: state.phaserLayer,
     };
   });
 

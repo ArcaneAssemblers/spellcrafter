@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 
 //components
 import { LoginComponent } from "./loginComponent";
-import { GamePhaseManager } from "./Pages/gamePhaseManager";
 
 //notes
 /*
@@ -31,7 +30,7 @@ export const PhaseManager = () => {
   return (
     <>
       {phase === Phase.LOGIN && <LoginComponent setUIState={setUIState}/>}
-      {phase === Phase.GAME && <GamePhaseManager />}
+      {/* {phase === Phase.GAME && <GamePhaseManager />} */}
     </>
   );
 };
