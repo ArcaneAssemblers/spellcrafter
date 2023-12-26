@@ -2,9 +2,7 @@
 import React, { useState, useEffect } from "react";
 
 //components
-import { LoadingComponent } from "./loadingComponent";
 import { LoginComponent } from "./loginComponent";
-import { PrepPhaseManager } from "./PrepPhasePages/prepPhaseManager";
 import { GamePhaseManager } from "./Pages/gamePhaseManager";
 
 //notes
