@@ -13,7 +13,7 @@ export const GamePage: React.FC = () => {
     const {
         account: { account },
         networkLayer: {
-            systemCalls: { forage },
+            systemCalls: { forage, interact },
             network: { graphSdk }
         },
     } = useDojo();
@@ -26,6 +26,12 @@ export const GamePage: React.FC = () => {
         //create a new game by sending a transaction
         if (!currentGameId) return;
         await forage(account, parseInt(currentGameId), 0);
+    }
+
+    const doInteract = async (account: Account, cardId: number) => {
+        //create a new game by sending a transaction
+        if (!currentGameId) return;
+        await interact(account, parseInt(currentGameId), cardId);
     }
 
     useEffect(() => {
@@ -51,7 +57,7 @@ export const GamePage: React.FC = () => {
           Forage
       </div>    
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doInteract(account, gameState.cards[0][0])}}>
           Interact
       </div>   
 

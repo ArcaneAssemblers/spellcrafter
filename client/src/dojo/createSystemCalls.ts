@@ -1,11 +1,6 @@
 import { SetupNetworkResult } from "./setupNetwork";
-import { ClientComponents } from "./createClientComponents";
-
 import { toast } from 'react-toastify';
-
-import { Account, num } from "starknet";
-
-//HERE
+import { Account } from "starknet";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -70,6 +65,21 @@ export function createSystemCalls(
         }
     };
 
+    const interact = async (account: Account, gameId: number, itemId: number) => {
+        try {
+            const tx = await execute(account, "spellcrafter_system", "interact", [gameId, itemId]);
+            const receipt = await account.waitForTransaction(
+                tx.transaction_hash,
+                { retryInterval: 100 }
+            )
+            console.log(receipt)
+            notify('Successfully foraged!', true)
+        } catch (e) {
+            console.log(e)
+            notify(`Error foraging ${e}`, false)
+        }
+    };
+
     const summon = async (account: Account, gameId: number, familiarType: number) => {
         try {
             const tx = await execute(account, "spellcrafter_system", "summon", [gameId, familiarType]);
@@ -117,7 +127,7 @@ export function createSystemCalls(
 
     const reapAction = async (account: Account, gameId: number, entityId: number) => {
         try {
-            const tx = await execute(account, "spellcrafter_system", "sacrifice", [gameId, entityId]);
+            const tx = await execute(account, "spellcrafter_system", "reap_action", [gameId, entityId]);
             const receipt = await account.waitForTransaction(
                 tx.transaction_hash,
                 { retryInterval: 100 }
@@ -133,7 +143,7 @@ export function createSystemCalls(
 
     const wait = async (account: Account, gameId: number) => {
         try {
-            const tx = await execute(account, "spellcrafter_system", "sacrifice", [gameId]);
+            const tx = await execute(account, "spellcrafter_system", "wait", [gameId]);
             const receipt = await account.waitForTransaction(
                 tx.transaction_hash,
                 { retryInterval: 100 }
@@ -146,10 +156,10 @@ export function createSystemCalls(
         }
     };
 
-
     return {
         createGame,
         forage,
+        interact,
         summon,
         send,
         reapAction,
