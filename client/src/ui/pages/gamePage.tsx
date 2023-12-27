@@ -51,6 +51,22 @@ export const GamePage: React.FC = () => {
           Forage
       </div>    
 
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
+          Interact
+      </div>   
+
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
+          Summon
+      </div>  
+
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
+          Send
+      </div>
+
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
+          Sacrifice
+      </div>
+
     </ClickWrapper>
     );
 };

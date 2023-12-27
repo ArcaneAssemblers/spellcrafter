@@ -10,8 +10,7 @@ import { Account, num } from "starknet";
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
 export function createSystemCalls(
-    { execute, contractComponents, clientComponents, call }: SetupNetworkResult,
-    { Owner }: ClientComponents
+    { execute }: SetupNetworkResult,
 ) {
 
     const notify = (message: string, succeeded: boolean) => {
@@ -41,7 +40,7 @@ export function createSystemCalls(
         }
     }
 
-    const create_game = async (account: Account) => {
+    const createGame = async (account: Account) => {
         try {
             const tx = await execute(account, "spellcrafter_system", "new_game", []);
             const receipt = await account.waitForTransaction(
@@ -71,13 +70,90 @@ export function createSystemCalls(
         }
     };
 
-    return {
-        create_game,
-        forage,
+    const summon = async (account: Account, gameId: number, familiarType: number) => {
+        try {
+            const tx = await execute(account, "spellcrafter_system", "summon", [gameId, familiarType]);
+            const receipt = await account.waitForTransaction(
+                tx.transaction_hash,
+                { retryInterval: 100 }
+            )
+            console.log(receipt)
+            notify('Successfully summoned!', true)
+        } catch (e) {
+            console.log(e)
+            notify(`Error summoning ${e}`, false)
+        }
     };
-}
 
-function hexToDecimal(hexString: string): number {
-    const decimalResult: number = parseInt(hexString, 16);
-    return decimalResult;
+    const send = async (account: Account, gameId: number, familiarId: number) => {
+        try {
+            const tx = await execute(account, "spellcrafter_system", "send", [gameId, familiarId]);
+            const receipt = await account.waitForTransaction(
+                tx.transaction_hash,
+                { retryInterval: 100 }
+            )
+            console.log(receipt)
+            notify('Successfully sent familiar!', true)
+        } catch (e) {
+            console.log(e)
+            notify(`Error sending familiar ${e}`, false)
+        }
+    };
+
+    const sacrifice = async (account: Account, gameId: number, familiarId: number) => {
+        try {
+            const tx = await execute(account, "spellcrafter_system", "sacrifice", [gameId, familiarId]);
+            const receipt = await account.waitForTransaction(
+                tx.transaction_hash,
+                { retryInterval: 100 }
+            )
+            console.log(receipt)
+            notify('Successfully sacrificed!', true)
+        } catch (e) {
+            console.log(e)
+            notify(`Error sacrificing ${e}`, false)
+        }
+    };
+
+    const reapAction = async (account: Account, gameId: number, entityId: number) => {
+        try {
+            const tx = await execute(account, "spellcrafter_system", "sacrifice", [gameId, entityId]);
+            const receipt = await account.waitForTransaction(
+                tx.transaction_hash,
+                { retryInterval: 100 }
+            )
+            console.log(receipt)
+            notify('Successfully reaped action!', true)
+        } catch (e) {
+            console.log(e)
+            notify(`Error reaping action ${e}`, false)
+        }
+    };
+
+
+    const wait = async (account: Account, gameId: number) => {
+        try {
+            const tx = await execute(account, "spellcrafter_system", "sacrifice", [gameId]);
+            const receipt = await account.waitForTransaction(
+                tx.transaction_hash,
+                { retryInterval: 100 }
+            )
+            console.log(receipt)
+            notify('Successfully waited!', true)
+        } catch (e) {
+            console.log(e)
+            notify(`Error waiting ${e}`, false)
+        }
+    };
+
+
+    return {
+        createGame,
+        forage,
+        summon,
+        send,
+        reapAction,
+        wait,
+        sacrifice,
+    };
 }

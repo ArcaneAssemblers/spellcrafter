@@ -16,7 +16,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
     const {
         account: { account },
         networkLayer: {
-            systemCalls: { create_game },
+            systemCalls: { createGame },
             network: { graphSdk }
         },
     } = useDojo();
@@ -49,7 +49,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
 
     const newGame = async (account: Account) => {
         //create a new game by sending a transaction
-        const game = await create_game(account);
+        await createGame(account);
     }
 
     const setCurrentGameId = useStore((state) => state.setCurrentGameId);
