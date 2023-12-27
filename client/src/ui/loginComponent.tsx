@@ -5,6 +5,8 @@ import { ClickWrapper } from "./clickWrapper";
 import { Phase } from "./phaseManager";
 import { useDojo } from "../hooks/useDojo";
 import { truncateString } from "../utils";
+import { Account, num } from "starknet";
+import { padHexAddress } from "../utils";
 
 interface LoginPageProps {
   setUIState: React.Dispatch<Phase>;
@@ -16,19 +18,28 @@ export const LoginComponent: React.FC<LoginPageProps> = ({ setUIState }) => {
   const {
     account: { account, create, isDeploying, clear,select,list },
     networkLayer: {
-      systemCalls: { create_game }
+      systemCalls: { create_game },
+      network: { graphSdk }
     },
   } = useDojo();
+
+  useEffect(() => {
+    const fetchPlayerGames = async () => {
+       const response = await graphSdk().getPlayersGames({ address: padHexAddress(account.address) });
+       console.log(response.data);
+    }
+  
+    fetchPlayerGames();
+  }, [graphSdk, account]);
 
   //create the client game comp for the start of the loading
   const createGameClient = async () => {
     setUIState(Phase.LOADING); 
   }
 
-  const newGame = async () => {
-    //create a new game
+  const newGame = async (account: Account) => {
+    //create a new game by sending a transaction
     const game = await create_game(account);
-    console.log(game);
   }
 
 
@@ -58,7 +69,7 @@ export const LoginComponent: React.FC<LoginPageProps> = ({ setUIState }) => {
           Login as {truncateString(account.address,5)}
       </div>
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { newGame()}}>
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { newGame(account)}}>
           Create Game
       </div>      
 

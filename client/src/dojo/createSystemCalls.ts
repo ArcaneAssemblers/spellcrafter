@@ -51,10 +51,6 @@ export function createSystemCalls(
                 { retryInterval: 100 }
             )
 
-            // setComponentsFromEvents(contractComponents,
-            //     getEvents(receipt)
-            // );
-
             console.log(receipt)
 
             notify('Game Created!',true)

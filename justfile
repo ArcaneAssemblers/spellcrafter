@@ -53,11 +53,9 @@ start_client:
 start_devnet:
 	katana --disable-fee --seed=0
 
-# migrates, authorizes, then start the indexer. Requires a devnet running on localhost:5050
+# Requires a devnet running on localhost:5050
 start_indexer:
 	#!/usr/bin/env bash
 	set -euxo pipefail
-	just build_contracts
-	WORLD_ADDRESS=$(just migrate | grep "at address" | grep -oE9 '(0x[a-fA-F0-9]{63})')
-	just set_auth
-	cd contracts && torii --world ${WORLD_ADDRESS}
+	WORLD_ADDRESS=$(cat ./contracts/target/dev/manifest.json | jq -r '.world.address')
+	torii --world ${WORLD_ADDRESS} --rpc $RPC_URL

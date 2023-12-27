@@ -54,3 +54,10 @@ export function truncateString(inputString: string, prefixLength: number): strin
 
     return `${prefix}...${suffix}`;
 }
+
+export function padHexAddress(hexAddress: string): string {
+    // convert a hex encoded address to a 64 byte long hex string by removing the leading 0x, padding with 0 and then readding the prefix
+    const hexAddressWithoutPrefix = hexAddress.slice(2);
+    const paddedHexAddress = hexAddressWithoutPrefix.padStart(64, '0');
+    return `0x${paddedHexAddress}`;
+}
