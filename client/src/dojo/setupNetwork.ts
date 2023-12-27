@@ -1,5 +1,4 @@
 import { defineContractComponents } from "./contractComponents";
-import { defineClientComponents } from "./clientComponents";
 import { world } from "./world";
 import { RPCProvider, Query, } from "@dojoengine/core";
 import { Account, num } from "starknet";
@@ -25,7 +24,6 @@ export async function setupNetwork() {
 
         // Define contract components for the world.
         contractComponents: defineContractComponents(world),
-        clientComponents: defineClientComponents(world),
 
         // Define the graph SDK instance.
         graphSdk: () => getSdk(new GraphQLClient(VITE_PUBLIC_TORII)),

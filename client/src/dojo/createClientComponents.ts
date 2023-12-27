@@ -8,14 +8,10 @@ export function createClientComponents({ contractComponents, clientComponents }:
     return {
         ...contractComponents,
 
-        // Game: overridableComponent(contractComponents.Game),
-        // GameEntityCounter: overridableComponent(contractComponents.GameEntityCounter),
-        // GameTracker: overridableComponent(contractComponents.GameTracker),
-        // Outpost: overridableComponent(contractComponents.Outpost),
-
-        ...clientComponents,
+        Valueingame: overridableComponent(contractComponents.Valueingame),
+        Owner: overridableComponent(contractComponents.Owner),
+        Familiar: overridableComponent(contractComponents.Familiar),
+        Occupied: overridableComponent(contractComponents.Occupied),
 
     };
 }
-
-//pretty sure this is unnecessary

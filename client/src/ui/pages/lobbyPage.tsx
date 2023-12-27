@@ -13,7 +13,6 @@ interface LobbyPageProps {
 
 export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
 
-    //for now we use a burner account
     const {
         account: { account },
         networkLayer: {
