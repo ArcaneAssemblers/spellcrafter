@@ -13,7 +13,7 @@ export const GamePage: React.FC = () => {
     const {
         account: { account },
         networkLayer: {
-            systemCalls: { forage, interact },
+            systemCalls: { forage, interact, summon },
             network: { graphSdk }
         },
     } = useDojo();
@@ -23,26 +23,38 @@ export const GamePage: React.FC = () => {
     const [gameState, setGameState] = useState<SpellcrafterGame>();
 
     const doForage = async (account: Account) => {
-        //create a new game by sending a transaction
         if (!currentGameId) return;
         await forage(account, parseInt(currentGameId), 0);
+        setTimeout(() => {
+            fetchGameData(currentGameId)
+        }, 2000)
     }
 
     const doInteract = async (account: Account, cardId: number) => {
-        //create a new game by sending a transaction
         if (!currentGameId) return;
         await interact(account, parseInt(currentGameId), cardId);
+        setTimeout(() => {
+            fetchGameData(currentGameId)
+        }, 2000)
+    }
+
+    const doSummon = async (account: Account, familiarType: number) => {
+        if (!currentGameId) return;
+        await summon(account, parseInt(currentGameId), familiarType);
+        setTimeout(() => {
+            fetchGameData(currentGameId)
+        }, 2000)
+    }
+
+    const fetchGameData = async (currentGameId: string | null) => {
+        if(!currentGameId) return;
+        const { data } = await graphSdk().getGameValues({ game_id: padHex(currentGameId) });
+        setGameState(gameStateFromGameValuesQuery(data));
     }
 
     useEffect(() => {
-        const fetchGameData = async () => {
-            if(!currentGameId) return;
-            const { data } = await graphSdk().getGameValues({ game_id: padHex(currentGameId) });
-            setGameState(gameStateFromGameValuesQuery(data));
-        }
-
-        fetchGameData();
-    }, [graphSdk, currentGameId]);
+        fetchGameData(currentGameId);
+    }, [currentGameId]);
 
     console.log(gameState)
 
@@ -61,17 +73,17 @@ export const GamePage: React.FC = () => {
           Interact
       </div>   
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
+      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSummon(account, 0)}}>
           Summon
       </div>  
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
+      {/* <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
           Send
       </div>
 
       <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
           Sacrifice
-      </div>
+      </div> */}
 
     </ClickWrapper>
     );

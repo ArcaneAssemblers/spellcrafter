@@ -23,33 +23,37 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
 
     const [games, setGames] = useState<Array<string>>([]);
 
-    useEffect(() => {
-        const fetchPlayerGames = async () => {
-            const { data } = await graphSdk().getPlayersGames({ address: padHex(account.address) });
+    const fetchPlayerGames = async (account: Account) => {
+        const { data } = await graphSdk().getPlayersGames({ address: padHex(account.address) });
 
-            const gameIds: Array<string> = [];
-            data.ownerModels?.edges?.forEach((edge) => {
-                edge?.node?.entity?.models?.forEach((model) => {
-                    switch (model?.__typename) {
-                        case "Owner":
-                            gameIds.push(model?.entity_id);
-                            break;
-                        default:
-                            break;
-                    }
-                })
+        const gameIds: Array<string> = [];
+        data.ownerModels?.edges?.forEach((edge) => {
+            if(edge?.node?.entity?.models?.length && edge?.node?.entity?.models?.length > 1) return; // A familiar has a Owner and Familiar component but a game just has an Owner. This filters out the former
+            edge?.node?.entity?.models?.forEach((model) => {
+                switch (model?.__typename) {
+                    case "Owner":
+                        gameIds.push(model?.entity_id);
+                        break;
+                    default:
+                        break;
+                }
             })
-            console.log(gameIds);
-            setGames(gameIds)
-        }
+        })
+        console.log(gameIds);
+        setGames(gameIds)
+    }
 
-        fetchPlayerGames();
-    }, [graphSdk, account]);
+    useEffect(() => {
+        fetchPlayerGames(account);
+    }, [account]);
 
 
     const newGame = async (account: Account) => {
         //create a new game by sending a transaction
         await createGame(account);
+        setTimeout(() => {
+            fetchPlayerGames(account)
+        }, 2000)
     }
 
     const setCurrentGameId = useStore((state) => state.setCurrentGameId);

@@ -1,5 +1,5 @@
 
-import { GetGameValuesQuery } from "../generated/graphql";
+import { GetGameValuesQuery, GetFamiliarsQuery } from "../generated/graphql";
 import { SpellStats, POLAR_STAT_MIDPOINT } from "./config";
 import cardDefs from "../generated/cards.json";
 
@@ -29,7 +29,7 @@ export type SpellcrafterGame = {
     familiar: Familiar | null,
 }
 
-export function gameStateFromGameValuesQuery({ valueingameModels }: GetGameValuesQuery): SpellcrafterGame {
+export function gameStateFromGameValuesQuery({ valueingameModels }: GetGameValuesQuery, { familiarModels }: GetFamiliarsQuery): SpellcrafterGame {
 
     let gameValues = new Map<number, number>();
 
@@ -44,8 +44,6 @@ export function gameStateFromGameValuesQuery({ valueingameModels }: GetGameValue
             }
         })
     })
-
-    console.log(gameValues);
 
     const cards = cardDefs.map((def): [number, number] => {
         return [parseInt(def.card_id), gameValues.get(parseInt(def.card_id)) || 0]
