@@ -1,8 +1,9 @@
 //libs
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 
 import { LoginPage } from "./pages/loginPage";
 import { LobbyPage } from "./pages/lobbyPage";
+import { GamePage } from "./pages/gamePage";
 
 export enum Phase {
   LOGIN,
@@ -21,6 +22,7 @@ export const PhaseManager = () => {
     <>
       {phase === Phase.LOGIN && <LoginPage setUIState={setUIState}/>}
       {phase === Phase.LOBBY &&<LobbyPage setUIState={setUIState}/>}
+      {phase === Phase.GAME &&<GamePage/>}
     </>
   );
 };

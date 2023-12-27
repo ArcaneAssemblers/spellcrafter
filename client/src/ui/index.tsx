@@ -1,11 +1,11 @@
-import { store } from "../store/store";
+import { useStore } from "../store/store";
 import { Wrapper } from "./wrapper";
 
 import { PhaseManager} from "./phaseManager";
 
 export const UI = () => {
 
-  const layers = store((state) => {
+  const layers = useStore((state) => {
     return {
       networkLayer: state.networkLayer,
     };

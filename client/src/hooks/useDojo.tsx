@@ -1,12 +1,12 @@
 import { Account, RpcProvider } from "starknet";
 import { NetworkLayer } from "../dojo/createNetworkLayer";
-import { store } from "../store/store";
+import { useStore } from "../store/store";
 import { useBurner } from "@dojoengine/create-burner";
 
 export type UIStore = ReturnType<typeof useDojo>;
 
 export const useDojo = () => {
-    const { networkLayer } = store();
+    const { networkLayer } = useStore();
 
     const provider = new RpcProvider({
         nodeUrl: import.meta.env.VITE_PUBLIC_NODE_URL,

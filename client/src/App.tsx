@@ -2,7 +2,7 @@
 import './App.css';
 import { useEffect } from 'react';
 import { useNetworkLayer } from './hooks/useNetworkLayer';
-import { store } from "./store/store";
+import { useStore } from "./store/store";
 import { UI } from './ui';
 
 import { ToastContainer } from 'react-toastify';
@@ -16,7 +16,7 @@ function App() {
 
     console.log("Setting network layer");
 
-    store.setState({ networkLayer });
+    useStore.setState({ networkLayer });
 
   }, [networkLayer]);
 
