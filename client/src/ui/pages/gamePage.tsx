@@ -84,8 +84,6 @@ export const GamePage: React.FC = () => {
         fetchGameData(currentGameId);
     }, [currentGameId]);
 
-    console.log(gameState)
-
     return (
         <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
 
@@ -118,13 +116,9 @@ export const GamePage: React.FC = () => {
                 Sacrifice Familiar
             </div>
 
-            {/* <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
-          Send
-      </div>
-
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>
-          Sacrifice
-      </div> */}
+            <div>
+                <pre>{JSON.stringify(gameState, null, 2)}</pre>
+            </div>
 
         </ClickWrapper>
     );

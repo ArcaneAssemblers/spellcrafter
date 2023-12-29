@@ -83,7 +83,6 @@ export async function gameStateFromGameValuesQuery({ valueingameModels, familiar
                     familiar.hasItem = model?.reaped == false && model?.doing !== "None" && model?.until <= time;
                     break;
                 case "Owner":
-                    console.log(model?.address, gameOwner)
                     if (model?.address != gameOwner) {
                         // the familiar has been sacrificed!
                         familiar = null;

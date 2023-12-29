@@ -1,6 +1,6 @@
 import { SetupNetworkResult } from "./setupNetwork";
 import { toast } from 'react-toastify';
-import { Account } from "starknet";
+import { Account, GetTransactionReceiptResponse } from "starknet";
 
 export type SystemCalls = ReturnType<typeof createSystemCalls>;
 
@@ -12,7 +12,7 @@ export function createSystemCalls(
         if (!succeeded) {
             toast("❌ " + message, {
                 position: "top-left",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -24,7 +24,7 @@ export function createSystemCalls(
         else {
             toast("✅ " + message, {
                 position: "top-left",
-                autoClose: 5000,
+                autoClose: 3000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,
@@ -35,6 +35,20 @@ export function createSystemCalls(
         }
     }
 
+    const notifyTxRecept = (receipt: GetTransactionReceiptResponse) => {
+        console.log(receipt)
+        switch(receipt.execution_status) {
+            case "SUCCEEDED":
+                notify(`Transaction ${receipt.transaction_hash} succeeded!`, true);
+                break;
+            case "REVERTED":
+                const match = receipt.revert_reason.match(/Failure reason: "(.*?)"/);
+                const failureReason = match ? match[1] : null;
+                notify(`Transaction failed: ${failureReason}`, false);
+                break;
+        }
+    }
+
     const createGame = async (account: Account) => {
         try {
             const tx = await execute(account, "spellcrafter_system", "new_game", []);
@@ -42,8 +56,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Game Created!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error creating game ${e}`, false)
@@ -57,8 +70,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Successfully foraged!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error foraging ${e}`, false)
@@ -72,8 +84,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Successfully foraged!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error foraging ${e}`, false)
@@ -87,8 +98,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Successfully summoned!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error summoning ${e}`, false)
@@ -102,8 +112,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Successfully sent familiar!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error sending familiar ${e}`, false)
@@ -117,8 +126,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Successfully sacrificed!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error sacrificing ${e}`, false)
@@ -132,8 +140,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Successfully reaped action!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error reaping action ${e}`, false)
@@ -148,8 +155,7 @@ export function createSystemCalls(
                 tx.transaction_hash,
                 { retryInterval: 100 }
             )
-            console.log(receipt)
-            notify('Successfully waited!', true)
+            notifyTxRecept(receipt)
         } catch (e) {
             console.log(e)
             notify(`Error waiting ${e}`, false)
