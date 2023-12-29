@@ -5,9 +5,13 @@ export enum SpellStats {
     Chaos = 10000,
     Power = 10001,
     Barriers = 10002,
-    HotCold = 10003,
-    LightDark = 10004,
-};
+    ItemsHeld = 10003,
+    FamiliarsHeld = 10004,
+    Ticks = 10005,
+
+    HotCold = 20004,
+    LightDark = 20005,
+}
 
 export const SpellStatsDisplay: { [key in SpellStats]: string } = {
     [SpellStats.Chaos]: "Chaos",
@@ -15,7 +19,10 @@ export const SpellStatsDisplay: { [key in SpellStats]: string } = {
     [SpellStats.Barriers]: "Barriers",
     [SpellStats.HotCold]: "Hot/Cold",
     [SpellStats.LightDark]: "Light/Dark",
-};
+    [SpellStats.ItemsHeld]: "Items Held",
+    [SpellStats.FamiliarsHeld]: "Number of Familiars",
+    [SpellStats.Ticks]: "Ticks",
+}
 
 
 export enum Region {
@@ -32,3 +39,9 @@ export const RegionDisplay: { [key in Region]: string } =  {
     [Region.Cave]: "Cave",
 }
 
+export const FamiliarDisplay: { [key in Region]: string } =  {
+    [Region.Forest]: "Raven",
+    [Region.Meadow]: "Cat",
+    [Region.Volcano]: "Salamander",
+    [Region.Cave]: "Wolf Spider",
+}

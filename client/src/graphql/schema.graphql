@@ -1,12 +1,12 @@
-query getGameValues($game_id: String!) {
-  valueingameComponents(where: {game_id: $game_id}) {
+query getGameData($game_id: u128!) {
+  valueingameModels(where: {game_id: $game_id}) {
     edges {
       node {
         entity {
           keys
-          components {
+          models {
             __typename
-            ... on ValueInGame {
+            ... on Valueingame {
               entity_id
               value
             }
@@ -15,15 +15,60 @@ query getGameValues($game_id: String!) {
       }
     }
   }
+
+  familiarModels(where: {game_id: $game_id}) {
+      edges {
+        node {
+          entity {
+            keys
+            models {
+              __typename
+              ... on Familiar {
+                entity_id
+                game_id
+                familiar_type
+              }
+              ... on Occupied {
+                entity_id
+                until
+                doing
+                reaped
+              }
+              ... on Owner {
+                entity_id
+                address
+              }
+            }
+          }
+        }
+      }
+  }
+
+  ownerModels(where: {entity_id: $game_id}) {
+      edges {
+        node {
+          entity {
+            keys
+            models {
+              __typename
+              ... on Owner {
+                entity_id
+                address
+              }
+            }
+          }
+        }
+      }
+    }
 }
 
-query getPlayersGames($address: String!) {
-  ownerComponents(where: {address: $address}) {
+query getPlayersGames($address: ContractAddress!) {
+  ownerModels(where: {address: $address}) {
     edges {
       node {
         entity {
           keys
-          components {
+          models {
             __typename
             ... on Owner {
               entity_id

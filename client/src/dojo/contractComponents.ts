@@ -4,30 +4,54 @@ import { defineComponent, Type as RecsType, World } from "@latticexyz/recs";
 
 export function defineContractComponents(world: World) {
   return {
-    ValueInGame: (() => {
-      const name = "ValueInGame";
+    Familiar: (() => {
       return defineComponent(
         world,
-        {
-          value: RecsType.Number,
-        },
+        { entity_id: RecsType.BigInt, game_id: RecsType.BigInt, familiar_type_id: RecsType.BigInt },
         {
           metadata: {
-            name: name,
+            name: "Familiar",
+            types: ["u128", "u128", "u128"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    Occupied: (() => {
+      return defineComponent(
+        world,
+        { entity_id: RecsType.BigInt, until: RecsType.Number, doing: RecsType.Number, reaped: RecsType.Boolean },
+        {
+          metadata: {
+            name: "Occupied",
+            types: ["u128", "u32", "enum", "bool"],
+            customTypes: ["Action"],
           },
         }
       );
     })(),
     Owner: (() => {
-      const name = "Owner";
       return defineComponent(
         world,
-        {
-          address: RecsType.String,
-        },
+        { entity_id: RecsType.BigInt, address: RecsType.BigInt },
         {
           metadata: {
-            name: name,
+            name: "Owner",
+            types: ["u128", "contractaddress"],
+            customTypes: [],
+          },
+        }
+      );
+    })(),
+    Valueingame: (() => {
+      return defineComponent(
+        world,
+        { entity_id: RecsType.BigInt, game_id: RecsType.BigInt, value: RecsType.Number },
+        {
+          metadata: {
+            name: "Valueingame",
+            types: ["u128", "u128", "u32"],
+            customTypes: [],
           },
         }
       );

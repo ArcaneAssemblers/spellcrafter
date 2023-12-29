@@ -19,11 +19,11 @@ mod spellcrafter_system {
     use core::zeroable::Zeroable;
     use spellcrafter::constants::{
         INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT,
-        CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT, FAMILIAR_LIMIT, FAMILIARS_HELD,
+        CHAOS_STAT, ITEMS_HELD, TICKS_PER_FORAGE, ITEM_LIMIT, FAMILIAR_LIMIT, FAMILIARS_HELD,
         TICKS_PER_SUMMON, BARRIERS_LIMIT, TICKS, TICKS_PER_SEND,
     };
     use spellcrafter::types::{Region, FamiliarType, FamiliarTypeTrait, Action};
-    use spellcrafter::components::{Owner, ValueInGame, Familiar, Occupied};
+    use spellcrafter::components::{Owner, Valueingame, Familiar, Occupied};
     use spellcrafter::utils::assertions::{
         assert_caller_is_owner, assert_is_alive, assert_is_familiar, assert_is_unoccupied
     };
@@ -43,9 +43,9 @@ mod spellcrafter_system {
                 world,
                 (
                     Owner { entity_id: game_id, address: get_caller_address() },
-                    ValueInGame { entity_id: BARRIERS_STAT, game_id, value: INITIAL_BARRIERS },
-                    ValueInGame { entity_id: HOTCOLD_STAT, game_id, value: POLAR_STAT_MIDPOINT },
-                    ValueInGame { entity_id: LIGHTDARK_STAT, game_id, value: POLAR_STAT_MIDPOINT }
+                    Valueingame { entity_id: BARRIERS_STAT, game_id, value: INITIAL_BARRIERS },
+                    Valueingame { entity_id: HOTCOLD_STAT, game_id, value: POLAR_STAT_MIDPOINT },
+                    Valueingame { entity_id: LIGHTDARK_STAT, game_id, value: POLAR_STAT_MIDPOINT }
                 )
             );
             game_id
@@ -61,7 +61,7 @@ mod spellcrafter_system {
             let card_id = draw_from_region(world, game_id, region);
 
             // increase chaos by a fixed amount. In the future this will be a function of time
-            increase_stat(world, game_id, CHAOS_STAT, CHAOS_PER_FORAGE);
+            tick(world, game_id, TICKS_PER_FORAGE);
 
             return card_id;
         }
@@ -76,10 +76,10 @@ mod spellcrafter_system {
             let tx_info = starknet::get_tx_info().unbox();
             let seed = tx_info.transaction_hash;
 
-            let owned = get!(world, (item_id, game_id), ValueInGame).value;
+            let owned = get!(world, (item_id, game_id), Valueingame).value;
             assert(owned > 0, 'Item is not owned');
 
-            let chaos = get!(world, (CHAOS_STAT, game_id), ValueInGame).value;
+            let chaos = get!(world, (CHAOS_STAT, game_id), Valueingame).value;
 
             if !pass_check(seed, chaos) {
                 bust_barrier(world, game_id);
@@ -109,7 +109,7 @@ mod spellcrafter_system {
             set!(
                 world,
                 (
-                    Familiar { entity_id, game_id, familiar_type_id: familiar_type.stat_id() },
+                    Familiar { entity_id, game_id, familiar_type },
                     Owner { entity_id, address: get_caller_address() },
                 )
             );
@@ -153,7 +153,7 @@ mod spellcrafter_system {
                 world, game_id, familiar_id
             ); // can only send them if they are unoccupied
 
-            let current_ticks = get!(world, (TICKS, game_id), ValueInGame).value;
+            let current_ticks = get!(world, (TICKS, game_id), Valueingame).value;
 
             set!(
                 world,
@@ -177,7 +177,7 @@ mod spellcrafter_system {
 
             assert(occupied.reaped == false, 'Action already reaped');
             assert(
-                occupied.until <= get!(world, (TICKS, game_id), ValueInGame).value,
+                occupied.until <= get!(world, (TICKS, game_id), Valueingame).value,
                 'Action not complete'
             );
 
@@ -218,7 +218,7 @@ mod forage_tests {
 
     use spellcrafter::types::Region;
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
-    use spellcrafter::components::{Owner, ValueInGame};
+    use spellcrafter::components::{Owner, Valueingame};
     use spellcrafter::constants::{ITEMS_HELD, ITEM_LIMIT};
 
     use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
@@ -232,7 +232,7 @@ mod forage_tests {
         let card_id = system.forage(game_id, Region::Forest);
 
         // post conditions
-        let card = get!(world, (card_id, game_id), ValueInGame);
+        let card = get!(world, (card_id, game_id), Valueingame);
         assert(card.value == 1, 'failed to add ingredient');
     }
 
@@ -245,7 +245,7 @@ mod forage_tests {
         let game_id = system.new_game();
 
         // // pre conditions
-        let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
+        let items = get!(world, (ITEMS_HELD, game_id), Valueingame).value;
         assert(items == 0, 'not initially no items');
 
         let mut i = 0;
@@ -258,7 +258,7 @@ mod forage_tests {
         };
 
         // post conditions
-        let items = get!(world, (ITEMS_HELD, game_id), ValueInGame).value;
+        let items = get!(world, (ITEMS_HELD, game_id), Valueingame).value;
         assert(items == ITEM_LIMIT, 'not expected n_items');
 
         // should fail
@@ -278,7 +278,7 @@ mod interact_tests {
     use dojo::test_utils::deploy_contract;
 
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
-    use spellcrafter::components::{Owner, ValueInGame};
+    use spellcrafter::components::{Owner, Valueingame};
 
     use super::{spellcrafter_system, ISpellCrafterDispatcher, ISpellCrafterDispatcherTrait};
 
@@ -303,7 +303,7 @@ mod interact_tests {
 
         let game_id = system.new_game();
 
-        set!(world, ValueInGame { entity_id: CARD_ID, game_id: game_id, value: 1 });
+        set!(world, Valueingame { entity_id: CARD_ID, game_id: game_id, value: 1 });
         system.interact(game_id, CARD_ID);
     }
 }
@@ -320,7 +320,7 @@ mod summon_tests {
     use dojo::test_utils::deploy_contract;
 
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
-    use spellcrafter::components::{Owner, ValueInGame, Familiar};
+    use spellcrafter::components::{Owner, Valueingame, Familiar};
     use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
     use spellcrafter::constants::{FAMILIARS_HELD, FAMILIAR_LIMIT};
 
@@ -335,8 +335,8 @@ mod summon_tests {
 
         // post conditions
         let familiar = get!(world, (familiar_entity_id), Familiar);
-        assert(familiar.familiar_type_id == FamiliarType::Cat.stat_id(), 'familiar type not set');
-        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        assert(familiar.familiar_type == FamiliarType::Cat, 'familiar type not set');
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), Valueingame).value;
         assert(familiars_held == 1, 'familiars_held not incremented');
     }
 
@@ -357,7 +357,7 @@ mod summon_tests {
         };
 
         // post conditions
-        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), Valueingame).value;
         assert(familiars_held == 1, 'familiars_held not incremented');
 
         // should panic
@@ -377,7 +377,7 @@ mod sacrifice_tests {
     use dojo::test_utils::deploy_contract;
 
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
-    use spellcrafter::components::{Owner, ValueInGame, Familiar};
+    use spellcrafter::components::{Owner, Valueingame, Familiar};
     use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
     use spellcrafter::constants::{FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS};
     use spellcrafter::cards::actions::bust_barrier;
@@ -392,7 +392,7 @@ mod sacrifice_tests {
         let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
         system.sacrifice(game_id, familiar_entity_id);
 
-        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), Valueingame).value;
         assert(familiars_held == 0, 'familiars_held not incremented');
     }
 
@@ -404,22 +404,22 @@ mod sacrifice_tests {
         bust_barrier(world, game_id);
 
         // pre conditions
-        let barriers = get!(world, (BARRIERS_STAT, game_id), ValueInGame).value;
+        let barriers = get!(world, (BARRIERS_STAT, game_id), Valueingame).value;
         assert(barriers == INITIAL_BARRIERS - 1, 'did not bust barrier');
 
         let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
         system.sacrifice(game_id, familiar_entity_id);
 
         // post conditions
-        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), ValueInGame).value;
-        let barriers = get!(world, (BARRIERS_STAT, game_id), ValueInGame).value;
+        let familiars_held = get!(world, (FAMILIARS_HELD, game_id), Valueingame).value;
+        let barriers = get!(world, (BARRIERS_STAT, game_id), Valueingame).value;
         assert(barriers == INITIAL_BARRIERS, 'barrier not rebuild');
         assert(familiars_held == 0, 'familiars_held not incremented');
 
         // cannot build barriers past
         let familiar_entity_id = system.summon(game_id, FamiliarType::Cat);
         system.sacrifice(game_id, familiar_entity_id);
-        let barriers = get!(world, (BARRIERS_STAT, game_id), ValueInGame).value;
+        let barriers = get!(world, (BARRIERS_STAT, game_id), Valueingame).value;
         assert(barriers == INITIAL_BARRIERS, 'barrier count not clamped');
     }
 }
@@ -436,7 +436,7 @@ mod send_tests {
     use dojo::test_utils::deploy_contract;
 
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
-    use spellcrafter::components::{ValueInGame, Familiar, Occupied};
+    use spellcrafter::components::{Valueingame, Familiar, Occupied};
     use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
     use spellcrafter::constants::{
         FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS, TICKS, TICKS_PER_SEND
@@ -453,7 +453,7 @@ mod send_tests {
         system.send(game_id, familiar_entity_id);
 
         let occupied = get!(world, familiar_entity_id, Occupied);
-        let time = get!(world, (TICKS, game_id), ValueInGame);
+        let time = get!(world, (TICKS, game_id), Valueingame);
         assert(occupied.until == time.value + TICKS_PER_SEND, 'entity is occupied');
     }
 }
@@ -470,7 +470,7 @@ mod reap_action_tests {
     use dojo::test_utils::deploy_contract;
 
     use spellcrafter::utils::testing::{deploy_game, SpellcraftDeployment};
-    use spellcrafter::components::{ValueInGame, Familiar, Occupied};
+    use spellcrafter::components::{Valueingame, Familiar, Occupied};
     use spellcrafter::types::{FamiliarType, FamiliarTypeTrait};
     use spellcrafter::constants::{
         FAMILIARS_HELD, FAMILIAR_LIMIT, BARRIERS_STAT, INITIAL_BARRIERS, TICKS, TICKS_PER_SEND, TICKS_PER_FORAGE,

@@ -13,7 +13,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - run: curl -L https://install.dojoengine.org | bash
-    - run: /home/runner/.config/.dojo/bin/dojoup --version v0.4.2
+    - run: /home/runner/.config/.dojo/bin/dojoup --version v0.3.15
     - run: |
         /home/runner/.config/.dojo/bin/sozo build
         /home/runner/.config/.dojo/bin/sozo test

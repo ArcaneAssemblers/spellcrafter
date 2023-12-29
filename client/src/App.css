@@ -1,0 +1,213 @@
+* {
+  overflow: hidden;
+  user-select: none;
+}
+
+h4, h2, h3, h1 {
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "OL";
+  src: url("/Fonts/OrticaLinear-Light.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Zelda";
+  src: url("/Fonts/The Wild Breath of Zelda.otf") format("opentype");
+}
+
+:root {
+  --borderColour: #a3a3a3;
+  --brightness: 30%;
+}
+
+.top-right-button
+{
+  position: absolute;
+  right: 15px;
+  top: 15px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  font-size: 4rem;
+  color: white;
+
+  width: fit-content;
+  aspect-ratio: 1/1;
+}
+
+.top-right-button:hover
+{
+  cursor: pointer;
+}
+
+/* standardize this */
+.embedded-text-icon
+{
+    height: 1em;
+    width: 1em;
+    vertical-align: middle;
+    padding-bottom: 0.2em;
+    margin: 0px 10px;
+}
+
+ /* Firefox */
+ * {
+  /* scrollbar-width: auto; */
+  scrollbar-color: #dddfdc #1a1e23;
+}
+
+/* Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #1a1e23;
+  border-radius: 12px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #dddfdc;
+  border-radius: 12px;
+  border: 0px solid #ffffff;
+}
+
+.phaser-layer-substitute {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background-color: black;
+}
+
+.phaser-layer-original {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+}
+
+.centered-div {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.center-via-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.global-button-style
+{
+	font-family: "OL";
+  color: white;
+  text-align: center;
+
+	background-color: #1a1e233f;
+	border: 2px solid var(--borderColour);
+
+  font-weight: bold;
+  box-sizing:"border-box"; 
+}
+
+.global-button-style:hover
+{
+	cursor: pointer;
+}
+
+.game-page-container {
+  width: 100%;
+  height: 100%;
+
+  position: relative;
+}
+
+.page-img {
+  width: 100%;
+  height: 100%;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.brightness-down{
+  filter: brightness(var(--brightness)); 
+}
+
+.pages-upper-section
+{
+  position: relative;
+
+  display: flex;
+  flex-direction: row;
+
+  width: 100%;
+  height: 10%;
+  /* background-color:red; */
+  color: white;
+}
+
+.page-title-flex
+{
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.page-title-flex h1
+{
+  font-family: Zelda;
+  font-weight: 100;
+  font-size: 3cqw;
+}
+
+.page-left-flex
+{
+  padding-left: 10px;
+  flex: 1;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* background-color: grey; */
+  font-size: 2cqw;
+  font-family: Zelda;
+  font-weight: 100;
+}
+
+.page-left-flex h2:hover
+{
+  cursor: pointer;
+}
+
+
+.page-right-flex
+{
+  padding-right: 10px;
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  /* background-color: greenyellow; */
+}
+
+
+.pointer {}
+
+.pointer:hover
+{
+  cursor: pointer;
+}

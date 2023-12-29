@@ -1,7 +1,7 @@
 use option::OptionTrait;
 use dojo::world::{IWorldDispatcher, IWorldDispatcherTrait};
 
-use spellcrafter::components::ValueInGame;
+use spellcrafter::components::Valueingame;
 use spellcrafter::types::{Action, Region};
 use spellcrafter::cards::properties::{
     consumable, chaos_delta, power_delta, hotcold_delta, lightdark_delta, requires_cold_gt,
@@ -50,6 +50,7 @@ fn enact_card(world: IWorldDispatcher, game_id: u128, card_id: u128) {
         Option::Some(b) => {
             if b {
                 consume(world, game_id, card_id);
+                decrease_stat(world, game_id, ITEMS_HELD, 1);
             }
         },
         Option::None(_) => {},
@@ -122,7 +123,7 @@ fn bust_barrier(world: IWorldDispatcher, game_id: u128) {
 }
 
 fn is_dead(world: IWorldDispatcher, game_id: u128) -> bool {
-    let value = get!(world, (BARRIERS_STAT, game_id), ValueInGame).value;
+    let value = get!(world, (BARRIERS_STAT, game_id), Valueingame).value;
     value == 0
 }
 
@@ -138,17 +139,17 @@ fn alter_stat(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: (u32
 
 // increase the value of the stat given by stat_id by delta
 fn increase_stat(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u32) {
-    let value = get!(world, (stat_id, game_id), ValueInGame).value;
+    let value = get!(world, (stat_id, game_id), Valueingame).value;
     // TODO: guard for overflows
     set!(
         world,
-        ValueInGame { entity_id: stat_id, game_id, value: value + delta }
+        Valueingame { entity_id: stat_id, game_id, value: value + delta }
     );
 }
 
 // increase the value of the stat given by stat_id by delta. Clamps at max
 fn increase_stat_clamped(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u32, max: u32) {
-    let value = get!(world, (stat_id, game_id), ValueInGame).value;
+    let value = get!(world, (stat_id, game_id), Valueingame).value;
     let result_value = if value + delta >= max {
         max // clamp at max to avoid overflow panics
     } else {
@@ -156,13 +157,13 @@ fn increase_stat_clamped(world: IWorldDispatcher, game_id: u128, stat_id: u128, 
     };
     set!(
         world,
-        ValueInGame { entity_id: stat_id, game_id, value: result_value }
+        Valueingame { entity_id: stat_id, game_id, value: result_value }
     );
 }
 
 // decrease the value of the stat given by stat_id by delta
 fn decrease_stat(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u32) {
-    let value = get!(world, (stat_id, game_id), ValueInGame).value;
+    let value = get!(world, (stat_id, game_id), Valueingame).value;
     let result_value = if delta >= value {
         0 // clamp at zero to avoid underflow panics
     } else {
@@ -170,7 +171,7 @@ fn decrease_stat(world: IWorldDispatcher, game_id: u128, stat_id: u128, delta: u
     };
     set!(
         world,
-        ValueInGame { entity_id: stat_id, game_id, value: result_value }
+        Valueingame { entity_id: stat_id, game_id, value: result_value }
     );
 }
 
@@ -184,7 +185,7 @@ fn stat_meets_threshold(
                 // this can never be met and is as bug
                 return false;
             }
-            let value = get!(world, (stat_id, game_id), ValueInGame).value;
+            let value = get!(world, (stat_id, game_id), Valueingame).value;
             value >= threshold
         },
         Option::None => {
@@ -199,7 +200,7 @@ fn polar_stat_meets_threshold(
 ) -> bool {
     match threshold {
         Option::Some((threshold, is_negative)) => {
-            let value = get!(world, (stat_id, game_id), ValueInGame).value;
+            let value = get!(world, (stat_id, game_id), Valueingame).value;
             if is_negative && !reverse || !is_negative && reverse {
                 value <= POLAR_STAT_MIDPOINT - threshold
             } else {
@@ -214,9 +215,9 @@ fn polar_stat_meets_threshold(
 
 // consume a single instance of a card
 fn consume(world: IWorldDispatcher, game_id: u128, card_id: u128) {
-    let value = get!(world, (card_id, game_id), ValueInGame);
+    let value = get!(world, (card_id, game_id), Valueingame);
     set!(
         world,
-        ValueInGame { entity_id: card_id, game_id: value.game_id, value: value.value - 1 }
+        Valueingame { entity_id: card_id, game_id: value.game_id, value: value.value - 1 }
     );
 }

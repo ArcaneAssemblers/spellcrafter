@@ -4,6 +4,6 @@ mod occupied;
 mod familiar;
 
 use owner::Owner;
-use value_in_game::ValueInGame;
+use value_in_game::Valueingame;
 use occupied::Occupied;
 use familiar::Familiar;
