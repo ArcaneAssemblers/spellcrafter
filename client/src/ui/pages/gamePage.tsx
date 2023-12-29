@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { serialize, useHost } from "esdeka/react";
+import { serialize, useHost, useGuest } from "esdeka/react";
 
 import { ClickWrapper } from "../clickWrapper";
 import { useDojo } from "../../hooks/useDojo";
@@ -11,6 +11,8 @@ import { FamiliarDisplay, Region, RegionDisplay } from "../../game/config";
 
 
 import cardDefs from '../../generated/cards.json';
+
+type Command = { action: string, data: any };
 
 export const GamePage: React.FC = () => {
     const {
@@ -24,7 +26,10 @@ export const GamePage: React.FC = () => {
     // used to communicate with ren-js iframe
     const channel = "spellcrafter";
     const renClientRef = useRef<HTMLIFrameElement>(null);
-    const { broadcast, call, subscribe } = useHost(renClientRef, channel);
+
+    const { call } = useHost(renClientRef, channel);
+
+    const { subscribe } = useGuest(renClientRef, "command");
 
     const currentGameId = useStore((state) => state.currentGameId);
 
@@ -33,6 +38,29 @@ export const GamePage: React.FC = () => {
     const [selectedFamiliar, setSelectedFamiliar] = useState<number>(0);
     const [selectedCard, setSelectedCard] = useState<number | undefined>(undefined);
 
+
+    useEffect(() => {
+        const unsubscribe = subscribe(event => {
+            const { action, data } = event.data.action.payload as Command;
+            console.log("Message from ren:", event);
+            switch(action) {
+                case "forage":
+                    doForage(account, data as number);
+                    break;
+                case "reap":
+                    doReapAction(account, data as number);
+                    break;
+            }
+        });
+        return () => {
+            unsubscribe();
+        };
+    }, [account, subscribe]);
+
+    useEffect(() => {
+        if(!gameState) return;
+        call(serialize(gameState))
+    }, [gameState, call])
 
     const doForage = async (account: Account, region: number) => {
         if (!currentGameId) return;
@@ -91,7 +119,6 @@ export const GamePage: React.FC = () => {
 
         setGameState(gameState);
         setSelectedCard(gameState?.cards[0][0]);
-        call(serialize(gameState))
     }
 
     useEffect(() => {
