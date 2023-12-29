@@ -109,7 +109,7 @@ mod spellcrafter_system {
             set!(
                 world,
                 (
-                    Familiar { entity_id, game_id, familiar_type_id: familiar_type.stat_id() },
+                    Familiar { entity_id, game_id, familiar_type },
                     Owner { entity_id, address: get_caller_address() },
                 )
             );
@@ -335,7 +335,7 @@ mod summon_tests {
 
         // post conditions
         let familiar = get!(world, (familiar_entity_id), Familiar);
-        assert(familiar.familiar_type_id == FamiliarType::Cat.stat_id(), 'familiar type not set');
+        assert(familiar.familiar_type == FamiliarType::Cat, 'familiar type not set');
         let familiars_held = get!(world, (FAMILIARS_HELD, game_id), Valueingame).value;
         assert(familiars_held == 1, 'familiars_held not incremented');
     }
