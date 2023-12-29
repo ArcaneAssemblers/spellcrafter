@@ -3,7 +3,7 @@ import { SpellcrafterPlugin } from './plugins/spellcrafter_plugin';
 const BASE_URL = import.meta.env.BASE_URL;
 
 const RenJSConfig =  {
-  'name': 'Quickstart',
+  'name': 'Arcane Assembler',
   'w': 1080,
   'h': 1920,
   'renderer': Phaser.AUTO, // become renderer
