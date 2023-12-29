@@ -35,8 +35,7 @@ Play with cards at home or play on-chain in the Realms Autonomous World to showc
     - [x] Code generation of contracts from cards sheet
     - [x] Spell interaction
     - [x] Forage mechanic
-    - [ ] Familiars mechanic
-    - [ ] Study mechanic
+    - [x] Familiars mechanic
     - [ ] Unmanipulatable randomness
     - [ ] Real-time Gameplay
 - [ ] Web Client
@@ -44,7 +43,7 @@ Play with cards at home or play on-chain in the Realms Autonomous World to showc
     - [ ] Mobile first game interface
         - [x] Game loop design
         - [x] Music
-        - [ ] Background/character art
+        - [x] Background/character art
         - [x] UI Art
         - [ ] Phaser/Renjs Integration with Dojo/Starknet
 - [ ] Refine parameters for balance and fun
