@@ -10,10 +10,21 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     cardDisplayGroup;
     setCard;
     barrierImages: any = [];
+    host: Window;
     
     onInit(): void {
-        subscribe("spellcrafter", event => {
-            console.log("Ren received game state:", event.data.action.payload);
+        const unsubscribe = subscribe("spellcrafter", event => {
+            console.log("Ren received initial state:", event.data.action.payload);
+            unsubscribe(); // ensure this can only be called once
+
+            // add a new handler for state updates after the game has started
+            subscribe("state_update", event => {
+                console.log("Ren received game state:", event.data.action.payload);
+                this.host = event.source as Window;
+                this.spellcrafterGame = event.data.action.payload;
+                this.game.managers.story.startScene("manageActions");
+            });
+
             this.spellcrafterGame = event.data.action.payload
             this.game.gui.changeMenu('hud').then(() => {
                 this.game.start();
