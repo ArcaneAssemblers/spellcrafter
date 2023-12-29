@@ -69,7 +69,8 @@ export class DojoSpellcrafterGame implements ISpellcrafterGame {
             });
         });
         call(this.host, "command", { action: "reap", data: this._familiar?.id } );
-        return result;    }
+        return result;    
+    }
 
     setFromData(data: any) {
         this._time = data.time;
