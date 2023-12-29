@@ -1,5 +1,6 @@
 import cards from "../generated/cards.json";
 import { Plugin } from "renjs";
+import { answer, subscribe } from "esdeka";
 
 import { SpellcrafterGame, newGame, forage, interact, approachSpell, summonFamiliar, sendFamiliar, claimFamiliarItem, sacrificeFamiliar } from "./spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
@@ -10,9 +11,18 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     setCard;
     barrierImages: any = [];
     
+    onInit(): void {
+        subscribe("spellcrafter", event => {
+            console.log("Ren received game state:", event.data.action.payload);
+            this.spellcrafterGame = event.data.action.payload
+            this.game.gui.changeMenu('hud').then(() => {
+                this.game.start();
+            });
+        });
+    }
+
     // called when new game is started, just before interpreter is called
     onStart(): void {
-        this.spellcrafterGame = newGame();
 
         const cardBack = this.game.add.image(195, 195, "cardback");
         const cardName = this.game.add.text(300, 250, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
@@ -38,7 +48,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 	}
 
     onAction(action): void {
-        console.log("spellcrafter event: ", action);
     }
 
     /// Called when the plugin is called from the story the `call spellcrafter` command
@@ -106,8 +115,8 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             let selectedCardIndex = 0;
 
             const updateCardDisplay = () => {
-                cardName.setText(cards[this.spellcrafterGame.cards[selectedCardIndex]].name);
-                cardText.setText(cards[this.spellcrafterGame.cards[selectedCardIndex]].description);
+                cardName.setText(cards[this.spellcrafterGame.cards[selectedCardIndex][0]].name);
+                cardText.setText(cards[this.spellcrafterGame.cards[selectedCardIndex][0]].description);
             }
 
             const returnToStory = () => {
@@ -217,16 +226,17 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["hotcold"] = stats.hotCold;
         this.game.managers.logic.vars["barriers"] = stats.barriers;
         this.game.managers.logic.vars["dead"] = stats.barriers <= 0;
+        this.game.managers.logic.vars["time"] = this.spellcrafterGame.time;
         this.game.managers.logic.vars["itemCount"] = this.spellcrafterGame.cards.length;
 
-        const lastForagedItem: number | null = this.spellcrafterGame.cards.length > 0 ? this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1] : null;
+        const lastForagedItem: number | null = this.spellcrafterGame.cards.length > 0 ? this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1][0] : null;
         this.game.managers.logic.vars["lastForagedItem"] =  lastForagedItem ? cards[lastForagedItem].card_id : null
         this.game.managers.logic.vars["lastForagedItemName"] =  lastForagedItem ? cards[lastForagedItem].name : null
         this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].description : null
         this.game.managers.logic.vars["lastForagedItemFlavour"] = lastForagedItem ? cards[lastForagedItem].flavour : null
         if (this.spellcrafterGame.familiar) {
             this.game.managers.logic.vars["familiar"] = this.spellcrafterGame.familiar.id;
-            this.game.managers.logic.vars["familiarName"] = cards[this.spellcrafterGame.familiar.id].name;
+            this.game.managers.logic.vars["familiarName"] = this.spellcrafterGame.familiar.familiarType;
             this.game.managers.logic.vars["familiarIdle"] = this.spellcrafterGame.familiar.busyUntil <= this.spellcrafterGame.time;
         } else {
             this.game.managers.logic.vars["familiar"] = null;

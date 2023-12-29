@@ -29,7 +29,7 @@ export type SpellcrafterGame = {
     time: number
     // the game stats for this current game
     stats: GameStats,
-    // The card indices that the player is holding
+    // The card indices that the player is holding and the quantity
     cards: Array<[number, number]>,
     // card index of familiar (if present)
     familiar: Familiar | null,
@@ -77,6 +77,8 @@ export async function gameStateFromGameValuesQuery({ valueingameModels, familiar
                 case "Familiar":
                     familiar.id = parseInt(model?.entity_id);
                     familiar.familiarType = model?.familiar_type;
+                    familiar.busyUntil = familiar.busyUntil || 0;
+                    familiar.hasItem = familiar.hasItem || false;
                     break;
                 case "Occupied":
                     familiar.busyUntil = model?.until || 0;

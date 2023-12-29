@@ -4,12 +4,13 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "bunx --bun vite --open",
+    "dev": "bunx --bun vite --open --port 5174",
     "build": "tsc && bunx --bun vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
+    "esdeka": "^0.1.18",
     "renjs": "^2.9.3"
   },
   "devDependencies": {

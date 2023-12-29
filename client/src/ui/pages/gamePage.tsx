@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { serialize, useHost } from "esdeka/react";
 
 import { ClickWrapper } from "../clickWrapper";
 import { useDojo } from "../../hooks/useDojo";
@@ -8,10 +9,10 @@ import { Account } from "starknet";
 import { SpellcrafterGame, gameStateFromGameValuesQuery } from "../../game/gameState";
 import { FamiliarDisplay, Region, RegionDisplay } from "../../game/config";
 
+
 import cardDefs from '../../generated/cards.json';
 
 export const GamePage: React.FC = () => {
-
     const {
         account: { account },
         networkLayer: {
@@ -20,12 +21,18 @@ export const GamePage: React.FC = () => {
         },
     } = useDojo();
 
+    // used to communicate with ren-js iframe
+    const channel = "spellcrafter";
+    const renClientRef = useRef<HTMLIFrameElement>(null);
+    const { broadcast, call, subscribe } = useHost(renClientRef, channel);
+
     const currentGameId = useStore((state) => state.currentGameId);
 
     const [gameState, setGameState] = useState<SpellcrafterGame>();
     const [selectedRegion, setSelectedRegion] = useState<number>(0);
     const [selectedFamiliar, setSelectedFamiliar] = useState<number>(0);
     const [selectedCard, setSelectedCard] = useState<number | undefined>(undefined);
+
 
     const doForage = async (account: Account, region: number) => {
         if (!currentGameId) return;
@@ -84,6 +91,7 @@ export const GamePage: React.FC = () => {
 
         setGameState(gameState);
         setSelectedCard(gameState?.cards[0][0]);
+        call(serialize(gameState))
     }
 
     useEffect(() => {
@@ -94,9 +102,14 @@ export const GamePage: React.FC = () => {
 
     return (
         <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
+            <iframe ref={renClientRef} src="http://localhost:5174/spellcrafter" width="100%" height="500"></iframe>
 
             <div>
                 Now playing game {currentGameId}
+            </div>
+
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { call(serialize(gameState)) }}>
+                Send State
             </div>
 
             <div style={{ display: "flex", flexDirection: "row" }}>

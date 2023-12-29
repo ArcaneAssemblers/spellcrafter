@@ -1,20 +1,15 @@
 start:
-  - play mysterious: LOOPED
-  - show tower: WITH FADE CONTINUE
-  - show deuzi: happy AT CENTER WITH FADE
-  - deuzi says: A spell demands a sacrifice. Will you pay the price to begin?
-  - choice:
-    - "I accept":
-      - deuzi says happy: One moment while your sacrifice is received..
-      - deuzi says happy: A spark of magic springs to life. You're ready to begin!
-      - hide deuzi: WITH FADE
-      - scene: manageActions
-    - "What does this mean?":
-      - deuzi says: When we have a tutorial this will go here...
-      - scene: start
+  # - play mysterious: LOOPED
+    - scene: manageActions
 
 manageActions:
   - show tower: WITH FADE
+
+
+  - if ({time} > 0):
+    - text: Welcome back Acolyte
+  - else:
+    - text: A new recruit! Welcome to the tower. Do you need to be shown around?
 
   # upkeep
   - call SpellCrafter: printDebug
@@ -57,7 +52,8 @@ manageActions:
   
     - var familiarReturnedItem: false
 
-  - text: The current spell power is {power}, and its chaos is {chaos}.
+  - text: The current spell power is {power}
+  - text: Its chaos is {chaos}.
   - call SpellCrafter: showBarriers
   - if ({lightdark} > 0):
     - text: The spell is light level {lightdark}.
