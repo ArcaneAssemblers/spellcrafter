@@ -6,7 +6,9 @@ import { padHex } from "../../utils";
 import { useStore } from "../../store/store";
 import { Account } from "starknet";
 import { SpellcrafterGame, gameStateFromGameValuesQuery } from "../../game/gameState";
+import { Region, RegionDisplay } from "../../game/config";
 
+import cardDefs from '../../generated/cards.json';
 
 export const GamePage: React.FC = () => {
 
@@ -21,10 +23,11 @@ export const GamePage: React.FC = () => {
     const currentGameId = useStore((state) => state.currentGameId);
 
     const [gameState, setGameState] = useState<SpellcrafterGame>();
+    const [selectedRegion, setSelectedRegion] = useState<number>(0);
 
-    const doForage = async (account: Account) => {
+    const doForage = async (account: Account, region: number) => {
         if (!currentGameId) return;
-        await forage(account, parseInt(currentGameId), 0);
+        await forage(account, parseInt(currentGameId), region);
         setTimeout(() => {
             fetchGameData(currentGameId)
         }, 2000)
@@ -88,11 +91,18 @@ export const GamePage: React.FC = () => {
         <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
 
             <div>
-                Now playing {currentGameId}
+                Now playing game {currentGameId}
             </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account) }}>
+            <div className="card">
+                <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value as any as Region)}>
+                    {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
+                        return <option value={value as Region} key={index}>{RegionDisplay[value as Region]}</option>
+                    })}
+                </select>
+                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account, selectedRegion) }}>
                 Forage
+            </div>
             </div>
 
             <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doInteract(account, gameState.cards[0][0]) }}>
@@ -116,8 +126,22 @@ export const GamePage: React.FC = () => {
                 Sacrifice Familiar
             </div>
 
-            <div>
-                <pre>{JSON.stringify(gameState, null, 2)}</pre>
+            <div className="card">
+                <pre>Time: {gameState?.time}</pre>
+            </div>
+
+            <div className="card">
+                <pre>{JSON.stringify(gameState?.stats, null, 2)}</pre>
+            </div>
+
+            <div className="card">
+                <pre>{JSON.stringify(gameState?.familiar, null, 2)}</pre>
+            </div>
+
+            <div className="card">
+                {gameState?.cards.map(([id, count]) => {
+                    return <p key={id}>{cardDefs[id].name}: {count}</p>
+                })}
             </div>
 
         </ClickWrapper>
