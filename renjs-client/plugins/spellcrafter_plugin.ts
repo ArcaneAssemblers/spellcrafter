@@ -18,13 +18,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             this.host = event.source as Window;
             unsubscribe(); // ensure this can only be called once
 
-            // add a new handler for state updates after the game has started
-            subscribe("spellcrafter", event => {
-                console.log("Ren received game state:", event.data.action.payload);
-                this.spellcrafterGame = new DojoSpellcrafterGame(event.data.action.payload, this.host);
-                this.game.managers.story.startScene("manageActions");
-            });
-
             this.spellcrafterGame = new DojoSpellcrafterGame(event.data.action.payload, this.host)
             this.game.gui.changeMenu('hud').then(() => {
                 this.game.start();
