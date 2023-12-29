@@ -537,7 +537,7 @@ export type GetGameDataQueryVariables = Exact<{
 }>;
 
 
-export type GetGameDataQuery = { __typename?: 'World__Query', valueingameModels?: { __typename?: 'ValueingameConnection', edges?: Array<{ __typename?: 'ValueingameEdge', node?: { __typename?: 'Valueingame', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar' } | { __typename: 'Occupied' } | { __typename: 'Owner' } | { __typename: 'Valueingame', entity_id?: any | null, value?: any | null } | null> | null } | null } | null } | null> | null } | null, familiarModels?: { __typename?: 'FamiliarConnection', edges?: Array<{ __typename?: 'FamiliarEdge', node?: { __typename?: 'Familiar', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar', entity_id?: any | null, game_id?: any | null, familiar_type?: any | null } | { __typename: 'Occupied', entity_id?: any | null, until?: any | null, doing?: any | null, reaped?: any | null } | { __typename: 'Owner' } | { __typename: 'Valueingame' } | null> | null } | null } | null } | null> | null } | null };
+export type GetGameDataQuery = { __typename?: 'World__Query', valueingameModels?: { __typename?: 'ValueingameConnection', edges?: Array<{ __typename?: 'ValueingameEdge', node?: { __typename?: 'Valueingame', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar' } | { __typename: 'Occupied' } | { __typename: 'Owner' } | { __typename: 'Valueingame', entity_id?: any | null, value?: any | null } | null> | null } | null } | null } | null> | null } | null, familiarModels?: { __typename?: 'FamiliarConnection', edges?: Array<{ __typename?: 'FamiliarEdge', node?: { __typename?: 'Familiar', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar', entity_id?: any | null, game_id?: any | null, familiar_type?: any | null } | { __typename: 'Occupied', entity_id?: any | null, until?: any | null, doing?: any | null, reaped?: any | null } | { __typename: 'Owner', entity_id?: any | null, address?: any | null } | { __typename: 'Valueingame' } | null> | null } | null } | null } | null> | null } | null, ownerModels?: { __typename?: 'OwnerConnection', edges?: Array<{ __typename?: 'OwnerEdge', node?: { __typename?: 'Owner', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar' } | { __typename: 'Occupied' } | { __typename: 'Owner', entity_id?: any | null, address?: any | null } | { __typename: 'Valueingame' } | null> | null } | null } | null } | null> | null } | null };
 
 export type GetPlayersGamesQueryVariables = Exact<{
   address: Scalars['ContractAddress']['input'];
@@ -582,6 +582,26 @@ export const GetGameDataDocument = gql`
               until
               doing
               reaped
+            }
+            ... on Owner {
+              entity_id
+              address
+            }
+          }
+        }
+      }
+    }
+  }
+  ownerModels(where: {entity_id: $game_id}) {
+    edges {
+      node {
+        entity {
+          keys
+          models {
+            __typename
+            ... on Owner {
+              entity_id
+              address
             }
           }
         }

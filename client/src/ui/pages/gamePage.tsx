@@ -13,7 +13,7 @@ export const GamePage: React.FC = () => {
     const {
         account: { account },
         networkLayer: {
-            systemCalls: { forage, interact, summon, send },
+            systemCalls: { forage, interact, summon, send, reapAction, sacrifice },
             network: { graphSdk }
         },
     } = useDojo();
@@ -54,17 +54,28 @@ export const GamePage: React.FC = () => {
         }, 2000)
     }
 
+    const doReapAction = async (account: Account, familiar_id: number) => {
+        if (!currentGameId) return;
+        await reapAction(account, parseInt(currentGameId), familiar_id);
+        setTimeout(() => {
+            fetchGameData(currentGameId)
+        }, 2000)
+    }
+
+    const doSacrifice = async (account: Account, familiar_id: number) => {
+        if (!currentGameId) return;
+        await sacrifice(account, parseInt(currentGameId), familiar_id);
+        setTimeout(() => {
+            fetchGameData(currentGameId)
+        }, 2000)
+    }
+
     const fetchGameData = async (currentGameId: string | null) => {
         if (!currentGameId) return;
         const game_id = padHex(currentGameId);
         const { data: valueData } = await graphSdk().getGameData({ game_id });
 
         const gameState = await gameStateFromGameValuesQuery(valueData);
-
-        // if there is a familiar then fetch the occupied data
-
-        // const { data: occupiedData } = await graphSdk().getOccupied({ entity_id: padHex(currentGameId) });
-
 
         setGameState(gameState);
     }
@@ -91,12 +102,20 @@ export const GamePage: React.FC = () => {
             </div>
 
             <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSummon(account, 0) }}>
-                Summon
+                Summon Familiar
             </div>
 
 
             <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSend(account, gameState?.familiar?.id) }}>
-                Send
+                Send Familiar
+            </div>
+
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doReapAction(account, gameState?.familiar?.id) }}>
+                Reap
+            </div>
+
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSacrifice(account, gameState?.familiar?.id) }}>
+                Sacrifice Familiar
             </div>
 
             {/* <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account)}}>

@@ -19,7 +19,7 @@ mod spellcrafter_system {
     use core::zeroable::Zeroable;
     use spellcrafter::constants::{
         INITIAL_BARRIERS, BARRIERS_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, POLAR_STAT_MIDPOINT,
-        CHAOS_STAT, ITEMS_HELD, CHAOS_PER_FORAGE, ITEM_LIMIT, FAMILIAR_LIMIT, FAMILIARS_HELD,
+        CHAOS_STAT, ITEMS_HELD, TICKS_PER_FORAGE, ITEM_LIMIT, FAMILIAR_LIMIT, FAMILIARS_HELD,
         TICKS_PER_SUMMON, BARRIERS_LIMIT, TICKS, TICKS_PER_SEND,
     };
     use spellcrafter::types::{Region, FamiliarType, FamiliarTypeTrait, Action};
@@ -61,7 +61,7 @@ mod spellcrafter_system {
             let card_id = draw_from_region(world, game_id, region);
 
             // increase chaos by a fixed amount. In the future this will be a function of time
-            increase_stat(world, game_id, CHAOS_STAT, CHAOS_PER_FORAGE);
+            tick(world, game_id, TICKS_PER_FORAGE);
 
             return card_id;
         }

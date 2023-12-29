@@ -35,9 +35,22 @@ export type SpellcrafterGame = {
     familiar: Familiar | null,
 }
 
-export async function gameStateFromGameValuesQuery({ valueingameModels, familiarModels }: GetGameDataQuery): SpellcrafterGame {
+export async function gameStateFromGameValuesQuery({ valueingameModels, familiarModels, ownerModels }: GetGameDataQuery): SpellcrafterGame {
 
     const gameValues = new Map<number, number>();
+    let gameOwner = null;
+
+    ownerModels?.edges?.forEach((entity) => {
+        entity?.node?.entity?.models?.forEach((model) => {
+            switch (model?.__typename) {
+                case "Owner":
+                    gameOwner = model?.address;
+                    break;
+                default:
+                    break;
+            }
+        })
+    })
 
     valueingameModels?.edges?.forEach((entity) => {
         entity?.node?.entity?.models?.forEach((model) => {
@@ -58,16 +71,24 @@ export async function gameStateFromGameValuesQuery({ valueingameModels, familiar
     }).filter(([_, count]) => count)
 
     const familiar = familiarModels?.edges?.map((entity) => {
-        const familiar: Familiar  = {};
+        let familiar: Familiar | null  = {};
         entity?.node?.entity?.models?.forEach((model) => {
             switch (model?.__typename) {
                 case "Familiar":
-                        familiar.id = parseInt(model?.entity_id);
-                        familiar.familiarType = model?.familiar_type;
+                    familiar.id = parseInt(model?.entity_id);
+                    familiar.familiarType = model?.familiar_type;
                     break;
                 case "Occupied":
-                        familiar.busyUntil = model?.until || 0;
-                        familiar.hasItem = model?.reaped == false && model?.doing !== "None" && model?.until <= time;
+                    familiar.busyUntil = model?.until || 0;
+                    familiar.hasItem = model?.reaped == false && model?.doing !== "None" && model?.until <= time;
+                    break;
+                case "Owner":
+                    console.log(model?.address, gameOwner)
+                    if (model?.address != gameOwner) {
+                        // the familiar has been sacrificed!
+                        familiar = null;
+                        return;
+                    }
                     break;
                 default:
                     break;
