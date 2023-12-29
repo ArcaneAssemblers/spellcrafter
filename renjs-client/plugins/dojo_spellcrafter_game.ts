@@ -60,8 +60,17 @@ export class DojoSpellcrafterGame implements ISpellcrafterGame {
     }
 
     claimFamiliarItem(): Promise<void> {
-        return Promise.resolve();
-    }
+        const forageIndex = {"forest": 0, "meadow": 1, "volcano": 2, "cave": 3}[region];
+        let result = new Promise<void>((resolve, reject) => {
+            let unsubscribe = subscribe("spellcrafter", event => {
+                console.log("forage handeler received state:", event.data.action.payload);
+                this.setFromData(event.data.action.payload);
+                unsubscribe();
+                resolve();
+            });
+        });
+        call(this.host, "reap", this._familiar?.id);
+        return result;    }
 
     setFromData(data: any) {
         this._time = data.time;
