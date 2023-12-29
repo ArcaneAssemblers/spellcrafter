@@ -1,12 +1,12 @@
 import cards from "../generated/cards.json";
 import { Plugin } from "renjs";
 import { answer, subscribe } from "esdeka";
-
-import { SpellcrafterGame, newGame, forage, interact, approachSpell, summonFamiliar, sendFamiliar, claimFamiliarItem, sacrificeFamiliar } from "./spellcrafter_game";
+import { ISpellcrafterGame } from "../interfaces/spellcrafter_game";
+import { DojoSpellcrafterGame } from "./dojo_spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
 // class SpellcrafterPlugin extends Plugin {
 
-    spellcrafterGame: SpellcrafterGame;
+    spellcrafterGame: ISpellcrafterGame;
     cardDisplayGroup;
     setCard;
     barrierImages: any = [];
@@ -21,11 +21,11 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             subscribe("state_update", event => {
                 console.log("Ren received game state:", event.data.action.payload);
                 this.host = event.source as Window;
-                this.spellcrafterGame = event.data.action.payload;
+                this.spellcrafterGame = new DojoSpellcrafterGame(event.data.action.payload);
                 this.game.managers.story.startScene("manageActions");
             });
 
-            this.spellcrafterGame = event.data.action.payload
+            this.spellcrafterGame = new DojoSpellcrafterGame(event.data.action.payload)
             this.game.gui.changeMenu('hud').then(() => {
                 this.game.start();
             });
@@ -34,7 +34,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 
     // called when new game is started, just before interpreter is called
     onStart(): void {
-
         const cardBack = this.game.add.image(195, 195, "cardback");
         const cardName = this.game.add.text(300, 250, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
         const cardText = this.game.add.text(300, 370, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
@@ -77,8 +76,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return Promise.resolve();
                 case "forage":
                     return this.forage(args[0]);
-                case "checkApproachSpell":
-                    return this.checkApproachSpell();
                 case "selectAndAddIngredient":
                     return this.selectAndAddIngredient();
                 case "summonFamiliar":
@@ -169,7 +166,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             const addToSpellButton = this.game.add.button(40, 1025, "button", async () => {
                 let pre_stats = {...this.spellcrafterGame.stats};
                 this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardIndex]].name;
-                await interact(this.spellcrafterGame, this.spellcrafterGame.cards[selectedCardIndex]);
+                await this.spellcrafterGame.interact(this.spellcrafterGame.cards[selectedCardIndex]);
                 this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
                 this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
                 this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
@@ -182,35 +179,37 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         });
     }
 
-    async checkApproachSpell(): Promise<void> {
-        let pre_barriers = this.spellcrafterGame.stats.barriers;
-        await approachSpell(this.spellcrafterGame);
-        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
-    }
-
     async forage(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
-        await forage(this.spellcrafterGame, region);
+        let pre_barriers = this.spellcrafterGame.stats.barriers;
+
+        await this.spellcrafterGame.forage(region);
+
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
+        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
     }
 
     async summonFamiliar(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
-        await summonFamiliar(this.spellcrafterGame, region);
+        let pre_barriers = this.spellcrafterGame.stats.barriers;
+
+        await this.spellcrafterGame.summonFamiliar(region);
+
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
+        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
     }
 
     async sendFamiliar(): Promise<void> {
-        await sendFamiliar(this.spellcrafterGame);
+        await this.spellcrafterGame.sendFamiliar();
     }
 
     async sacrificeFamiliar(): Promise<void> {
-        await sacrificeFamiliar(this.spellcrafterGame);
+        await this.spellcrafterGame.sacrificeFamiliar();
     }
 
     async claimFamiliarItem(): Promise<void> {
         try {
-            await claimFamiliarItem(this.spellcrafterGame);
+            await this.spellcrafterGame.claimFamiliarItem();
             this.game.managers.logic.vars["familiarReturnedItem"] = true;
         } catch (err) { // just print errors here since we know this can fail
             console.log("familiar item check failed: ", err.message);

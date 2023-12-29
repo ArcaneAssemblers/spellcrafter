@@ -14,12 +14,11 @@ export class DojoSpellcrafterGame implements ISpellcrafterGame {
     _cards: number[];
     _familiar: Familiar | null;
 
-    _provider: RPCProvider;
-    _signer: Account;
-
-    constructor(signer: Account) {
-        this._signer = signer;
-        this._provider = new RPCProvider(WORLD_ADDRESS, manifest, NODE_URL);
+    constructor(data: any) {
+        this._time = data.time;
+        this._stats = data.stats;
+        this._cards = data.cards;
+        this._familiar = data.familiar;
     }
 
     get time(): number {
