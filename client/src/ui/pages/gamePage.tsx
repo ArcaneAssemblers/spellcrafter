@@ -6,7 +6,7 @@ import { padHex } from "../../utils";
 import { useStore } from "../../store/store";
 import { Account } from "starknet";
 import { SpellcrafterGame, gameStateFromGameValuesQuery } from "../../game/gameState";
-import { Region, RegionDisplay } from "../../game/config";
+import { FamiliarDisplay, Region, RegionDisplay } from "../../game/config";
 
 import cardDefs from '../../generated/cards.json';
 
@@ -24,6 +24,8 @@ export const GamePage: React.FC = () => {
 
     const [gameState, setGameState] = useState<SpellcrafterGame>();
     const [selectedRegion, setSelectedRegion] = useState<number>(0);
+    const [selectedFamiliar, setSelectedFamiliar] = useState<number>(0);
+    const [selectedCard, setSelectedCard] = useState<number | undefined>(undefined);
 
     const doForage = async (account: Account, region: number) => {
         if (!currentGameId) return;
@@ -81,11 +83,14 @@ export const GamePage: React.FC = () => {
         const gameState = await gameStateFromGameValuesQuery(valueData);
 
         setGameState(gameState);
+        setSelectedCard(gameState?.cards[0][0]);
     }
 
     useEffect(() => {
         fetchGameData(currentGameId);
     }, [currentGameId]);
+
+    console.log(gameState);
 
     return (
         <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
@@ -94,25 +99,38 @@ export const GamePage: React.FC = () => {
                 Now playing game {currentGameId}
             </div>
 
-            <div className="card">
+            <div style={{ display: "flex", flexDirection: "row" }}>
                 <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value as any as Region)}>
                     {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
                         return <option value={value as Region} key={index}>{RegionDisplay[value as Region]}</option>
                     })}
                 </select>
                 <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account, selectedRegion) }}>
-                Forage
-            </div>
-            </div>
-
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doInteract(account, gameState.cards[0][0]) }}>
-                Interact
+                    Forage
+                </div>
             </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSummon(account, 0) }}>
-                Summon Familiar
+            <div style={{ display: "flex", flexDirection: "row" }}>
+                <select value={selectedCard} onChange={e => setSelectedCard(parseInt(e.target.value))}>
+                    {gameState?.cards.map(([cardId, _], index) => {
+                        return <option value={cardId} key={index}>{cardDefs[cardId].name}</option>
+                    })}
+                </select>
+                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doInteract(account, selectedCard) }}>
+                    Add to Spell
+                </div>
             </div>
 
+            <div style={{ display: "flex", flexDirection: "row" }}>
+                <select value={selectedFamiliar} onChange={e => setSelectedFamiliar(e.target.value as any as Region)}>
+                    {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
+                        return <option value={value as Region} key={index}>{FamiliarDisplay[value as Region]}</option>
+                    })}
+                </select>
+                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSummon(account, selectedFamiliar) }}>
+                    Summon
+                </div>
+            </div>
 
             <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSend(account, gameState?.familiar?.id) }}>
                 Send Familiar

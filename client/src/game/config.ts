@@ -38,3 +38,10 @@ export const RegionDisplay: { [key in Region]: string } =  {
     [Region.Volcano]: "Volcano",
     [Region.Cave]: "Cave",
 }
+
+export const FamiliarDisplay: { [key in Region]: string } =  {
+    [Region.Forest]: "Raven",
+    [Region.Meadow]: "Cat",
+    [Region.Volcano]: "Salamander",
+    [Region.Cave]: "Wolf Spider",
+}
