@@ -1,4 +1,4 @@
-query getGameValues($game_id: u128!) {
+query getGameData($game_id: u128!) {
   valueingameModels(where: {game_id: $game_id}) {
     edges {
       node {
@@ -15,6 +15,30 @@ query getGameValues($game_id: u128!) {
       }
     }
   }
+
+  familiarModels(where: {game_id: $game_id}) {
+      edges {
+        node {
+          entity {
+            keys
+            models {
+              __typename
+              ... on Familiar {
+                entity_id
+                game_id
+                familiar_type
+              }
+              ... on Occupied {
+                entity_id
+                until
+                doing
+                reaped
+              }
+            }
+          }
+        }
+      }
+  }
 }
 
 query getPlayersGames($address: ContractAddress!) {
@@ -28,47 +52,6 @@ query getPlayersGames($address: ContractAddress!) {
             ... on Owner {
               entity_id
               address
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getFamiliars($game_id: u128!) {
-  familiarModels(where: {game_id: $game_id}) {
-    edges {
-      node {
-        entity {
-          keys
-          models {
-            __typename
-            ... on Familiar {
-              entity_id
-              game_id
-              familiar_type_id
-            }
-          }
-        }
-      }
-    }
-  }
-}
-
-query getOccupied($entity_id: u128!) {
-  occupiedModels(where: {entity_id: $entity_id}) {
-    edges {
-      node {
-        entity {
-          keys
-          models {
-            __typename
-            ... on Occupied {
-              entity_id
-              until
-              doing
-              reaped
             }
           }
         }

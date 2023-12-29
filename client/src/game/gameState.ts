@@ -1,7 +1,8 @@
 
-import { GetGameValuesQuery, GetFamiliarsQuery } from "../generated/graphql";
+import { GetGameDataQuery } from "../generated/graphql";
 import { SpellStats, POLAR_STAT_MIDPOINT } from "./config";
 import cardDefs from "../generated/cards.json";
+import { padHex } from "../utils";
 
 export type GameStats = {
     chaos: number,
@@ -13,7 +14,12 @@ export type GameStats = {
 
 export type Familiar = {
     id: number,
-    region: string,
+    familiarType: string,
+    busyUntil: number,
+    hasItem: boolean,
+}
+
+type FamiliarOccupation = {
     busyUntil: number,
     hasItem: boolean,
 }
@@ -29,9 +35,9 @@ export type SpellcrafterGame = {
     familiar: Familiar | null,
 }
 
-export function gameStateFromGameValuesQuery({ valueingameModels }: GetGameValuesQuery, { familiarModels }: GetFamiliarsQuery): SpellcrafterGame {
+export async function gameStateFromGameValuesQuery({ valueingameModels, familiarModels }: GetGameDataQuery): SpellcrafterGame {
 
-    let gameValues = new Map<number, number>();
+    const gameValues = new Map<number, number>();
 
     valueingameModels?.edges?.forEach((entity) => {
         entity?.node?.entity?.models?.forEach((model) => {
@@ -45,13 +51,35 @@ export function gameStateFromGameValuesQuery({ valueingameModels }: GetGameValue
         })
     })
 
+    const time = gameValues.get(SpellStats.Ticks) || 0;
+
     const cards = cardDefs.map((def): [number, number] => {
         return [parseInt(def.card_id), gameValues.get(parseInt(def.card_id)) || 0]
     }).filter(([_, count]) => count)
 
+    const familiar = familiarModels?.edges?.map((entity) => {
+        const familiar: Familiar  = {};
+        entity?.node?.entity?.models?.forEach((model) => {
+            switch (model?.__typename) {
+                case "Familiar":
+                        familiar.id = parseInt(model?.entity_id);
+                        familiar.familiarType = model?.familiar_type;
+                    break;
+                case "Occupied":
+                        familiar.busyUntil = model?.until || 0;
+                        familiar.hasItem = model?.reaped == false && model?.doing !== "None" && model?.until <= time;
+                    break;
+                default:
+                    break;
+            }
+        })
+        return familiar;
+    }
+    )[0] || null;
+
     // return a game object with all fields zero
     return {
-        time: gameValues.get(SpellStats.Ticks) || 0,
+        time,
         stats: {
             chaos: gameValues.get(SpellStats.Chaos) || 0,
             power: gameValues.get(SpellStats.Power) || 0,
@@ -60,6 +88,6 @@ export function gameStateFromGameValuesQuery({ valueingameModels }: GetGameValue
             barriers: gameValues.get(SpellStats.Barriers) || 0,
         },
         cards,
-        familiar: null,
+        familiar,
     }
 }

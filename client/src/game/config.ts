@@ -11,11 +11,6 @@ export enum SpellStats {
 
     HotCold = 20004,
     LightDark = 20005,
-
-    Ravens = 30001,
-    Cats = 30002,
-    Salamanders = 30003,
-    WolfSpiders = 30004,
 }
 
 export const SpellStatsDisplay: { [key in SpellStats]: string } = {
@@ -27,10 +22,6 @@ export const SpellStatsDisplay: { [key in SpellStats]: string } = {
     [SpellStats.ItemsHeld]: "Items Held",
     [SpellStats.FamiliarsHeld]: "Number of Familiars",
     [SpellStats.Ticks]: "Ticks",
-    [SpellStats.Ravens]: "Ravens",
-    [SpellStats.Cats]: "Cats",
-    [SpellStats.Salamanders]: "Salamanders",
-    [SpellStats.WolfSpiders]: "Wolf Spiders",
 }
 
 

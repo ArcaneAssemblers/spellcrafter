@@ -30,7 +30,7 @@ export type Familiar = {
   __typename?: 'Familiar';
   entity?: Maybe<World__Entity>;
   entity_id?: Maybe<Scalars['u128']['output']>;
-  familiar_type_id?: Maybe<Scalars['u128']['output']>;
+  familiar_type?: Maybe<Scalars['Enum']['output']>;
   game_id?: Maybe<Scalars['u128']['output']>;
 };
 
@@ -54,7 +54,7 @@ export type FamiliarOrder = {
 
 export enum FamiliarOrderField {
   EntityId = 'ENTITY_ID',
-  FamiliarTypeId = 'FAMILIAR_TYPE_ID',
+  FamiliarType = 'FAMILIAR_TYPE',
   GameId = 'GAME_ID'
 }
 
@@ -66,13 +66,7 @@ export type FamiliarWhereInput = {
   entity_idLT?: InputMaybe<Scalars['u128']['input']>;
   entity_idLTE?: InputMaybe<Scalars['u128']['input']>;
   entity_idNEQ?: InputMaybe<Scalars['u128']['input']>;
-  familiar_type_id?: InputMaybe<Scalars['u128']['input']>;
-  familiar_type_idEQ?: InputMaybe<Scalars['u128']['input']>;
-  familiar_type_idGT?: InputMaybe<Scalars['u128']['input']>;
-  familiar_type_idGTE?: InputMaybe<Scalars['u128']['input']>;
-  familiar_type_idLT?: InputMaybe<Scalars['u128']['input']>;
-  familiar_type_idLTE?: InputMaybe<Scalars['u128']['input']>;
-  familiar_type_idNEQ?: InputMaybe<Scalars['u128']['input']>;
+  familiar_type?: InputMaybe<Scalars['Enum']['input']>;
   game_id?: InputMaybe<Scalars['u128']['input']>;
   game_idEQ?: InputMaybe<Scalars['u128']['input']>;
   game_idGT?: InputMaybe<Scalars['u128']['input']>;
@@ -538,12 +532,12 @@ export type World__TransactionEdge = {
   node?: Maybe<World__Transaction>;
 };
 
-export type GetGameValuesQueryVariables = Exact<{
+export type GetGameDataQueryVariables = Exact<{
   game_id: Scalars['u128']['input'];
 }>;
 
 
-export type GetGameValuesQuery = { __typename?: 'World__Query', valueingameModels?: { __typename?: 'ValueingameConnection', edges?: Array<{ __typename?: 'ValueingameEdge', node?: { __typename?: 'Valueingame', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar' } | { __typename: 'Occupied' } | { __typename: 'Owner' } | { __typename: 'Valueingame', entity_id?: any | null, value?: any | null } | null> | null } | null } | null } | null> | null } | null };
+export type GetGameDataQuery = { __typename?: 'World__Query', valueingameModels?: { __typename?: 'ValueingameConnection', edges?: Array<{ __typename?: 'ValueingameEdge', node?: { __typename?: 'Valueingame', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar' } | { __typename: 'Occupied' } | { __typename: 'Owner' } | { __typename: 'Valueingame', entity_id?: any | null, value?: any | null } | null> | null } | null } | null } | null> | null } | null, familiarModels?: { __typename?: 'FamiliarConnection', edges?: Array<{ __typename?: 'FamiliarEdge', node?: { __typename?: 'Familiar', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar', entity_id?: any | null, game_id?: any | null, familiar_type?: any | null } | { __typename: 'Occupied', entity_id?: any | null, until?: any | null, doing?: any | null, reaped?: any | null } | { __typename: 'Owner' } | { __typename: 'Valueingame' } | null> | null } | null } | null } | null> | null } | null };
 
 export type GetPlayersGamesQueryVariables = Exact<{
   address: Scalars['ContractAddress']['input'];
@@ -552,23 +546,9 @@ export type GetPlayersGamesQueryVariables = Exact<{
 
 export type GetPlayersGamesQuery = { __typename?: 'World__Query', ownerModels?: { __typename?: 'OwnerConnection', edges?: Array<{ __typename?: 'OwnerEdge', node?: { __typename?: 'Owner', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar' } | { __typename: 'Occupied' } | { __typename: 'Owner', entity_id?: any | null, address?: any | null } | { __typename: 'Valueingame' } | null> | null } | null } | null } | null> | null } | null };
 
-export type GetFamiliarsQueryVariables = Exact<{
-  game_id: Scalars['u128']['input'];
-}>;
 
-
-export type GetFamiliarsQuery = { __typename?: 'World__Query', familiarModels?: { __typename?: 'FamiliarConnection', edges?: Array<{ __typename?: 'FamiliarEdge', node?: { __typename?: 'Familiar', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar', entity_id?: any | null, game_id?: any | null, familiar_type_id?: any | null } | { __typename: 'Occupied' } | { __typename: 'Owner' } | { __typename: 'Valueingame' } | null> | null } | null } | null } | null> | null } | null };
-
-export type GetOccupiedQueryVariables = Exact<{
-  entity_id: Scalars['u128']['input'];
-}>;
-
-
-export type GetOccupiedQuery = { __typename?: 'World__Query', occupiedModels?: { __typename?: 'OccupiedConnection', edges?: Array<{ __typename?: 'OccupiedEdge', node?: { __typename?: 'Occupied', entity?: { __typename?: 'World__Entity', keys?: Array<string | null> | null, models?: Array<{ __typename: 'Familiar' } | { __typename: 'Occupied', entity_id?: any | null, until?: any | null, doing?: any | null, reaped?: any | null } | { __typename: 'Owner' } | { __typename: 'Valueingame' } | null> | null } | null } | null } | null> | null } | null };
-
-
-export const GetGameValuesDocument = gql`
-    query getGameValues($game_id: u128!) {
+export const GetGameDataDocument = gql`
+    query getGameData($game_id: u128!) {
   valueingameModels(where: {game_id: $game_id}) {
     edges {
       node {
@@ -579,6 +559,29 @@ export const GetGameValuesDocument = gql`
             ... on Valueingame {
               entity_id
               value
+            }
+          }
+        }
+      }
+    }
+  }
+  familiarModels(where: {game_id: $game_id}) {
+    edges {
+      node {
+        entity {
+          keys
+          models {
+            __typename
+            ... on Familiar {
+              entity_id
+              game_id
+              familiar_type
+            }
+            ... on Occupied {
+              entity_id
+              until
+              doing
+              reaped
             }
           }
         }
@@ -607,71 +610,20 @@ export const GetPlayersGamesDocument = gql`
   }
 }
     `;
-export const GetFamiliarsDocument = gql`
-    query getFamiliars($game_id: u128!) {
-  familiarModels(where: {game_id: $game_id}) {
-    edges {
-      node {
-        entity {
-          keys
-          models {
-            __typename
-            ... on Familiar {
-              entity_id
-              game_id
-              familiar_type_id
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
-export const GetOccupiedDocument = gql`
-    query getOccupied($entity_id: u128!) {
-  occupiedModels(where: {entity_id: $entity_id}) {
-    edges {
-      node {
-        entity {
-          keys
-          models {
-            __typename
-            ... on Occupied {
-              entity_id
-              until
-              doing
-              reaped
-            }
-          }
-        }
-      }
-    }
-  }
-}
-    `;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
 
 const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationType) => action();
-const GetGameValuesDocumentString = print(GetGameValuesDocument);
+const GetGameDataDocumentString = print(GetGameDataDocument);
 const GetPlayersGamesDocumentString = print(GetPlayersGamesDocument);
-const GetFamiliarsDocumentString = print(GetFamiliarsDocument);
-const GetOccupiedDocumentString = print(GetOccupiedDocument);
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
-    getGameValues(variables: GetGameValuesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetGameValuesQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetGameValuesQuery>(GetGameValuesDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getGameValues', 'query');
+    getGameData(variables: GetGameDataQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetGameDataQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
+        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetGameDataQuery>(GetGameDataDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getGameData', 'query');
     },
     getPlayersGames(variables: GetPlayersGamesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetPlayersGamesQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
         return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetPlayersGamesQuery>(GetPlayersGamesDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getPlayersGames', 'query');
-    },
-    getFamiliars(variables: GetFamiliarsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetFamiliarsQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetFamiliarsQuery>(GetFamiliarsDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getFamiliars', 'query');
-    },
-    getOccupied(variables: GetOccupiedQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<{ data: GetOccupiedQuery; extensions?: any; headers: Dom.Headers; status: number; }> {
-        return withWrapper((wrappedRequestHeaders) => client.rawRequest<GetOccupiedQuery>(GetOccupiedDocumentString, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getOccupied', 'query');
     }
   };
 }
