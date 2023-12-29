@@ -50,6 +50,7 @@ fn enact_card(world: IWorldDispatcher, game_id: u128, card_id: u128) {
         Option::Some(b) => {
             if b {
                 consume(world, game_id, card_id);
+                decrease_stat(world, game_id, ITEMS_HELD, 1);
             }
         },
         Option::None(_) => {},
