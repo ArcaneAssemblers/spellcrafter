@@ -1,6 +1,9 @@
 start:
+  - if ({dead}):
+    - scene: deathScreen
+
   # - play mysterious: LOOPED
-    - scene: manageActions
+  - scene: manageActions
 
 manageActions:
   - show tower: WITH FADE
@@ -308,4 +311,9 @@ cave:
 endGame:
   - text: And that is the story of an unknown mage who died in the pursuit of power greater than themselves...
   - hide ALL:
-  - endgame:
+  - scene: deathScreen
+
+deathScreen:
+  - hide ALL:
+  - text: There is nothing more see here, although your achievements have been recorded forever.
+  - text: Consider starting a new game.
