@@ -21,25 +21,39 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+
+  build-and-deploy-contracts:
     runs-on: ubuntu-latest
     defaults:
-        run:
-            working-directory: ./renjs-client
+      run:
+        working-directory: ./contracts
     steps:
-      - uses: actions/checkout@v4
-      - name: Use bun
-        uses: oven-sh/setup-bun@v1
+    - uses: actions/checkout@v3
+    - run: curl -L https://install.dojoengine.org | bash
+    - run: /home/runner/.config/.dojo/bin/dojoup --version v0.3.15
+    - run: |
+        /home/runner/.config/.dojo/bin/sozo build
+        /home/runner/.config/.dojo/bin/sozo migrate --name="arcane" --rpc-url=$STARKNET_RPC_URL --private-key=$DEPLOYER_PRIVATE_KEY
 
-      - run: bun install
-      - run: bun run build
+  # build-and-deploy:
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #       run:
+  #           working-directory: ./renjs-client
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Use bun
+  #       uses: oven-sh/setup-bun@v1
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: './renjs-client/dist'
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+  #     - run: bun install
+  #     - run: bun run build
+
+  #     - name: Setup Pages
+  #       uses: actions/configure-pages@v3
+  #     - name: Upload artifact
+  #       uses: actions/upload-pages-artifact@v1
+  #       with:
+  #         path: './renjs-client/dist'
+  #     - name: Deploy to GitHub Pages
+  #       id: deployment
+  #       uses: actions/deploy-pages@v1
