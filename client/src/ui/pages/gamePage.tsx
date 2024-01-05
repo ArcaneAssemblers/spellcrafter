@@ -66,6 +66,14 @@ export const GamePage: React.FC = () => {
         call(serialize(gameState))
     }, [gameState, call])
 
+    const callThenUpdate = async (f, account, data) => {
+        if (!currentGameId) return;
+        await f(account, currentGameId, data);
+        setTimeout(() => {
+            fetchGameData(currentGameId)
+        }, 2000)
+    };
+
     useEffect(() => {
         const unsubscribe = subscribe(event => {
             const { action, data } = event.data.action.payload as Command;
@@ -75,25 +83,25 @@ export const GamePage: React.FC = () => {
                     connection.current = true;
                     break;
                 case "forage":
-                    doForage(account, data as number);
+                    callThenUpdate(forage, account, data as number);
                     break;
                 case "interact":
-                    doInteract(account, data as number);
+                    callThenUpdate(interact, account, data as number);
                     break;
                 case "summon":
-                    doSummon(account, data as number);
+                    callThenUpdate(summon, account, data as number);
                     break;
                 case "send":
-                    doSend(account, data as number);
+                    callThenUpdate(send, account, data as number);
                     break;
                 case "sacrifice":
-                    doSacrifice(account, data as number);
+                    callThenUpdate(sacrifice, account, data as number);
                     break;
                 case "reap":
-                    doReapAction(account, data as number);
+                    callThenUpdate(reapAction, account, data as number);
                     break;
                 case "wait":
-                    doWait(account);
+                    callThenUpdate(wait, account, undefined);
                     break;
                 default:
                     console.error("Ren client sent unknown action:", action);
@@ -103,62 +111,6 @@ export const GamePage: React.FC = () => {
             unsubscribe();
         };
     }, [account, subscribe]);
-
-    const doForage = async (account: Account, region: number) => {
-        if (!currentGameId) return;
-        await forage(account, parseInt(currentGameId), region);
-        setTimeout(() => {
-            fetchGameData(currentGameId)
-        }, 2000)
-    }
-
-    const doInteract = async (account: Account, cardId: number) => {
-        if (!currentGameId) return;
-        await interact(account, parseInt(currentGameId), cardId);
-        setTimeout(() => {
-            fetchGameData(currentGameId)
-        }, 2000)
-    }
-
-    const doSummon = async (account: Account, familiarType: number) => {
-        if (!currentGameId) return;
-        await summon(account, parseInt(currentGameId), familiarType);
-        setTimeout(() => {
-            fetchGameData(currentGameId)
-        }, 2000)
-    }
-
-    const doSend = async (account: Account, familiar_id: number) => {
-        if (!currentGameId) return;
-        await send(account, parseInt(currentGameId), familiar_id);
-        setTimeout(() => {
-            fetchGameData(currentGameId)
-        }, 2000)
-    }
-
-    const doReapAction = async (account: Account, familiar_id: number) => {
-        if (!currentGameId) return;
-        await reapAction(account, parseInt(currentGameId), familiar_id);
-        setTimeout(() => {
-            fetchGameData(currentGameId)
-        }, 2000)
-    }
-
-    const doSacrifice = async (account: Account, familiar_id: number) => {
-        if (!currentGameId) return;
-        await sacrifice(account, parseInt(currentGameId), familiar_id);
-        setTimeout(() => {
-            fetchGameData(currentGameId)
-        }, 2000)
-    }
-
-    const doWait = async (account: Account) => {
-        if (!currentGameId) return;
-        await wait(account, parseInt(currentGameId));
-        setTimeout(() => {
-            fetchGameData(currentGameId)
-        }, 2000)
-    }
 
     const fetchGameData = async (currentGameId: string | null) => {
         if (!currentGameId) return;
@@ -187,17 +139,13 @@ export const GamePage: React.FC = () => {
                 Now playing game {currentGameId}
             </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { call(serialize(gameState)) }}>
-                Send State
-            </div>
-
             <div style={{ display: "flex", flexDirection: "row" }}>
                 <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value as any as Region)}>
                     {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
                         return <option value={value as Region} key={index}>{RegionDisplay[value as Region]}</option>
                     })}
                 </select>
-                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doForage(account, selectedRegion) }}>
+                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(forage, account, selectedRegion) }}>
                     Forage
                 </div>
             </div>
@@ -208,7 +156,7 @@ export const GamePage: React.FC = () => {
                         return <option value={cardId} key={index}>{cardDefs[cardId].name}</option>
                     })}
                 </select>
-                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doInteract(account, selectedCard) }}>
+                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(interact, account, selectedCard) }}>
                     Add to Spell
                 </div>
             </div>
@@ -219,24 +167,24 @@ export const GamePage: React.FC = () => {
                         return <option value={value as Region} key={index}>{FamiliarDisplay[value as Region]}</option>
                     })}
                 </select>
-                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSummon(account, selectedFamiliar) }}>
+                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(summon, account, selectedFamiliar) }}>
                     Summon
                 </div>
             </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSend(account, gameState?.familiar?.id) }}>
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(send, account, gameState?.familiar?.id) }}>
                 Send Familiar
             </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doReapAction(account, gameState?.familiar?.id) }}>
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(reapAction, account, gameState?.familiar?.id) }}>
                 Reap
             </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSacrifice(account, gameState?.familiar?.id) }}>
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(sacrifice, account, gameState?.familiar?.id) }}>
                 Sacrifice Familiar
             </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doWait(account) }}>
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(wait, account, undefined) }}>
                 Wait
             </div>
 
