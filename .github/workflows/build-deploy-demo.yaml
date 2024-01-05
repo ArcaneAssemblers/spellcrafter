@@ -41,31 +41,32 @@ jobs:
         /home/runner/.config/.dojo/bin/sozo build
         WORLD_ADDRESS=$(/home/runner/.config/.dojo/bin/sozo migrate --name="arcane" --rpc-url="$STARKNET_RPC_URL" --account-address="$DEPLOYER_ADDRESS" --private-key="$DEPLOYER_PRIVATE_KEY" | grep "at address" | grep -oE9 '(0x[a-fA-F0-9]{63})')
         echo "WORLD_ADDRESS=$WORLD_ADDRESS" >> "$GITHUB_OUTPUT"
-
-  print-world-address:
+        echo "WORLD_ADDRESS=$WORLD_ADDRESS" >> $GITHUB_STEP_SUMMARY
+  
+  build-and-deploy-client:
     runs-on: ubuntu-latest
     needs: build-and-deploy-contracts
+    defaults:
+        run:
+            working-directory: ./client
+    env:
+      VITE_PUBLIC_WORLD_ADDRESS: ${{ needs.build-and-deploy-contracts.outputs.WORLD_ADDRESS }}
+      VITE_PUBLIC_NODE_URL: ${{ vars.STARKNET_RPC_URL }}
+      VITE_PUBLIC_TORII: ${{ vars.TORII_URL }}
     steps:
-    - run: echo ${{ needs.build-and-deploy-contracts.outputs.WORLD_ADDRESS }}
-  # build-and-deploy:
-  #   runs-on: ubuntu-latest
-  #   defaults:
-  #       run:
-  #           working-directory: ./renjs-client
-  #   steps:
-  #     - uses: actions/checkout@v4
-  #     - name: Use bun
-  #       uses: oven-sh/setup-bun@v1
+      - uses: actions/checkout@v4
+      - name: Use bun
+        uses: oven-sh/setup-bun@v1
 
-  #     - run: bun install
-  #     - run: bun run build
+      - run: bun install
+      - run: bun run build
 
-  #     - name: Setup Pages
-  #       uses: actions/configure-pages@v3
-  #     - name: Upload artifact
-  #       uses: actions/upload-pages-artifact@v1
-  #       with:
-  #         path: './renjs-client/dist'
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v1
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './client/dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
