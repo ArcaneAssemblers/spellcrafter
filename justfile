@@ -2,7 +2,7 @@ set positional-arguments
 set export
 
 DOJO_VERSION := "0.3.15"
-RPC_URL := "http://localhost:5050"
+STARKNET_RPC_URL := "http://localhost:5050"
 
 default:
   just --list
@@ -42,7 +42,7 @@ set_auth:
 	cd contracts
 
 	for component in ${COMPONENTS[@]}; do
-		sozo auth writer $component $GAME_ADDRESS   --world $WORLD_ADDRESS --rpc-url $RPC_URL
+		sozo auth writer $component $GAME_ADDRESS --world $WORLD_ADDRESS --rpc-url $STARKNET_RPC_URL
 	done
 
 # start the dev server hosting the web client
@@ -53,9 +53,9 @@ start_client:
 start_devnet:
 	katana --disable-fee --seed=0
 
-# Requires a devnet running on localhost:5050
+# Requires a devnet running on STARKNET_RPC_URL
 start_indexer:
 	#!/usr/bin/env bash
 	set -euxo pipefail
 	WORLD_ADDRESS=$(cat ./contracts/target/dev/manifest.json | jq -r '.world.address')
-	torii --world ${WORLD_ADDRESS} --rpc $RPC_URL
+	torii --world ${WORLD_ADDRESS} --rpc $STARKNET_RPC_URL
