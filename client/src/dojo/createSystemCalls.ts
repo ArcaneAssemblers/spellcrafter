@@ -24,7 +24,7 @@ export function createSystemCalls(
         else {
             toast("✅ " + message, {
                 position: "top-left",
-                autoClose: 3000,
+                autoClose: 1000,
                 hideProgressBar: false,
                 closeOnClick: true,
                 pauseOnHover: true,

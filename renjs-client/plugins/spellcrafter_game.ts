@@ -21,7 +21,7 @@ export type GameStats = {
 
 export type Familiar = {
     id: number,
-    region: string,
+    familiarType: string,
     busyUntil: number,
     hasItem: boolean,
 }
@@ -32,7 +32,7 @@ export type SpellcrafterGame = {
     // the game stats for this current game
     stats: GameStats,
     // The card indices that the player is holding
-    cards: Array<number>,
+    cards: Array<[number, number]>,
     // card index of familiar (if present)
     familiar: Familiar | null,
 }
@@ -48,7 +48,7 @@ export function newGame(): SpellcrafterGame {
             lightDark: 0,
             barriers: 3,
         },
-        cards: [1,2,3,4,5,6,7],
+        cards: [],
         familiar: null,
     }
 }

@@ -66,18 +66,17 @@ config:
 
   menus:
     main:
-      - type: button
+      - type: label
         x: 150
         'y': 452
-        asset: asset4
-        binding: start
-      - type: button
-        x: 350
-        'y': 452
-        asset: asset5
-        binding: openMenu
-        menu: settings
-
+        text: "Waiting to receive world data"
+        style:
+          font: fontsaudimat-mono
+          fontSize: 45px
+          fill: '#FFFFFF'
+          align: left
+          boundsAlignH: center
+          boundsAlignV: middle
 assets:
   images:
     textbox:
