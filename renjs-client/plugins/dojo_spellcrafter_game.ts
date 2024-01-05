@@ -30,7 +30,16 @@ export class DojoSpellcrafterGame implements ISpellcrafterGame {
     }
 
     interact(cardId: number): Promise<void> {
-        return Promise.resolve();
+        let result = new Promise<void>((resolve, reject) => {
+            let unsubscribe = subscribe("spellcrafter", event => {
+                console.log("received state:", event.data.action.payload);
+                this.setFromData(event.data.action.payload);
+                unsubscribe();
+                resolve();
+            });
+        });
+        call(this.host, "command", { action: "interact", data: cardId});
+        return result;
     }
 
     forage(region: string): Promise<void> {
@@ -48,18 +57,57 @@ export class DojoSpellcrafterGame implements ISpellcrafterGame {
     }
 
     summonFamiliar(region: string): Promise<void> {
-        return Promise.resolve();
+        const familiarIndex = {"forest": 0, "meadow": 1, "volcano": 2, "cave": 3}[region];
+        let result = new Promise<void>((resolve, reject) => {
+            let unsubscribe = subscribe("spellcrafter", event => {
+                console.log("received state:", event.data.action.payload);
+                this.setFromData(event.data.action.payload);
+                unsubscribe();
+                resolve();
+            });
+        });
+        call(this.host, "command", { action: "summon", data: familiarIndex});
+        return result;
     }
 
     sendFamiliar(): Promise<void> {
-        return Promise.resolve();
+        let result = new Promise<void>((resolve, reject) => {
+            let unsubscribe = subscribe("spellcrafter", event => {
+                console.log("received state:", event.data.action.payload);
+                this.setFromData(event.data.action.payload);
+                unsubscribe();
+                resolve();
+            });
+        });
+        call(this.host, "command", { action: "send", data: this.familiar?.id});
+        return result;
     }
 
     sacrificeFamiliar(): Promise<void> {
-        return Promise.resolve();
+        let result = new Promise<void>((resolve, reject) => {
+            let unsubscribe = subscribe("spellcrafter", event => {
+                console.log("received state:", event.data.action.payload);
+                this.setFromData(event.data.action.payload);
+                unsubscribe();
+                resolve();
+            });
+        });
+        call(this.host, "command", { action: "sacrifice", data: this.familiar?.id});
+        return result;
     }
 
     claimFamiliarItem(): Promise<void> {
+        // use the local state to check if a transaction should be made to claim the item
+        if (!this._familiar) {
+            throw new Error("No familiar owned");
+        }
+        if (this._familiar.busyUntil > this._time) {
+            throw new Error("familiar has not returned");
+        }
+        if(!this._familiar.hasItem) {
+            throw new Error("familiar has no item");
+        }
+
         let result = new Promise<void>((resolve, reject) => {
             let unsubscribe = subscribe("spellcrafter", event => {
                 console.log("received state:", event.data.action.payload);

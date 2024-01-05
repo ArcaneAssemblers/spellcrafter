@@ -47,6 +47,18 @@ export const GamePage: React.FC = () => {
                 case "forage":
                     doForage(account, data as number);
                     break;
+                case "interact":
+                    doInteract(account, data as number);
+                    break;
+                case "summon":
+                    doSummon(account, data as number);
+                    break;
+                case "send":
+                    doSend(account, data as number);
+                    break;
+                case "sacrifice":
+                    doSacrifice(account, data as number);
+                    break;
                 case "reap":
                     doReapAction(account, data as number);
                     break;

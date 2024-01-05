@@ -120,7 +120,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                 cardText.setText(cards[this.spellcrafterGame.cards[selectedCardIndex][0]].description);
             }
 
-            const returnToStory = () => {
+            const hideCardChoser = () => {
                 cardBack.destroy();
                 cardName.destroy();
                 cardText.destroy();
@@ -129,7 +129,9 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                 rightButton.destroy();
                 addToSpellButton.destroy();
                 buttonText.destroy();
+            }
 
+            const returnToStory = () => {
                 resolve();
             }
 
@@ -157,9 +159,10 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             rightButton.rotation = Math.PI;
 
             const addToSpellButton = this.game.add.button(40, 1025, "button", async () => {
+                hideCardChoser();
                 let pre_stats = {...this.spellcrafterGame.stats};
-                this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardIndex]].name;
-                await this.spellcrafterGame.interact(this.spellcrafterGame.cards[selectedCardIndex]);
+                this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardIndex][0]].name;
+                await this.spellcrafterGame.interact(this.spellcrafterGame.cards[selectedCardIndex][0]);
                 this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
                 this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
                 this.game.managers.logic.vars["lightdarkDelta"] = this.spellcrafterGame.stats.lightDark - pre_stats.lightDark;
