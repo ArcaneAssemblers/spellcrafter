@@ -41,7 +41,7 @@ jobs:
         /home/runner/.config/.dojo/bin/sozo build
         WORLD_ADDRESS=$(/home/runner/.config/.dojo/bin/sozo migrate --name="arcane" --rpc-url="$STARKNET_RPC_URL" --account-address="$DEPLOYER_ADDRESS" --private-key="$DEPLOYER_PRIVATE_KEY" | grep "at address" | grep -oE9 '(0x[a-fA-F0-9]{63})')
         echo "WORLD_ADDRESS=$WORLD_ADDRESS" >> "$GITHUB_OUTPUT"
-        echo "WORLD_ADDRESS=$WORLD_ADDRESS" >> $GITHUB_STEP_SUMMARY
+        echo "Contracts deployed to world at $WORLD_ADDRESS" >> $GITHUB_STEP_SUMMARY
   
   build-and-deploy-client:
     runs-on: ubuntu-latest
