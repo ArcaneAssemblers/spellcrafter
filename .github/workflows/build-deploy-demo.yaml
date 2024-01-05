@@ -28,15 +28,16 @@ jobs:
       run:
         working-directory: ./contracts
     env:
-      DEPLOYER_PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
       STARKNET_RPC_URL: ${{ vars.STARKNET_RPC_URL }}
+      DEPLOYER_ADDRESS: ${{ vars.DEPLOYER_ADDRESS }}
+      DEPLOYER_PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
     steps:
     - uses: actions/checkout@v3
     - run: curl -L https://install.dojoengine.org | bash
     - run: /home/runner/.config/.dojo/bin/dojoup --version v0.3.15
     - run: |
         /home/runner/.config/.dojo/bin/sozo build
-        /home/runner/.config/.dojo/bin/sozo migrate --name="arcane" --rpc-url="$STARKNET_RPC_URL" --private-key="$DEPLOYER_PRIVATE_KEY"
+        /home/runner/.config/.dojo/bin/sozo migrate --name="arcane" --rpc-url="$STARKNET_RPC_URL" --account-address="$DEPLOYER_ADDRESS" --private-key="$DEPLOYER_PRIVATE_KEY"
 
   # build-and-deploy:
   #   runs-on: ubuntu-latest
