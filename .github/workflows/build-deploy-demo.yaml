@@ -28,7 +28,8 @@ jobs:
       run:
         working-directory: ./contracts
     env:
-      DEPLOYER_PRIVATE_KEY: ${{ secrets.DEPLOYERPRIVATEKEY }}
+      DEPLOYER_PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
+      STARKNET_RPC_URL: ${{ vars.STARKNET_RPC_URL }}
     steps:
     - uses: actions/checkout@v3
     - run: curl -L https://install.dojoengine.org | bash
