@@ -18,7 +18,7 @@ export const GamePage: React.FC = () => {
     const {
         account: { account },
         networkLayer: {
-            systemCalls: { forage, interact, summon, send, reapAction, sacrifice },
+            systemCalls: { forage, interact, summon, send, reapAction, sacrifice, wait },
             network: { graphSdk }
         },
     } = useDojo();
@@ -62,6 +62,11 @@ export const GamePage: React.FC = () => {
                 case "reap":
                     doReapAction(account, data as number);
                     break;
+                case "wait":
+                    doWait(account);
+                    break;
+                default:
+                    console.error("Ren client sent unknown action:", action);
             }
         });
         return () => {
@@ -117,6 +122,14 @@ export const GamePage: React.FC = () => {
     const doSacrifice = async (account: Account, familiar_id: number) => {
         if (!currentGameId) return;
         await sacrifice(account, parseInt(currentGameId), familiar_id);
+        setTimeout(() => {
+            fetchGameData(currentGameId)
+        }, 2000)
+    }
+
+    const doWait = async (account: Account) => {
+        if (!currentGameId) return;
+        await wait(account, parseInt(currentGameId));
         setTimeout(() => {
             fetchGameData(currentGameId)
         }, 2000)
@@ -194,6 +207,10 @@ export const GamePage: React.FC = () => {
 
             <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doSacrifice(account, gameState?.familiar?.id) }}>
                 Sacrifice Familiar
+            </div>
+
+            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { doWait(account) }}>
+                Wait
             </div>
 
             <div className="card">

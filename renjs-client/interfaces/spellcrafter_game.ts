@@ -31,4 +31,5 @@ export interface ISpellcrafterGame {
     sendFamiliar: () => Promise<void>;
     sacrificeFamiliar: () => Promise<void>;
     claimFamiliarItem: () => Promise<void>;
+    wait: () => Promise<void>;
 }

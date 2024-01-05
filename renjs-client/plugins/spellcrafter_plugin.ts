@@ -79,6 +79,8 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return this.sacrificeFamiliar();
                 case "claimFamiliarItem":
                     return this.claimFamiliarItem();
+                case "wait":
+                    return this.wait();
                 case "showCard":
                     return this.showCard();
                 case "hideCard":
@@ -210,6 +212,16 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         } catch (err) { // just print errors here since we know this can fail
             console.log("familiar item check failed: ", err.message);
         }
+    }
+
+    async wait(): Promise<void> {
+        let pre_chaos = this.spellcrafterGame.stats.chaos;
+        let pre_barriers = this.spellcrafterGame.stats.barriers;
+
+        await this.spellcrafterGame.wait();
+
+        this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
+        this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
     }
 
     async showCard(): Promise<void> {

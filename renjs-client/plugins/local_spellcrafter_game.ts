@@ -10,6 +10,7 @@ const CHAOS_PER_SUMMON = 5;
 
 const TICKS_PER_FORAGE = 2;
 const TICKS_PER_SUMMON = 5;
+const TICKS_PER_WAIT = 1;
 const TICKS_FOR_FAMILIAR_FORAGE = 2;
 
 export class LocalSpellcrafterGame implements ISpellcrafterGame {
@@ -135,6 +136,11 @@ export class LocalSpellcrafterGame implements ISpellcrafterGame {
         this._cards.push(parseInt(card.card_id));
     
         this._familiar.hasItem = false;
+        return Promise.resolve();
+    }
+
+    wait(): Promise<void> {
+        this._time += TICKS_PER_WAIT;
         return Promise.resolve();
     }
 

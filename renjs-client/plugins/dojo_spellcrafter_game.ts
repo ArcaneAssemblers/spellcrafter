@@ -120,6 +120,19 @@ export class DojoSpellcrafterGame implements ISpellcrafterGame {
         return result;    
     }
 
+    wait(): Promise<void> {
+        let result = new Promise<void>((resolve, reject) => {
+            let unsubscribe = subscribe("spellcrafter", event => {
+                console.log("received state:", event.data.action.payload);
+                this.setFromData(event.data.action.payload);
+                unsubscribe();
+                resolve();
+            });
+        });
+        call(this.host, "command", { action: "wait" });
+        return result;
+    }
+
     setFromData(data: any) {
         this._time = data.time;
         this._stats = data.stats;

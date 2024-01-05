@@ -153,6 +153,11 @@ manageActions:
     - "Add Components":
       - scene: addComponents
 
+    - "Wait":
+      - text: You wait for a while.
+      - call SpellCrafter: wait
+      - scene: approaching
+
 
 
 approaching:
