@@ -253,24 +253,8 @@ sacrifice:
     - hide deuzi: WITH FADE
   - scene: manageActions
 
-leavingTower:
-  # - show outside: WITH FADE
-  # - show deuzi: normal AT CENTER WITH FADE
-  # - deuzi says: I'll guard the tower while you're away.
-  # - hide deuzi: WITH FADE
-  # - text: "It will take 5:00 minutes to forage in the {foraging}"
-  - if ({foraging} == "forest"):
-      - scene: forest
-  - if ({foraging} == "meadow"):
-      - scene: meadow
-  - if ({foraging} == "volcano"):
-      - scene: volcano
-  - if ({foraging} == "cave"):
-      - scene: cave
-
 forest:
   - show forest: WITH FADE
-  - text: "You forage in the forest for several hours"
   - call SpellCrafter: forage forest
   - call SpellCrafter: showCard
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
@@ -280,7 +264,6 @@ forest:
 
 meadow:
   - show meadow: WITH FADE
-  - text: "You forage in the meadow for several hours"
   - call SpellCrafter: forage meadow
   - call SpellCrafter: showCard
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
@@ -290,7 +273,6 @@ meadow:
 
 volcano:
   - show volcano: WITH FADE
-  - text: "You forage in the volcano for several hours"
   - call SpellCrafter: forage volcano
   - call SpellCrafter: showCard
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
@@ -300,7 +282,6 @@ volcano:
 
 cave:
   - show cave: WITH FADE
-  - text: "You forage in the cave for several hours"
   - call SpellCrafter: forage cave
   - call SpellCrafter: showCard
   - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.

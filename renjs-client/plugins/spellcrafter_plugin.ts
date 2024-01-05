@@ -1,6 +1,6 @@
 import cards from "../generated/cards.json";
 import { Plugin } from "renjs";
-import { answer, subscribe } from "esdeka";
+import { call, subscribe } from "esdeka";
 import { ISpellcrafterGame } from "../interfaces/spellcrafter_game";
 import { DojoSpellcrafterGame } from "./dojo_spellcrafter_game";
 export class SpellcrafterPlugin extends RenJS.Plugin {
@@ -14,11 +14,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     
     onInit(): void {
         const unsubscribe = subscribe("spellcrafter", event => {
+            unsubscribe(); // ensure this can only be called once
             console.log("Ren received initial state:", event.data.action.payload);
             this.host = event.source as Window;
-            unsubscribe(); // ensure this can only be called once
 
             this.spellcrafterGame = new DojoSpellcrafterGame(event.data.action.payload, this.host)
+            call(this.host, "command", { action: "connected" });
             this.game.gui.changeMenu('hud').then(() => {
                 this.game.start();
             });

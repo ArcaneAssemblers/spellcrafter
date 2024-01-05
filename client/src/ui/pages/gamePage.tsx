@@ -13,6 +13,8 @@ import { FamiliarDisplay, Region, RegionDisplay } from "../../game/config";
 import cardDefs from '../../generated/cards.json';
 
 type Command = { action: string, data: any };
+const MAX_TRIES = 100;
+const INTERVAL = 500;
 
 export const GamePage: React.FC = () => {
     const {
@@ -26,6 +28,8 @@ export const GamePage: React.FC = () => {
     // used to communicate with ren-js iframe
     const channel = "spellcrafter";
     const renClientRef = useRef<HTMLIFrameElement>(null);
+    const connection = useRef(false);
+    const [connectionTries, setConnectionTries] = useState(MAX_TRIES);
 
     const { call } = useHost(renClientRef, channel);
 
@@ -38,12 +42,32 @@ export const GamePage: React.FC = () => {
     const [selectedFamiliar, setSelectedFamiliar] = useState<number>(0);
     const [selectedCard, setSelectedCard] = useState<number | undefined>(undefined);
 
+    // Send a connection request to the request
+    useEffect(() => {
+        if(!gameState) return () => { /* Consistency */ };
+        if (connection.current || connectionTries <= 0) {
+            return () => { /* Consistency */ };
+        }
+
+        call(serialize(gameState));
+        const timeout = setTimeout(() => {
+            call(serialize(gameState));
+            setConnectionTries(connectionTries - 1);
+        }, INTERVAL);
+
+        return () => {
+            clearTimeout(timeout);
+        };
+    }, [gameState, call, connectionTries, connection]);
 
     useEffect(() => {
         const unsubscribe = subscribe(event => {
             const { action, data } = event.data.action.payload as Command;
             console.log("Message from ren:", event);
-            switch(action) {
+            switch (action) {
+                case "connected":
+                    connection.current = true;
+                    break;
                 case "forage":
                     doForage(account, data as number);
                     break;
@@ -73,11 +97,6 @@ export const GamePage: React.FC = () => {
             unsubscribe();
         };
     }, [account, subscribe]);
-
-    useEffect(() => {
-        if(!gameState) return;
-        call(serialize(gameState))
-    }, [gameState, call])
 
     const doForage = async (account: Account, region: number) => {
         if (!currentGameId) return;
