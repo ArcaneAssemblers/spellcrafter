@@ -44,7 +44,7 @@ export const GamePage: React.FC = () => {
 
     // Send a connection request to the request
     useEffect(() => {
-        if(!gameState) return () => { /* Consistency */ };
+        if (!gameState) return () => { /* Consistency */ };
         if (connection.current || connectionTries <= 0) {
             return () => { /* Consistency */ };
         }
@@ -59,6 +59,12 @@ export const GamePage: React.FC = () => {
             clearTimeout(timeout);
         };
     }, [gameState, call, connectionTries, connection]);
+
+    // whenever the game state changes send it to the ren client
+    useEffect(() => {
+        if (!gameState) return;
+        call(serialize(gameState))
+    }, [gameState, call])
 
     useEffect(() => {
         const unsubscribe = subscribe(event => {
@@ -162,7 +168,9 @@ export const GamePage: React.FC = () => {
         const gameState = await gameStateFromGameValuesQuery(valueData);
 
         setGameState(gameState);
-        setSelectedCard(gameState?.cards[0][0]);
+        if (gameState?.cards.length > 0) {
+            setSelectedCard(gameState?.cards[0][0]);
+        }
     }
 
     useEffect(() => {

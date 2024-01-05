@@ -14,9 +14,9 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     
     onInit(): void {
         const unsubscribe = subscribe("spellcrafter", event => {
-            unsubscribe(); // ensure this can only be called once
             console.log("Ren received initial state:", event.data.action.payload);
             this.host = event.source as Window;
+            unsubscribe(); // ensure this can only be called once
 
             this.spellcrafterGame = new DojoSpellcrafterGame(event.data.action.payload, this.host)
             call(this.host, "command", { action: "connected" });

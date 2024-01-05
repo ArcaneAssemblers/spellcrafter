@@ -78,17 +78,16 @@ manageActions:
         - text: Where would you like to visit?
         - "Forest":
           - text: You head out to the snowy forest. It's cold, but you're prepared.
-          - var foraging: forest
+          - scene: forest
         - "Meadow":
           - text: You leave the tower for the meadow. It is beautiful and sunny.
-          - var foraging: meadow
+          - scene: meadow
         - "Volcano":
           - text: You begin hiking toward the volcano. Lucky you know a heat shielding spell.
-          - var foraging: volcano
+          - scene: volcano
         - "Cave":
           - text: You begin your journey to the cave. Don't forget the lantern.
-          - var foraging: cave
-      - scene: leavingTower
+          - scene: cave
 
     - Send Familiar !if ({familiar} && {familiarIdle}):
       - call SpellCrafter: sendFamiliar
