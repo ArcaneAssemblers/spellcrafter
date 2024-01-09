@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-import { ClickWrapper } from "../clickWrapper";
 import { Phase } from "../phaseManager";
 import { useDojo } from "../../hooks/useDojo";
 import { Account, num } from "starknet";
 import { padHex } from "../../utils";
 import { useStore } from "../../store/store";
+
+import Button from 'react-bootstrap/Button';
+import Stack from 'react-bootstrap/Stack';
+import Image from 'react-bootstrap/Image';
+import Container from 'react-bootstrap/Container';
+
+import headerImageUrl from './concept-art.png';
 
 interface LobbyPageProps {
     setUIState: React.Dispatch<Phase>;
@@ -28,7 +34,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
 
         const gameIds: Array<string> = [];
         data.ownerModels?.edges?.forEach((edge) => {
-            if(edge?.node?.entity?.models?.length && edge?.node?.entity?.models?.length > 1) return; // A familiar has a Owner and Familiar component but a game just has an Owner. This filters out the former
+            if (edge?.node?.entity?.models?.length && edge?.node?.entity?.models?.length > 1) return; // A familiar has a Owner and Familiar component but a game just has an Owner. This filters out the former
             edge?.node?.entity?.models?.forEach((model) => {
                 switch (model?.__typename) {
                     case "Owner":
@@ -64,18 +70,18 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
     }
 
     return (
-        <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
-
-        {games.map((gameId, index) => {
-            return (<div key={index} className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { setGameAndPlay(gameId) }}>
-                Play {gameId}
-            </div>)
-        })}
-
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { newGame(account)}}>
-          New Game
-      </div>      
-
-    </ClickWrapper>
+        <Container>
+            <Stack gap={3}>
+                <Image src={headerImageUrl} rounded fluid />
+                {games.map((gameId, index) => {
+                    return (<Button variant="secondary" onClick={() => { setGameAndPlay(gameId) }}>
+                        Play {gameId}
+                    </Button>)
+                })}
+                <Button variant="success" onClick={() => { newGame(account) }}>
+                    New Game
+                </Button>
+            </Stack>
+        </Container>
     );
 };

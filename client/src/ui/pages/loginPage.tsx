@@ -1,10 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 
-import { ClickWrapper } from "../clickWrapper";
 import { Phase } from "../phaseManager";
 import { useDojo } from "../../hooks/useDojo";
 import { truncateString } from "../../utils";
 
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Stack from 'react-bootstrap/Stack';
+import Image from 'react-bootstrap/Image';
+import Container from 'react-bootstrap/Container';
+
+import headerImageUrl from './concept-art.png';
 
 interface LoginPageProps {
   setUIState: React.Dispatch<Phase>;
@@ -22,13 +28,16 @@ export const LoginPage: React.FC<LoginPageProps> = ({ setUIState }) => {
   }
 
   return (
-    <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
+    <Container>
+    <Stack gap={3}>
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={create}>
+    <Image src={headerImageUrl} rounded fluid/>
+
+      <Button onClick={create}>
         {isDeploying ? "deploying burner" : "create burner"}
-      </div>
+      </Button>
 
-      <select onChange={(e) => select(e.target.value)}>
+      <Form.Select onChange={(e) => select(e.target.value)}>
           {list().map((account, index) => {
             return (
               <option value={account.address} key={index}>
@@ -37,16 +46,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ setUIState }) => {
             );
           })}
           i
-      </select>
+      </Form.Select>
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={clear}>
-        delete burners
-      </div>
-
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { goToLobby()}}>
+      <Button variant="success" onClick={() => { goToLobby()}}>
           Login as {truncateString(account.address,5)}
-      </div>    
+      </Button>    
 
-    </ClickWrapper>
+      <hr/>
+
+      <Button variant="danger" onClick={clear}>
+        delete burners
+      </Button>
+
+    </Stack>
+    </Container>
   );
 };

@@ -8,6 +8,11 @@ import { UI } from './ui';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+
 function App() {
   const networkLayer = useNetworkLayer();
 
@@ -22,10 +27,14 @@ function App() {
 
 
   return (
-    <div>
+    <Container>
+      <Row className="justify-content-md-center">
+      <Col md={5}>
       <UI />
       <ToastContainer />
-    </div>
+      </Col>
+      </Row>
+    </Container>
   );
 }
 

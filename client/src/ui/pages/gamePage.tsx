@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { serialize, useHost, useGuest } from "esdeka/react";
 
-import { ClickWrapper } from "../clickWrapper";
 import { useDojo } from "../../hooks/useDojo";
 import { padHex } from "../../utils";
 import { useStore } from "../../store/store";
@@ -9,6 +8,11 @@ import { Account } from "starknet";
 import { SpellcrafterGame, gameStateFromGameValuesQuery } from "../../game/gameState";
 import { FamiliarDisplay, Region, RegionDisplay } from "../../game/config";
 
+import Button from 'react-bootstrap/Button';
+import Accordion from 'react-bootstrap/Accordion';
+import Stack from 'react-bootstrap/Stack';
+import Container from 'react-bootstrap/Container';
+import Ratio from 'react-bootstrap/Ratio';
 
 import cardDefs from '../../generated/cards.json';
 
@@ -132,80 +136,96 @@ export const GamePage: React.FC = () => {
     console.log(gameState);
 
     return (
-        <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
-            <iframe ref={renClientRef} src={import.meta.env.BASE_URL + "/ren_client/"} width="100%" height="500"></iframe>
+        <Stack>
 
-            <div>
-                Now playing game {currentGameId}
-            </div>
+            {/* <Ratio aspectRatio={1080 / 1920}> */}
+                <iframe ref={renClientRef} src={import.meta.env.BASE_URL + "/ren_client/"} style={{width: "100%", height: "100%", position: "absolute" }}></iframe>
+            {/* </Ratio> */}
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-                <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value as any as Region)}>
-                    {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
-                        return <option value={value as Region} key={index}>{RegionDisplay[value as Region]}</option>
-                    })}
-                </select>
-                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(forage, account, selectedRegion) }}>
-                    Forage
-                </div>
-            </div>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-                <select value={selectedCard} onChange={e => setSelectedCard(parseInt(e.target.value))}>
-                    {gameState?.cards.map(([cardId, _], index) => {
-                        return <option value={cardId} key={index}>{cardDefs[cardId].name}</option>
-                    })}
-                </select>
-                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(interact, account, selectedCard) }}>
-                    Add to Spell
-                </div>
-            </div>
+            {/* <Accordion>
+                <Accordion.Item eventKey="0">
+                    <Accordion.Header>Debug State</Accordion.Header>
+                    <Accordion.Body>
+                        <div>
+                            Now playing game {currentGameId}
+                        </div>
 
-            <div style={{ display: "flex", flexDirection: "row" }}>
-                <select value={selectedFamiliar} onChange={e => setSelectedFamiliar(e.target.value as any as Region)}>
-                    {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
-                        return <option value={value as Region} key={index}>{FamiliarDisplay[value as Region]}</option>
-                    })}
-                </select>
-                <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(summon, account, selectedFamiliar) }}>
-                    Summon
-                </div>
-            </div>
+                        <div className="card">
+                            <pre>Time: {gameState?.time}</pre>
+                        </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(send, account, gameState?.familiar?.id) }}>
-                Send Familiar
-            </div>
+                        <div className="card">
+                            <pre>{JSON.stringify(gameState?.stats, null, 2)}</pre>
+                        </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(reapAction, account, gameState?.familiar?.id) }}>
-                Reap
-            </div>
+                        <div className="card">
+                            <pre>{JSON.stringify(gameState?.familiar, null, 2)}</pre>
+                        </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(sacrifice, account, gameState?.familiar?.id) }}>
-                Sacrifice Familiar
-            </div>
+                        <div className="card">
+                            {gameState?.cards.map(([id, count]) => {
+                                return <p key={id}>{cardDefs[id].name}: {count}</p>
+                            })}
+                        </div>
+                    </Accordion.Body>
+                </Accordion.Item>
+                <Accordion.Item eventKey="1">
+                    <Accordion.Header>Debug Controls</Accordion.Header>
+                    <Accordion.Body>
+                        <Stack gap={3}>
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                <select value={selectedRegion} onChange={e => setSelectedRegion(e.target.value as any as Region)}>
+                                    {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
+                                        return <option value={value as Region} key={index}>{RegionDisplay[value as Region]}</option>
+                                    })}
+                                </select>
+                                <Button onClick={() => { callThenUpdate(forage, account, selectedRegion) }}>
+                                    Forage
+                                </Button>
+                            </div>
 
-            <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { callThenUpdate(wait, account, undefined) }}>
-                Wait
-            </div>
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                <select value={selectedCard} onChange={e => setSelectedCard(parseInt(e.target.value))}>
+                                    {gameState?.cards.map(([cardId, _], index) => {
+                                        return <option value={cardId} key={index}>{cardDefs[cardId].name}</option>
+                                    })}
+                                </select>
+                                <Button onClick={() => { callThenUpdate(interact, account, selectedCard) }}>
+                                    Add to Spell
+                                </Button>
+                            </div>
 
-            <div className="card">
-                <pre>Time: {gameState?.time}</pre>
-            </div>
+                            <div style={{ display: "flex", flexDirection: "row" }}>
+                                <select value={selectedFamiliar} onChange={e => setSelectedFamiliar(e.target.value as any as Region)}>
+                                    {Object.values(Region).filter(value => typeof value === 'number').map((value: any, index) => {
+                                        return <option value={value as Region} key={index}>{FamiliarDisplay[value as Region]}</option>
+                                    })}
+                                </select>
+                                <Button onClick={() => { callThenUpdate(summon, account, selectedFamiliar) }}>
+                                    Summon
+                                </Button>
+                            </div>
 
-            <div className="card">
-                <pre>{JSON.stringify(gameState?.stats, null, 2)}</pre>
-            </div>
+                            <Button onClick={() => { callThenUpdate(send, account, gameState?.familiar?.id) }}>
+                                Send Familiar
+                            </Button>
 
-            <div className="card">
-                <pre>{JSON.stringify(gameState?.familiar, null, 2)}</pre>
-            </div>
+                            <Button onClick={() => { callThenUpdate(reapAction, account, gameState?.familiar?.id) }}>
+                                Reap
+                            </Button>
 
-            <div className="card">
-                {gameState?.cards.map(([id, count]) => {
-                    return <p key={id}>{cardDefs[id].name}: {count}</p>
-                })}
-            </div>
+                            <Button onClick={() => { callThenUpdate(sacrifice, account, gameState?.familiar?.id) }}>
+                                Sacrifice Familiar
+                            </Button>
 
-        </ClickWrapper>
+                            <Button onClick={() => { callThenUpdate(wait, account, undefined) }}>
+                                Wait
+                            </Button>
+                        </Stack>
+                    </Accordion.Body>
+                </Accordion.Item>
+            </Accordion> */}
+        </Stack>
     );
 };
