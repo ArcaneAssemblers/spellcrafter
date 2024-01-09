@@ -19,7 +19,7 @@ export const useDojo = () => {
         {
             masterAccount: masterAccount,
             accountClassHash: import.meta.env.VITE_PUBLIC_ACCOUNT_CLASS_HASH!,
-            nodeUrl: "http://0.0.0.0:5050"
+            nodeUrl: import.meta.env.VITE_PUBLIC_NODE_URL
         }
     );
 

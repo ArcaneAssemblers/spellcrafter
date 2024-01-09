@@ -133,7 +133,7 @@ export const GamePage: React.FC = () => {
 
     return (
         <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
-            <iframe ref={renClientRef} src="http://localhost:5174/spellcrafter" width="100%" height="500"></iframe>
+            <iframe ref={renClientRef} src={import.meta.env.BASE_URL + "/ren_client/"} width="100%" height="500"></iframe>
 
             <div>
                 Now playing game {currentGameId}

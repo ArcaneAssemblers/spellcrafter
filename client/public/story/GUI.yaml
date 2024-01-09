@@ -1,0 +1,132 @@
+name: ArcaneAssembler
+resolution:
+  - 1080
+  - 1920
+assetCounter: 44
+config:
+  hud:
+    - id: default
+      type: image
+      asset: gameframe
+      x: 0
+      'y': 0
+    - id: default
+      type: choices
+      asset: buttonspritesheet
+      x: 40
+      'y': 680
+      alignment: centered
+      separation: 10
+      sfx: none
+      text:
+        x: 0
+        'y': 0
+        style:
+          font: fontsaudimat-mono
+          fontSize: 45px
+          fill: '#FFFFFF'
+          align: left
+          boundsAlignH: center
+          boundsAlignV: middle
+    - id: default
+      type: messageBox
+      asset: textbox
+      x: 40
+      'y': 1560
+      sfx: none
+      text:
+        x: 110
+        'y': 34
+        style:
+          font: fontsaudimat-mono
+          fontSize: 45px
+          fill: '#BF9FE6'
+          align: left
+          wordWrap: true
+          wordWrapWidth: '870'
+      ctc:
+        x: 960
+        'y': 280
+        asset: readystar
+    - id: default
+      type: nameBox
+      asset: namebox
+      x: 140
+      'y': 1490
+      text:
+        x: 0
+        'y': 0
+        style:
+          font: fontsaudimat-mono
+          fontSize: 40px
+          fill: '#BF9FE6'
+          align: left
+          boundsAlignH: center
+          boundsAlignV: middle
+
+  menus:
+    main:
+      - type: label
+        x: 150
+        'y': 452
+        text: "Waiting to receive world data"
+        style:
+          font: fontsaudimat-mono
+          fontSize: 45px
+          fill: '#FFFFFF'
+          align: left
+          boundsAlignH: center
+          boundsAlignV: middle
+assets:
+  images:
+    textbox:
+      name: textbox
+      fileName: textbox.png
+    namebox:
+      name: namebox
+      fileName: namebox.png
+    gameframe:
+      name: gameframe
+      fileName: gameframe.png
+  spritesheets:
+    loading-bar:
+      name: loading-bar
+      fileName: loaderloading-bar.png
+      w: 578
+      h: 82
+    asset4:
+      name: asset4
+      fileName: mainasset4.png
+      w: 143
+      h: 82
+    asset5:
+      name: asset5
+      fileName: mainasset5.png
+      w: 199
+      h: 82
+    readystar: # blinky thing
+      name: readystar
+      fileName: readystar.png
+      w: 40
+      h: 43
+    buttonspritesheet: # option buttons
+      name: buttonspritesheet
+      fileName: buttonspritesheet.png
+      w: 1000
+      h: 140
+    asset32: # interrupt buttons
+      name: asset32
+      fileName: hudasset32.png
+      w: 716
+      h: 65
+  fonts:
+    fontsaudimat-mono:
+      fileName: OpenDyslexic3-Regular.ttf
+      name: fontsaudimat-mono
+  audio:
+    Evan_Schaeffer_-_01_-_Aqueduct:
+      fileName: audioEvan_Schaeffer_-_01_-_Aqueduct.mp3
+      name: Evan_Schaeffer_-_01_-_Aqueduct
+      type: music
+madeWithRenJSBuilder: "2.0"
+assetsPath: assets/gui/
