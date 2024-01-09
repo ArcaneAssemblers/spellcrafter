@@ -2,7 +2,7 @@ start:
   - if ({dead}):
     - scene: deathScreen
 
-  # - play mysterious: LOOPED
+  - play mysterious: LOOPED
   - scene: manageActions
 
 manageActions:
