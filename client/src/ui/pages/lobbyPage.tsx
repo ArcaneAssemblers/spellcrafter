@@ -10,6 +10,7 @@ import { useStore } from "../../store/store";
 import Button from 'react-bootstrap/Button';
 import Stack from 'react-bootstrap/Stack';
 import Image from 'react-bootstrap/Image';
+import Container from 'react-bootstrap/Container';
 
 import headerImageUrl from './concept-art.png';
 
@@ -70,21 +71,18 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
     }
 
     return (
-        <Stack gap={3}>
-
-        <Image src={headerImageUrl} rounded fluid/>
-
-
-            {games.map((gameId, index) => {
-                return (<Button onClick={() => { setGameAndPlay(gameId) }}>
-                    Play {gameId}
-                </Button>)
-            })}
-
-            <Button onClick={() => { newGame(account) }}>
-                New Game
-            </Button>
-
-        </Stack>
+        <Container>
+            <Stack gap={3}>
+                <Image src={headerImageUrl} rounded fluid />
+                {games.map((gameId, index) => {
+                    return (<Button variant="secondary" onClick={() => { setGameAndPlay(gameId) }}>
+                        Play {gameId}
+                    </Button>)
+                })}
+                <Button variant="success" onClick={() => { newGame(account) }}>
+                    New Game
+                </Button>
+            </Stack>
+        </Container>
     );
 };

@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Stack from 'react-bootstrap/Stack';
 import Image from 'react-bootstrap/Image';
+import Container from 'react-bootstrap/Container';
 
 import headerImageUrl from './concept-art.png';
 
@@ -19,24 +20,25 @@ interface LoginPageProps {
 export const LoginPage: React.FC<LoginPageProps> = ({ setUIState }) => {
 
   const {
-    account: { account, create, isDeploying, clear,select,list },
+    account: { account, create, isDeploying, clear, select, list },
   } = useDojo();
 
   //create the client game comp for the start of the loading
   const goToLobby = async () => {
-    setUIState(Phase.LOBBY); 
+    setUIState(Phase.LOBBY);
   }
 
   return (
-    <Stack gap={3}>
+    <Container>
+      <Stack gap={3}>
 
-    <Image src={headerImageUrl} rounded fluid/>
+        <Image src={headerImageUrl} rounded fluid />
 
-      <Button onClick={create}>
-        {isDeploying ? "deploying burner" : "create burner"}
-      </Button>
+        <Button onClick={create}>
+          {isDeploying ? "deploying burner" : "create burner"}
+        </Button>
 
-      <Form.Select onChange={(e) => select(e.target.value)}>
+        <Form.Select onChange={(e) => select(e.target.value)}>
           {list().map((account, index) => {
             return (
               <option value={account.address} key={index}>
@@ -45,16 +47,19 @@ export const LoginPage: React.FC<LoginPageProps> = ({ setUIState }) => {
             );
           })}
           i
-      </Form.Select>
+        </Form.Select>
 
-      <Button onClick={clear}>
-        delete burners
-      </Button>
+        <Button variant="success" onClick={() => { goToLobby() }}>
+          Login as {truncateString(account.address, 5)}
+        </Button>
 
-      <Button onClick={() => { goToLobby()}}>
-          Login as {truncateString(account.address,5)}
-      </Button>    
+        <hr />
 
-    </Stack>
+        <Button variant="danger" onClick={clear}>
+          delete burners
+        </Button>
+
+      </Stack>
+    </Container>
   );
 };

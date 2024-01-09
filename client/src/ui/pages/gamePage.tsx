@@ -139,12 +139,12 @@ export const GamePage: React.FC = () => {
     return (
         <Stack>
 
-            <Ratio aspectRatio={1080 / 1920}>
-                <iframe ref={renClientRef} src={import.meta.env.BASE_URL + "/ren_client/"}></iframe>
-            </Ratio>
+            {/* <Ratio aspectRatio={1080 / 1920}> */}
+                <iframe ref={renClientRef} src={import.meta.env.BASE_URL + "/ren_client/"} style={{width: "100%", height: "100%", position: "absolute" }}></iframe>
+            {/* </Ratio> */}
 
 
-            <Accordion>
+            {/* <Accordion>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Debug State</Accordion.Header>
                     <Accordion.Body>
@@ -226,7 +226,7 @@ export const GamePage: React.FC = () => {
                         </Stack>
                     </Accordion.Body>
                 </Accordion.Item>
-            </Accordion>
+            </Accordion> */}
         </Stack>
     );
 };
