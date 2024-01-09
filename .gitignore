@@ -1,2 +1,3 @@
 cards-output/
 env/
+.env.slot

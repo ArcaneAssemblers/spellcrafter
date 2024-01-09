@@ -1,8 +1,12 @@
 set positional-arguments
 set export
+set dotenv-load
+
+# uncomment one of these for the environment you want to use
+set dotenv-filename := ".env.slot"
+# set dotenv-filename := ".env.local"
 
 DOJO_VERSION := "0.3.15"
-STARKNET_RPC_URL := "http://localhost:5050"
 
 default:
   just --list
@@ -23,7 +27,7 @@ test:
 	cd contracts && sozo test
 
 migrate:
-	cd contracts && sozo migrate
+	cd contracts && sozo migrate --rpc-url=$STARKNET_RPC_URL --account-address=$DEPLOYER_ADDRESS --private-key=$DEPLOYER_PRIVATE_KEY
 
 # fetch the cards from the google sheet and write to cards.csv in this repo
 fetch_cards:
@@ -42,7 +46,7 @@ set_auth:
 	cd contracts
 
 	for component in ${COMPONENTS[@]}; do
-		sozo auth writer $component $GAME_ADDRESS --world $WORLD_ADDRESS --rpc-url $STARKNET_RPC_URL
+		sozo auth writer $component $GAME_ADDRESS --world $WORLD_ADDRESS --rpc-url=$STARKNET_RPC_URL --account-address=$DEPLOYER_ADDRESS --private-key=$DEPLOYER_PRIVATE_KEY
 	done
 
 # start the dev server hosting the web client
