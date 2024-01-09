@@ -1,0 +1,299 @@
+start:
+  - if ({dead}):
+    - scene: deathScreen
+
+  # - play mysterious: LOOPED
+  - scene: manageActions
+
+manageActions:
+  - show tower: WITH FADE
+
+
+  - if ({time} > 0):
+    - text: Welcome back Acolyte
+  - else:
+    - text: A new recruit! Welcome to the tower. Do you need to be shown around?
+
+  # upkeep
+  - call SpellCrafter: printDebug
+  - call SpellCrafter: claimFamiliarItem
+  - if ({familiarReturnedItem}):
+
+    - if ({familiarName} == "Raven"):
+      - show raven: WITH CUT AT OUTLEFT
+      - show raven: WITH MOVE AT LEFT
+      - play raven:
+    - if ({familiarName} == "Cat"):
+      - show cat: WITH CUT AT OUTLEFT
+      - show cat: WITH MOVE AT LEFT
+      - play cat:
+    - if ({familiarName} == "Salamander"):
+      - show salamander: WITH CUT AT OUTLEFT
+      - show salamander: WITH MOVE AT LEFT
+      - play salamander:
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: WITH CUT AT OUTLEFT
+      - show spider: WITH MOVE AT LEFT
+      - play spider:
+
+    - call SpellCrafter: showCard
+    - text: Your {familiarName} returned a {lastForagedItemName}! {lastForagedItemFlavour}.
+    - call SpellCrafter: hideCard
+
+    - if ({familiarName} == "Raven"):
+      - show raven: WITH MOVE AT OUTLEFT
+      - hide raven: WITH CUT AT OUTLEFT
+    - if ({familiarName} == "Cat"):
+      - show cat: WITH MOVE AT OUTLEFT
+      - hide cat: WITH CUT AT OUTLEFT
+    - if ({familiarName} == "Salamander"):
+      - show salamander: WITH MOVE AT OUTLEFT
+      - hide salamander: WITH CUT AT OUTLEFT
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: WITH MOVE AT OUTLEFT
+      - hide spider: WITH CUT AT OUTLEFT
+  
+    - var familiarReturnedItem: false
+
+  - text: The current spell power is {power}
+  - text: Its chaos is {chaos}.
+  - call SpellCrafter: showBarriers
+  - if ({lightdark} > 0):
+    - text: The spell is light level {lightdark}.
+  - if ({lightdark} < 0):
+    - var dark: "{lightdark} * -1"
+    - text: The spell is dark level {dark}.
+
+  - if ({hotcold} > 0):
+    - text: The spell is hot level {hotcold}.
+  - if ({hotcold} < 0):
+    - var cold: "{hotcold} * -1"
+    - text: The spell is cold level {cold}.
+
+  - choice:
+    - text: What would you like to do?
+
+    - "Forage":
+      - choice:
+        - text: Where would you like to visit?
+        - "Forest":
+          - text: You head out to the snowy forest. It's cold, but you're prepared.
+          - scene: forest
+        - "Meadow":
+          - text: You leave the tower for the meadow. It is beautiful and sunny.
+          - scene: meadow
+        - "Volcano":
+          - text: You begin hiking toward the volcano. Lucky you know a heat shielding spell.
+          - scene: volcano
+        - "Cave":
+          - text: You begin your journey to the cave. Don't forget the lantern.
+          - scene: cave
+
+    - Send Familiar !if ({familiar} && {familiarIdle}):
+      - call SpellCrafter: sendFamiliar
+
+      - if ({familiarName} == "Raven"):
+        - show raven: WITH CUT AT OUTLEFT
+        - show raven: WITH MOVE AT LEFT
+        - play raven:
+      - if ({familiarName} == "Cat"):
+        - show cat: WITH CUT AT OUTLEFT
+        - show cat: WITH MOVE AT LEFT
+        - play cat:
+      - if ({familiarName} == "Salamander"):
+        - show salamander: WITH CUT AT OUTLEFT
+        - show salamander: WITH MOVE AT LEFT
+        - play salamander:
+      - if ({familiarName} == "Wolf Spider"):
+        - show spider: WITH CUT AT OUTLEFT
+        - show spider: WITH MOVE AT LEFT
+        - play spider:
+
+      - text: You send your {familiarName} out to forage. Check back later to see what they bring back.
+
+      - if ({familiarName} == "Raven"):
+        - show raven: WITH MOVE AT OUTLEFT
+        - hide raven: WITH CUT AT OUTLEFT
+      - if ({familiarName} == "Cat"):
+        - show cat: WITH MOVE AT OUTLEFT
+        - hide cat: WITH CUT AT OUTLEFT
+      - if ({familiarName} == "Salamander"):
+        - show salamander: WITH MOVE AT OUTLEFT
+        - hide salamander: WITH CUT AT OUTLEFT
+      - if ({familiarName} == "Wolf Spider"):
+        - show spider: WITH MOVE AT OUTLEFT
+        - hide spider: WITH CUT AT OUTLEFT
+
+      - scene: manageActions
+
+    - Summon Familiar !if (!{familiar}):
+      - text: You begin the summoning ritual
+      - choice:
+        - text: What would you like to summon?
+        - "Raven":
+          - call SpellCrafter: summonFamiliar forest
+          - show raven: WITH FADE AT CENTER
+          - play raven:
+        - "Cat":
+          - call SpellCrafter: summonFamiliar meadow
+          - show cat: WITH FADE AT CENTER
+          - play cat:
+        - "Salamander":
+          - call SpellCrafter: summonFamiliar volcano
+          - show salamander: WITH FADE AT CENTER
+          - play salamander:
+        - "Wolf Spider": 
+          - call SpellCrafter: summonFamiliar cave
+          - show spider: WITH FADE AT CENTER
+          - play spider:
+      - text: You summon a (bold){familiarName}(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
+      - scene: approaching
+
+    - Sacrifice Familiar !if ({familiar} && {familiarIdle}):
+      - scene: sacrifice
+
+    - "Add Components":
+      - scene: addComponents
+
+    - "Wait":
+      - text: You wait for a while.
+      - call SpellCrafter: wait
+      - scene: approaching
+
+
+
+approaching:
+  - hide ALL: WITH FADE
+  - if ({chaosDelta} > 0):
+    - text: The chaos increased by {chaosDelta} while you were away.
+    - var chaosDelta: 0
+  - text: "You approach the spell(pause: 500).(pause: 500).(pause: 500)."
+  - if ({dead}):
+    - effect SHAKE:
+    - text: (color:#c40000)FAIL(end)
+    - show altar: WITH FADE
+    - text: The spell rushes past its final barrier and explodes outward. The last thing you see is a blinding flash of light... and then darkness.
+    - scene: endGame
+  - if ({barriersDelta} < 0):
+    - effect SHAKE:
+    - text: (color:#c40000)FAIL(end)
+    - show altar: WITH FADE
+    - text: You see a barrier shatter and fall away. Only {barriers} remain holding the spell in place.
+  - else:
+    - show altar: WITH FADE
+    - text: (color:#008900)The spell appears to be stable for now(end)
+  - scene: manageActions
+
+
+addComponents:
+  - if ({itemCount} > 0):
+    - call SpellCrafter: selectAndAddIngredient # This will set the {lastAddedItemName}, {chaosDelta}, {powerDelta} variables
+    - text: You added {lastAddedItemName} to the spell
+    - text: The chaos changed by {chaosDelta}. The power changed by {powerDelta}
+
+    - if ({lightdarkDelta} > 0):
+      - text: The spell became lighter by {lightdarkDelta}.
+    - if ({lightdarkDelta} < 0):
+      - text: The spell became darker by {lightdarkDelta}.
+  
+    - if ({hotcoldDelta} > 0):
+      - text: The spell became hotter by {hotcoldDelta}.
+    - if ({hotcoldDelta} < 0):
+      - text: The spell became colder by {hotcoldDelta}.
+
+    - var chaosDelta: 0
+
+  - else:
+    - text: You don't have any components to add!!
+  - scene: manageActions
+
+sacrifice:
+  - if ({familiar} && {familiarIdle}):
+    - text: You begin the sacrifice ritual
+    
+    - if ({familiarName} == "Raven"):
+      - show raven: WITH FADE AT CENTER
+    - if ({familiarName} == "Cat"):
+      - show cat: WITH FADE AT CENTER
+    - if ({familiarName} == "Salamander"):
+      - show salamander: WITH FADE AT CENTER
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: WITH FADE AT CENTER
+
+    - text: I'm sorry {familiarName}, but I really need your help.
+    - show altar: WITH FADE
+
+    - if ({familiarName} == "Raven"):
+      - show raven: scared WITH CUT AT CENTER
+    - if ({familiarName} == "Cat"):
+      - show cat: scared WITH CUT AT CENTER
+    - if ({familiarName} == "Salamander"):
+      - show salamander: scared WITH CUT AT CENTER
+    - if ({familiarName} == "Wolf Spider"):
+      - show spider: scared WITH CUT AT CENTER
+
+    - text: You place your {familiarName} on the altar.
+    - call SpellCrafter: sacrificeFamiliar
+    - effect SHAKE:
+    - play sacrifice:
+
+    - if ({familiarName} == "Raven"):
+      - hide raven:
+    - if ({familiarName} == "Cat"):
+      - hide cat:
+    - if ({familiarName} == "Salamander"):
+      - hide salamander:
+    - if ({familiarName} == "Wolf Spider"):
+      - hide spider:
+
+    - text: You sacrifice your {familiarName} to the spell.
+  - else:
+    - deuzi says angry: You don't have a familiar to sacrifice!!
+    - hide deuzi: WITH FADE
+  - scene: manageActions
+
+forest:
+  - show forest: WITH FADE
+  - call SpellCrafter: forage forest
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
+  - text: Time to return to the tower.
+  - scene: approaching
+
+meadow:
+  - show meadow: WITH FADE
+  - call SpellCrafter: forage meadow
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
+  - text: Time to return to the tower.
+  - scene: approaching
+
+volcano:
+  - show volcano: WITH FADE
+  - call SpellCrafter: forage volcano
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
+  - text: Time to return to the tower.
+  - scene: approaching
+
+cave:
+  - show cave: WITH FADE
+  - call SpellCrafter: forage cave
+  - call SpellCrafter: showCard
+  - text: You found 1 {lastForagedItemName}! {lastForagedItemFlavour}.
+  - call SpellCrafter: hideCard
+  - text: Time to return to the tower.
+  - scene: approaching
+
+endGame:
+  - text: And that is the story of an unknown mage who died in the pursuit of power greater than themselves...
+  - hide ALL:
+  - scene: deathScreen
+
+deathScreen:
+  - hide ALL:
+  - text: There is nothing more see here, although your achievements have been recorded forever.
+  - text: Consider starting a new game.
