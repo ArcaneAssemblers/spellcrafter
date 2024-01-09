@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { ClickWrapper } from "../clickWrapper";
 import { Phase } from "../phaseManager";
 import { useDojo } from "../../hooks/useDojo";
 import { Account, num } from "starknet";

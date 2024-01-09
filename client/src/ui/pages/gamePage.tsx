@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { serialize, useHost, useGuest } from "esdeka/react";
 
-import { ClickWrapper } from "../clickWrapper";
 import { useDojo } from "../../hooks/useDojo";
 import { padHex } from "../../utils";
 import { useStore } from "../../store/store";
