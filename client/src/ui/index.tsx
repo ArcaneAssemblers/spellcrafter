@@ -16,8 +16,6 @@ export const UI = () => {
   //main index that loads the layers we need to this before we do any operations 
 
   return (
-    <Wrapper>
-      <PhaseManager />
-    </Wrapper>
+    <PhaseManager />
   );
 };

@@ -69,7 +69,7 @@ config:
       - type: label
         x: 150
         'y': 452
-        text: "Waiting to receive world data"
+        text: ""
         style:
           font: fontsaudimat-mono
           fontSize: 45px

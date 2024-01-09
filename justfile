@@ -3,8 +3,8 @@ set export
 set dotenv-load
 
 # uncomment one of these for the environment you want to use
-set dotenv-filename := ".env.slot"
-# set dotenv-filename := ".env.local"
+# set dotenv-filename := ".env.slot"
+set dotenv-filename := ".env.local"
 
 DOJO_VERSION := "0.3.15"
 

@@ -7,6 +7,12 @@ import { Account, num } from "starknet";
 import { padHex } from "../../utils";
 import { useStore } from "../../store/store";
 
+import Button from 'react-bootstrap/Button';
+import Stack from 'react-bootstrap/Stack';
+import Image from 'react-bootstrap/Image';
+
+import headerImageUrl from './concept-art.png';
+
 interface LobbyPageProps {
     setUIState: React.Dispatch<Phase>;
 }
@@ -28,7 +34,7 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
 
         const gameIds: Array<string> = [];
         data.ownerModels?.edges?.forEach((edge) => {
-            if(edge?.node?.entity?.models?.length && edge?.node?.entity?.models?.length > 1) return; // A familiar has a Owner and Familiar component but a game just has an Owner. This filters out the former
+            if (edge?.node?.entity?.models?.length && edge?.node?.entity?.models?.length > 1) return; // A familiar has a Owner and Familiar component but a game just has an Owner. This filters out the former
             edge?.node?.entity?.models?.forEach((model) => {
                 switch (model?.__typename) {
                     case "Owner":
@@ -64,18 +70,21 @@ export const LobbyPage: React.FC<LobbyPageProps> = ({ setUIState }) => {
     }
 
     return (
-        <ClickWrapper className="centered-div" style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", gap: "20px" }}>
+        <Stack gap={3}>
 
-        {games.map((gameId, index) => {
-            return (<div key={index} className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { setGameAndPlay(gameId) }}>
-                Play {gameId}
-            </div>)
-        })}
+        <Image src={headerImageUrl} rounded fluid/>
 
-      <div className="global-button-style" style={{ fontSize: "2.4cqw", padding: "5px 10px", fontFamily: "OL", fontWeight: "100" }} onClick={() => { newGame(account)}}>
-          New Game
-      </div>      
 
-    </ClickWrapper>
+            {games.map((gameId, index) => {
+                return (<Button onClick={() => { setGameAndPlay(gameId) }}>
+                    Play {gameId}
+                </Button>)
+            })}
+
+            <Button onClick={() => { newGame(account) }}>
+                New Game
+            </Button>
+
+        </Stack>
     );
 };
