@@ -10,7 +10,7 @@ const RenJSConfig =  {
   'scaleMode': Phaser.ScaleManager.SHOW_ALL,
   'loadingScreen': {
     'loadingBar': {
-      'asset': BASE_URL+'/assets/gui/loadingbarspritesheet.png',
+      'asset': BASE_URL+'/ren_client/assets/gui/loadingbarspritesheet.png',
       'position': {
         'x': 240,
         'y': 1450
@@ -21,7 +21,7 @@ const RenJSConfig =  {
       }
     }
   },
-  'fonts': BASE_URL+'/assets/gui/fonts.css',
+  'fonts': BASE_URL+'/ren_client/assets/gui/fonts.css',
   'guiConfig': BASE_URL+'/story/GUI.yaml',
   storyConfig: BASE_URL+'/story/Config.yaml',
   storySetup: BASE_URL+'/story/Setup.yaml',
