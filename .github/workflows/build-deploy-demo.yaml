@@ -53,6 +53,8 @@ jobs:
       VITE_PUBLIC_WORLD_ADDRESS: ${{ needs.build-and-deploy-contracts.outputs.WORLD_ADDRESS }}
       VITE_PUBLIC_NODE_URL: ${{ vars.STARKNET_RPC_URL }}
       VITE_PUBLIC_TORII: ${{ vars.TORII_URL }}
+      VITE_PUBLIC_MASTER_ADDRESS: ${{ vars.DEPLOYER_ADDRESS }}
+      VITE_PUBLIC_MASTER_PRIVATE_KEY: ${{ secrets.DEPLOYER_PRIVATE_KEY }}
     steps:
       - uses: actions/checkout@v4
       - name: Use bun
