@@ -52,6 +52,7 @@ cgs:
   back-button: assets/objects/back-button.png
   barrier: assets/objects/barrier.png
   barrier-broken: assets/objects/barrier-broken.png
+  arrow: assets/objects/arrow.png
 
   
 music:

@@ -4,6 +4,7 @@ start:
 
   - show outside: WITH FADE
 
+
   - if ({time} > 0):
     - text: Welcome back Acolyte
   - else:
@@ -29,8 +30,12 @@ tutorial:
 
   - wizard says: Oh, you've got some protective barrier charms!
   - wizard says: Thats good. Those are up here too.
+  - show arrow: WITH FADE AT 750,350
+    angle: -70
+    zoom: 0.3
   - wizard says: As your spell tries to break loose these will break
   - wizard says: So try not to let them all crack.
+  - hide arrow: WITH FADE
 
   - wizard says: Some spells are also infused with elements. You can see hot/cold and light/dark up there.
   - wizard says: Hot and cold are opposed, as are light and dark. Imagine them like this….
