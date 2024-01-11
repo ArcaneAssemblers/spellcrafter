@@ -36,14 +36,14 @@ config:
       sfx: none
       text:
         x: 110
-        'y': 34
+        'y': 50
         style:
           font: fontsaudimat-mono
-          fontSize: 45px
+          fontSize: 40px
           fill: '#BF9FE6'
           align: left
           wordWrap: true
-          wordWrapWidth: '870'
+          wordWrapWidth: '850'
       ctc:
         x: 960
         'y': 280

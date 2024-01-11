@@ -2,17 +2,75 @@ start:
   - if ({dead}):
     - scene: deathScreen
 
-  - play mysterious: LOOPED
-  - scene: manageActions
-
-manageActions:
-  - show tower: WITH FADE
-
+  - show outside: WITH FADE
 
   - if ({time} > 0):
     - text: Welcome back Acolyte
   - else:
-    - text: A new recruit! Welcome to the tower. Do you need to be shown around?
+    - text: A new recruit! Do you need to be shown around?
+    - choice:
+      - "Yes (Tutorial)":
+        - scene: tutorial
+      - "No":
+        - text: Very well. I will leave you to your work.
+
+  - scene: manageActions
+
+tutorial:
+  - show wizard: WITH FADE
+  - wizard says: "Ah, you must be new acolyte from the academy. Let's go over the basics."
+  - wizard says: "You’re trying to create the most powerful spell, aren't you?"
+
+  - wizard says: "You can see your current power up there."
+  - wizard says: Spells are chaotic and difficult to control. Eventually your spell will become too chaotic and…
+  - wizard says: …Well, you'll see.
+
+  - wizard says: You can see its current chaos level up there.
+
+  - wizard says: Oh, you've got some protective barrier charms!
+  - wizard says: Thats good. Those are up here too.
+  - wizard says: As your spell tries to break loose these will break
+  - wizard says: So try not to let them all crack.
+
+  - wizard says: Some spells are also infused with elements. You can see hot/cold and light/dark up there.
+  - wizard says: Hot and cold are opposed, as are light and dark. Imagine them like this….
+  # show graph of elements
+  - wizard says: But of course you've covered all of that at the academy. Now let's talk about what you're doing here…
+
+  - show tower: WITH FADE
+
+  # (Point to Add ingredients button)
+  - wizard says: This is your tower, where you can add to your spell. 
+  - wizard says: Your ingredients will infuse the spell with their essence.
+  - wizard says: Be conscious of how many items you carry… Your pockets are only big enough for 7.
+
+  # (Back to main selection screen, pointing to forage button)
+  - wizard says: You'll have to go out and get new things to feed your spell. There are various options…
+  # (Show forage option screen)
+  - wizard says: The cold forest, the bright meadow, the dark cave, the burning volcano…
+  - wizard says: Each area provides its own set of ingredients… I suppose it depends what you're looking for.
+
+  # (Back to main selection screen, pointing to summon familiar button)
+  - wizard says: Of course those in the arcane arts also have familiars. They run errands to their preferred habitat.
+
+  # (Show familiar option screen)
+  - wizard says: The Raven visits the forest, the Cat to a meadow, Spider to the cave, Salamander to the volcano.
+  - wizard says: Don't forget to send them out to fetch… Familiars are always a little clingy.
+
+  - hide ALL: WITH FADE
+  - wizard says: Oh! One last thing.
+  - show altar: WITH FADE
+  - wizard says: Only when you summon or forage, you leave the spell unattended.
+  - wizard says: "Chaos builds and builds(pause: 500).(pause: 500).(pause: 500)."
+  - wizard says: But you'll probably be fine.
+  - hide ALL: WITH FADE
+
+  - scene: manageActions
+
+
+manageActions:
+  - play mysterious: LOOPED
+  - show tower: WITH FADE
 
   # upkeep
   - call SpellCrafter: printDebug

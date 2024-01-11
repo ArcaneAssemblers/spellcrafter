@@ -10,6 +10,13 @@ backgrounds:
   cave: assets/backgrounds/cave.png
 
 characters:
+  wizard:
+    displayName: Wizard
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/raven.png
+      scared: assets/characters/ravenScared.png
+
   raven:
     displayName: Raven
     speechColour: "#ca90cf"
