@@ -16,7 +16,7 @@ const TICKS_FOR_FAMILIAR_FORAGE = 2;
 export class LocalSpellcrafterGame implements ISpellcrafterGame {
     _time: number;
     _stats: GameStats;
-    _cards: number[];
+    _cards: Array<[number, number]>;
     _familiar: Familiar | null;
 
     constructor() {
@@ -28,7 +28,7 @@ export class LocalSpellcrafterGame implements ISpellcrafterGame {
             lightDark: 0,
             barriers: 3,
         };
-        this._cards = [1,2,3,4,5,6,7];
+        this._cards = [];
         this._familiar = null;
     }
 
@@ -40,7 +40,7 @@ export class LocalSpellcrafterGame implements ISpellcrafterGame {
         return this._stats;
     }
 
-    get cards(): number[] {
+    get cards(): Array<[number, number]> {
         return this._cards;
     }
 

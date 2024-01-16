@@ -5,14 +5,14 @@ import { ISpellcrafterGame } from "../interfaces/spellcrafter_game";
 import { DojoSpellcrafterGame } from "./dojo_spellcrafter_game";
 
 export class SpellcrafterPlugin extends RenJS.Plugin {
-// class SpellcrafterPlugin extends Plugin {
+    // class SpellcrafterPlugin extends Plugin {
 
     spellcrafterGame: ISpellcrafterGame;
     cardDisplayGroup;
     setCard;
     barrierImages: any = [];
     host: Window;
-    
+
     onInit(): void {
         const unsubscribe = subscribe("spellcrafter", event => {
             console.log("Ren received initial state:", event.data.action.payload);
@@ -49,8 +49,8 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.barrierImages.push(this.game.add.image(900, 50, "barrier"));
         this.barrierImages.forEach(img => { this.game.gui.hud.add(img) });
 
-        this.syncState()
-	}
+        this._syncState()
+    }
 
     onAction(action): void {
     }
@@ -60,12 +60,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     //  call SpellCrafter: forage forest
     //  call SpellCrafter: interact 3
     // call spellCrafter : showItemsChoice
-	onCall({body}): void {
+    onCall({ body }): void {
         console.log("spellcrafter called with: ", body);
         const [method, ...args] = body.split(" ");
 
         const decodeCall = (method: string, ...args: any[]): Promise<void> => {
-            switch(method) {
+            switch (method) {
                 case "printDebug":
                     console.log(this.spellcrafterGame);
                     return Promise.resolve();
@@ -92,24 +92,25 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return Promise.resolve();
                 case "hideBarriers":
                     // this.barrierImages.forEach(img => { img.visible = false });
-                    return Promise.resolve(); 
+                    return Promise.resolve();
                 default:
                     throw new Error("invalid method: " + method);
             }
         }
 
         decodeCall(method, ...args).then(() => {
-            this.syncState();
+            this._syncState();
         }).catch(async (err) => {
             console.error(err.message);
-            this.syncState();
+            this._syncState();
             await this.game.managers.text.display(err.message, "default");
             this.game.managers.story.startScene("manageActions");
             // hang forever
         }).finally(async () => {
+            await this.hideCard();
             this.game.resolveAction(); // must call this to return control to the story
         });
-	}
+    }
 
     /// Display the currently owned items and allow the player to select one
     /// After this resolves the `chosenItem` variable will hold the index of the chosen item
@@ -155,7 +156,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                 selectedCardIndex = (selectedCardIndex - 1 + this.spellcrafterGame.cards.length) % this.spellcrafterGame.cards.length;
                 updateCardDisplay()
             }, this, 0);
-            const rightButton = this.game.add.button(875+150, 845+150, "back-button", () => {
+            const rightButton = this.game.add.button(875 + 150, 845 + 150, "back-button", () => {
                 selectedCardIndex = (selectedCardIndex + 1) % this.spellcrafterGame.cards.length;
                 updateCardDisplay()
             }, this, 0);
@@ -163,8 +164,8 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 
             const addToSpellButton = this.game.add.button(40, 1025, "button", async () => {
                 hideCardChoser();
-                let pre_stats = {...this.spellcrafterGame.stats};
-                this.game.managers.logic.vars["lastAddedItemName"] =  cards[this.spellcrafterGame.cards[selectedCardIndex][0]].name;
+                let pre_stats = { ...this.spellcrafterGame.stats };
+                this.game.managers.logic.vars["lastAddedItemName"] = cards[this.spellcrafterGame.cards[selectedCardIndex][0]].name;
                 await this.spellcrafterGame.interact(this.spellcrafterGame.cards[selectedCardIndex][0]);
                 this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_stats.chaos;
                 this.game.managers.logic.vars["powerDelta"] = this.spellcrafterGame.stats.power - pre_stats.power;
@@ -181,9 +182,11 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     async forage(region: string): Promise<void> {
         let pre_chaos = this.spellcrafterGame.stats.chaos;
         let pre_barriers = this.spellcrafterGame.stats.barriers;
+        let pre_cards = this.spellcrafterGame.cards;
 
         await this.spellcrafterGame.forage(region);
 
+        this._setLastForagedItem(findNewCard(pre_cards, this.spellcrafterGame.cards));
         this.game.managers.logic.vars["chaosDelta"] = this.spellcrafterGame.stats.chaos - pre_chaos;
         this.game.managers.logic.vars["barriersDelta"] = this.spellcrafterGame.stats.barriers - pre_barriers;
     }
@@ -208,7 +211,9 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 
     async claimFamiliarItem(): Promise<void> {
         try {
+            let pre_cards = this.spellcrafterGame.cards;
             await this.spellcrafterGame.claimFamiliarItem();
+            this._setLastForagedItem(findNewCard(pre_cards, this.spellcrafterGame.cards));
             this.game.managers.logic.vars["familiarReturnedItem"] = true;
         } catch (err) { // just print errors here since we know this can fail
             console.log("familiar item check failed: ", err.message);
@@ -234,9 +239,16 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.cardDisplayGroup.visible = false;
     }
 
+    _setLastForagedItem(lastForagedItem: number | null): void {
+        this.game.managers.logic.vars["lastForagedItem"] = lastForagedItem ? cards[lastForagedItem].card_id : null
+        this.game.managers.logic.vars["lastForagedItemName"] = lastForagedItem ? cards[lastForagedItem].name : null
+        this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].description : null
+        this.game.managers.logic.vars["lastForagedItemFlavour"] = lastForagedItem ? cards[lastForagedItem].flavour : null
+    }
+
     /// copies variables from the game state object into the renjs context
     /// so they can be displayed in-game and used to alter the story flow
-    syncState(): void {
+    _syncState(): void {
         const stats = this.spellcrafterGame.stats;
 
         this.game.managers.logic.vars["chaos"] = stats.chaos;
@@ -248,11 +260,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["time"] = this.spellcrafterGame.time;
         this.game.managers.logic.vars["itemCount"] = this.spellcrafterGame.cards.length;
 
-        const lastForagedItem: number | null = this.spellcrafterGame.cards.length > 0 ? this.spellcrafterGame.cards[this.spellcrafterGame.cards.length - 1][0] : null;
-        this.game.managers.logic.vars["lastForagedItem"] =  lastForagedItem ? cards[lastForagedItem].card_id : null
-        this.game.managers.logic.vars["lastForagedItemName"] =  lastForagedItem ? cards[lastForagedItem].name : null
-        this.game.managers.logic.vars["lastForagedItemDescription"] = lastForagedItem ? cards[lastForagedItem].description : null
-        this.game.managers.logic.vars["lastForagedItemFlavour"] = lastForagedItem ? cards[lastForagedItem].flavour : null
         if (this.spellcrafterGame.familiar) {
             this.game.managers.logic.vars["familiar"] = this.spellcrafterGame.familiar.id;
             this.game.managers.logic.vars["familiarName"] = this.spellcrafterGame.familiar.familiarType;
@@ -260,11 +267,24 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         } else {
             this.game.managers.logic.vars["familiar"] = null;
         }
-        for(let i = 0; i < 3; i++) {
-            if (stats.barriers >= (i+1))
-                this.barrierImages[2-i].loadTexture("barrier");
+        for (let i = 0; i < 3; i++) {
+            if (stats.barriers >= (i + 1))
+                this.barrierImages[2 - i].loadTexture("barrier");
             else
-                this.barrierImages[2-i].loadTexture("barrier-broken");
+                this.barrierImages[2 - i].loadTexture("barrier-broken");
         }
     }
+}
+
+function findNewCard(preCards: Array<[number, number]>, postCards: Array<[number, number]>): number | null {
+    const before = new Map();
+    preCards.forEach(([cardId, count]) => {
+        before.set(cardId, count);
+    })
+    for (let i = 0; i < postCards.length; i++) {
+        if(before.get(postCards[i][0]) == undefined || before.get(postCards[i][0]) < postCards[i][1]) {
+            return postCards[i][0];
+        }
+    }
+    return null;
 }

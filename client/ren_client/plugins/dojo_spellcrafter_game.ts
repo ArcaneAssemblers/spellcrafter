@@ -4,7 +4,7 @@ import { call, subscribe } from "esdeka";
 export class DojoSpellcrafterGame implements ISpellcrafterGame {
     _time: number;
     _stats: GameStats;
-    _cards: number[];
+    _cards: Array<[number, number]>;
     _familiar: Familiar | null;
     host: Window;
 
@@ -21,7 +21,7 @@ export class DojoSpellcrafterGame implements ISpellcrafterGame {
         return this._stats;
     }
 
-    get cards(): number[] {
+    get cards(): Array<[number, number]> {
         return this._cards;
     }
 
