@@ -15,7 +15,6 @@ characters:
     speechColour: "#ca90cf"
     looks:
       normal: assets/characters/wizard.png
-      menacing: assets/characters/wizardMenace.png
 
   raven:
     displayName: Raven
