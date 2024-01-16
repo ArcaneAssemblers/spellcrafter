@@ -168,6 +168,7 @@ approaching:
     - text: The chaos increased by {chaosDelta} while you were away.
     - var chaosDelta: 0
   - text: "You approach the spell(pause: 500).(pause: 500).(pause: 500)."
+  - call SpellCrafter: updateBarriers
   - if ({dead}):
     - effect SHAKE:
     - text: (color:#c40000)FAIL(end)
@@ -236,6 +237,7 @@ sacrifice:
     - call SpellCrafter: sacrificeFamiliar
     - effect SHAKE:
     - play sacrifice:
+    - call SpellCrafter: updateBarriers
 
     - if ({familiarName} == "Raven"):
       - hide raven:
