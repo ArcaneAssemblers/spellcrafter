@@ -20,7 +20,7 @@ export interface ISpellcrafterGame {
     // the game stats for this current game
     stats: GameStats,
     // The card indices that the player is holding
-    cards: Array<number>,
+    cards: Array<[number, number]>,
     // card index of familiar (if present)
     familiar: Familiar | null,
 

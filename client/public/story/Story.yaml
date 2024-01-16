@@ -18,28 +18,47 @@ start:
   - scene: manageActions
 
 tutorial:
-  - show wizard: WITH FADE
+  - show wizard: AT MID_LEFT WITH FADE
   - wizard says: "Ah, you must be new acolyte from the academy. Let's go over the basics."
   - wizard says: "You’re trying to create the most powerful spell, aren't you?"
 
   - wizard says: "You can see your current power up there."
+  - show arrow: WITH FADE AT 200,380
+    angle: -90
+    zoom: 0.3
+  - wait: click
+  - hide arrow: WITH FADE
+
   - wizard says: Spells are chaotic and difficult to control. Eventually your spell will become too chaotic and…
   - wizard says: …Well, you'll see.
-
   - wizard says: You can see its current chaos level up there.
-
-  - wizard says: Oh, you've got some protective barrier charms!
-  - wizard says: Thats good. Those are up here too.
-  - show arrow: WITH FADE AT 750,350
-    angle: -70
+  - show arrow: WITH FADE AT 400,380
+    angle: -90
     zoom: 0.3
-  - wizard says: As your spell tries to break loose these will break
-  - wizard says: So try not to let them all crack.
+  - wait: click
   - hide arrow: WITH FADE
 
   - wizard says: Some spells are also infused with elements. You can see hot/cold and light/dark up there.
+  - show arrow: WITH FADE AT 550,380
+    angle: -70
+    zoom: 0.3
+  - wait: click
+  - hide arrow: WITH FADE
   - wizard says: Hot and cold are opposed, as are light and dark. Imagine them like this….
-  # show graph of elements
+  - show elemental-grid: WITH FADE AT 540,600
+  - wait: click
+  - hide elemental-grid: WITH FADE
+
+
+  - wizard says: Oh, you've got some protective barrier charms!
+  - show arrow: WITH FADE AT 750,450
+    angle: -70
+    zoom: 0.3
+  - wizard says: Thats good. Those are up here too.
+  - hide arrow: WITH FADE
+  - wizard says: As your spell tries to break loose these will break
+  - wizard says: So try not to let them all crack.
+
   - wizard says: But of course you've covered all of that at the academy. Now let's talk about what you're doing here…
 
   - show tower: WITH FADE
@@ -117,21 +136,6 @@ manageActions:
       - hide spider: WITH CUT AT OUTLEFT
   
     - var familiarReturnedItem: false
-
-  - text: The current spell power is {power}
-  - text: Its chaos is {chaos}.
-  - call SpellCrafter: showBarriers
-  - if ({lightdark} > 0):
-    - text: The spell is light level {lightdark}.
-  - if ({lightdark} < 0):
-    - var dark: "{lightdark} * -1"
-    - text: The spell is dark level {dark}.
-
-  - if ({hotcold} > 0):
-    - text: The spell is hot level {hotcold}.
-  - if ({hotcold} < 0):
-    - var cold: "{hotcold} * -1"
-    - text: The spell is cold level {cold}.
 
   - choice:
     - text: What would you like to do?
@@ -231,6 +235,7 @@ approaching:
     - text: The chaos increased by {chaosDelta} while you were away.
     - var chaosDelta: 0
   - text: "You approach the spell(pause: 500).(pause: 500).(pause: 500)."
+  - call SpellCrafter: updateBarriers
   - if ({dead}):
     - effect SHAKE:
     - text: (color:#c40000)FAIL(end)
@@ -299,6 +304,7 @@ sacrifice:
     - call SpellCrafter: sacrificeFamiliar
     - effect SHAKE:
     - play sacrifice:
+    - call SpellCrafter: updateBarriers
 
     - if ({familiarName} == "Raven"):
       - hide raven:

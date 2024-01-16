@@ -14,8 +14,8 @@ characters:
     displayName: Wizard
     speechColour: "#ca90cf"
     looks:
-      normal: assets/characters/raven.png
-      scared: assets/characters/ravenScared.png
+      normal: assets/characters/wizard.png
+      menacing: assets/characters/wizardMenace.png
 
   raven:
     displayName: Raven
@@ -53,6 +53,17 @@ cgs:
   barrier: assets/objects/barrier.png
   barrier-broken: assets/objects/barrier-broken.png
   arrow: assets/objects/arrow.png
+  elemental-grid: assets/objects/elemental-grid.png
+
+  topbar: assets/objects/topbar.png
+  topbarhang: assets/objects/topbarhang.png
+
+  orbchaos: assets/objects/orbchaos.png
+  orbpower: assets/objects/orbpower.png
+  orbhot: assets/objects/orbhot.png
+  orbcold: assets/objects/orbcold.png
+  orblight: assets/objects/orblight.png
+  orbdark: assets/objects/orbdark.png
 
   
 music:

@@ -5,6 +5,9 @@ positions:
   LEFT: 
     x: 100
     y: 1920
+  MID_LEFT: 
+    x: 350
+    y: 1920
   DEFAULT:
     x: 540
     y: 1920

@@ -63,6 +63,14 @@ mod spellcrafter_system {
             // increase chaos by a fixed amount. In the future this will be a function of time
             tick(world, game_id, TICKS_PER_FORAGE);
 
+            // TODO This is not simulation safe. Ok for quick protyping only
+            let tx_info = starknet::get_tx_info().unbox();
+            let seed = tx_info.transaction_hash;
+            let chaos = get!(world, (CHAOS_STAT, game_id), Valueingame).value;
+            if !pass_check(seed, chaos) {
+                bust_barrier(world, game_id);
+            }
+
             return card_id;
         }
 
@@ -79,15 +87,7 @@ mod spellcrafter_system {
             let owned = get!(world, (item_id, game_id), Valueingame).value;
             assert(owned > 0, 'Item is not owned');
 
-            let chaos = get!(world, (CHAOS_STAT, game_id), Valueingame).value;
-
-            if !pass_check(seed, chaos) {
-                bust_barrier(world, game_id);
-            }
-
-            if !is_dead(world, game_id) {
-                enact_card(world, game_id, item_id);
-            }
+            enact_card(world, game_id, item_id);
         }
 
         // summon a familiar which can be sent to retrieve items. Returns the entity ID of the familiar
@@ -104,20 +104,30 @@ mod spellcrafter_system {
             // Move time forward, also increase chaos
             tick(world, game_id, TICKS_PER_SUMMON);
 
-            // create a new entity for the familiar
-            let entity_id: u128 = world.uuid().into();
-            set!(
-                world,
-                (
-                    Familiar { entity_id, game_id, familiar_type },
-                    Owner { entity_id, address: get_caller_address() },
-                )
-            );
+            // TODO This is not simulation safe. Ok for quick protyping only
+            let tx_info = starknet::get_tx_info().unbox();
+            let seed = tx_info.transaction_hash;
+            let chaos = get!(world, (CHAOS_STAT, game_id), Valueingame).value;
+            if !pass_check(seed, chaos) {
+                bust_barrier(world, game_id);
+            }
 
-            // increase the total number of familiars held in this game
-            increase_stat(world, game_id, FAMILIARS_HELD, 1);
+            if !is_dead(world, game_id) {
+                // create a new entity for the familiar
+                let entity_id: u128 = world.uuid().into();
+                set!(
+                    world,
+                    (
+                        Familiar { entity_id, game_id, familiar_type },
+                        Owner { entity_id, address: get_caller_address() },
+                    )
+                );
 
-            return entity_id;
+                // increase the total number of familiars held in this game
+                increase_stat(world, game_id, FAMILIARS_HELD, 1);
+                return entity_id;
+            }
+            return 0;
         }
 
         // Sacrifice a familiar to rebuild one barrier
