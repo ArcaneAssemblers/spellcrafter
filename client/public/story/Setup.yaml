@@ -10,6 +10,12 @@ backgrounds:
   cave: assets/backgrounds/cave.png
 
 characters:
+  wizard:
+    displayName: Wizard
+    speechColour: "#ca90cf"
+    looks:
+      normal: assets/characters/wizard.png
+
   raven:
     displayName: Raven
     speechColour: "#ca90cf"
@@ -45,6 +51,9 @@ cgs:
   back-button: assets/objects/back-button.png
   barrier: assets/objects/barrier.png
   barrier-broken: assets/objects/barrier-broken.png
+  arrow: assets/objects/arrow.png
+  elemental-grid: assets/objects/elemental-grid.png
+
   topbar: assets/objects/topbar.png
   topbarhang: assets/objects/topbarhang.png
 

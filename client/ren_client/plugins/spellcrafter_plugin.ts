@@ -45,21 +45,21 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.gui.hud.add(this.game.add.image(625, 160, "topbarhang"));
 
         this.game.gui.hud.add(this.game.add.image(100, 62, "orbpower"));
-        this.powerText = this.game.add.text(195, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.powerText = this.game.add.text(195, 57, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
         this.game.gui.hud.add(this.powerText);
 
         this.game.gui.hud.add(this.game.add.image(100+230, 62, "orbchaos"));
-        this.chaosText = this.game.add.text(195+230, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.chaosText = this.game.add.text(195+230, 57, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
         this.game.gui.hud.add(this.chaosText);
 
         this.hotColdOrb = this.game.add.image(100+490, 62, "orbhot");
         this.game.gui.hud.add(this.hotColdOrb);
-        this.hotColdText = this.game.add.text(195+490, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.hotColdText = this.game.add.text(195+490, 57, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
         this.game.gui.hud.add(this.hotColdText);
 
         this.lightDarkOrb = this.game.add.image(100+680, 62, "orblight");
         this.game.gui.hud.add(this.lightDarkOrb);
-        this.lightDarkText = this.game.add.text(195+680, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.lightDarkText = this.game.add.text(195+680, 57, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
         this.game.gui.hud.add(this.lightDarkText);
 
         this.cardDisplayGroup = this.game.add.group()
