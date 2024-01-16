@@ -49,7 +49,8 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.barrierImages.push(this.game.add.image(900, 50, "barrier"));
         this.barrierImages.forEach(img => { this.game.gui.hud.add(img) });
 
-        this._syncState()
+        this._syncState();
+        this._syncBarriers();
     }
 
     onAction(action): void {
@@ -87,6 +88,9 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                     return this.showCard();
                 case "hideCard":
                     return this.hideCard();
+                case "updateBarriers":
+                    this._syncBarriers();
+                    return Promise.resolve();
                 case "showBarriers":
                     // this.barrierImages.forEach(img => { img.visible = true });
                     return Promise.resolve();
@@ -247,6 +251,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
 
     /// copies variables from the game state object into the renjs context
     /// so they can be displayed in-game and used to alter the story flow
+    /// This does not sync the barriers so they can be dramatically revealed later
     _syncState(): void {
         const stats = this.spellcrafterGame.stats;
 
@@ -266,8 +271,11 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         } else {
             this.game.managers.logic.vars["familiar"] = null;
         }
+    }
+
+    _syncBarriers(): void {
         for (let i = 0; i < 3; i++) {
-            if (stats.barriers >= (i + 1))
+            if (this.spellcrafterGame.stats.barriers >= (i + 1))
                 this.barrierImages[2 - i].loadTexture("barrier");
             else
                 this.barrierImages[2 - i].loadTexture("barrier-broken");
