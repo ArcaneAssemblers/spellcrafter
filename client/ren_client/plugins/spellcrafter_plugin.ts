@@ -11,6 +11,12 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
     cardDisplayGroup;
     setCard;
     barrierImages: any = [];
+    powerText: Phaser.Text;
+    chaosText: Phaser.Text;
+    lightDarkText: Phaser.Text;
+    lightDarkOrb: Phaser.Image;
+    hotColdText: Phaser.Text;
+    hotColdOrb: Phaser.Image;
     host: Window;
 
     onInit(): void {
@@ -33,6 +39,29 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         const cardName = this.game.add.text(300, 250, "", { font: "55px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "top", boundsAlignH: "center" })
         const cardText = this.game.add.text(300, 370, "", { font: "40px fontsaudimat-mono", fill: "#FFFFFF", boundsAlignV: "middle" });
 
+        // top bar
+        
+        this.game.gui.hud.add(this.game.add.image(40, 35, "topbar"));
+        this.game.gui.hud.add(this.game.add.image(625, 160, "topbarhang"));
+
+        this.game.gui.hud.add(this.game.add.image(100, 62, "orbpower"));
+        this.powerText = this.game.add.text(195, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.game.gui.hud.add(this.powerText);
+
+        this.game.gui.hud.add(this.game.add.image(100+230, 62, "orbchaos"));
+        this.chaosText = this.game.add.text(195+230, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.game.gui.hud.add(this.chaosText);
+
+        this.hotColdOrb = this.game.add.image(100+490, 62, "orbhot");
+        this.game.gui.hud.add(this.hotColdOrb);
+        this.hotColdText = this.game.add.text(195+490, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.game.gui.hud.add(this.hotColdText);
+
+        this.lightDarkOrb = this.game.add.image(100+680, 62, "orblight");
+        this.game.gui.hud.add(this.lightDarkOrb);
+        this.lightDarkText = this.game.add.text(195+680, -83, "0", { font: "60px fontsaudimat-mono", fill: "#AA85BD", boundsAlignV: "top", boundsAlignH: "center" });
+        this.game.gui.hud.add(this.lightDarkText);
+
         this.cardDisplayGroup = this.game.add.group()
         this.cardDisplayGroup.add(cardBack);
         this.cardDisplayGroup.add(cardName);
@@ -44,9 +73,9 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             cardText.setText(cards[cardId].description);
         }
 
-        this.barrierImages.push(this.game.add.image(700, 50, "barrier"));
-        this.barrierImages.push(this.game.add.image(800, 50, "barrier"));
-        this.barrierImages.push(this.game.add.image(900, 50, "barrier"));
+        this.barrierImages.push(this.game.add.image(640, 165, "barrier"));
+        this.barrierImages.push(this.game.add.image(750, 165, "barrier"));
+        this.barrierImages.push(this.game.add.image(860, 165, "barrier"));
         this.barrierImages.forEach(img => { this.game.gui.hud.add(img) });
 
         this._syncState();
@@ -263,6 +292,15 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
         this.game.managers.logic.vars["dead"] = stats.barriers <= 0;
         this.game.managers.logic.vars["time"] = this.spellcrafterGame.time;
         this.game.managers.logic.vars["itemCount"] = this.spellcrafterGame.cards.length;
+
+        this.powerText.setText(stats.power.toString());
+        this.chaosText.setText(stats.chaos.toString());
+        
+        this.hotColdText.setText(Math.abs(stats.hotCold).toString());
+        this.hotColdOrb.loadTexture(stats.hotCold < 0 ? "orbcold" : "orbhot");
+        
+        this.lightDarkText.setText(Math.abs(stats.lightDark).toString());
+        this.lightDarkOrb.loadTexture(stats.lightDark < 0 ? "orbdark" : "orblight");
 
         if (this.spellcrafterGame.familiar) {
             this.game.managers.logic.vars["familiar"] = this.spellcrafterGame.familiar.id;

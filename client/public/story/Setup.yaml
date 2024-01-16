@@ -45,6 +45,15 @@ cgs:
   back-button: assets/objects/back-button.png
   barrier: assets/objects/barrier.png
   barrier-broken: assets/objects/barrier-broken.png
+  topbar: assets/objects/topbar.png
+  topbarhang: assets/objects/topbarhang.png
+
+  orbchaos: assets/objects/orbchaos.png
+  orbpower: assets/objects/orbpower.png
+  orbhot: assets/objects/orbhot.png
+  orbcold: assets/objects/orbcold.png
+  orblight: assets/objects/orblight.png
+  orbdark: assets/objects/orbdark.png
 
   
 music:
