@@ -107,7 +107,6 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
             this.game.managers.story.startScene("manageActions");
             // hang forever
         }).finally(async () => {
-            await this.hideCard();
             this.game.resolveAction(); // must call this to return control to the story
         });
     }
