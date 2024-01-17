@@ -113,7 +113,7 @@ manageActions:
       - show salamander: WITH CUT AT OUTLEFT
       - show salamander: WITH MOVE AT LEFT
       - play salamander:
-    - if ({familiarName} == "Wolf Spider"):
+    - if ({familiarName} == "WolfSpider"):
       - show spider: WITH CUT AT OUTLEFT
       - show spider: WITH MOVE AT LEFT
       - play spider:
@@ -131,7 +131,7 @@ manageActions:
     - if ({familiarName} == "Salamander"):
       - show salamander: WITH MOVE AT OUTLEFT
       - hide salamander: WITH CUT AT OUTLEFT
-    - if ({familiarName} == "Wolf Spider"):
+    - if ({familiarName} == "WolfSpider"):
       - show spider: WITH MOVE AT OUTLEFT
       - hide spider: WITH CUT AT OUTLEFT
   
@@ -171,7 +171,7 @@ manageActions:
         - show salamander: WITH CUT AT OUTLEFT
         - show salamander: WITH MOVE AT LEFT
         - play salamander:
-      - if ({familiarName} == "Wolf Spider"):
+      - if ({familiarName} == "WolfSpider"):
         - show spider: WITH CUT AT OUTLEFT
         - show spider: WITH MOVE AT LEFT
         - play spider:
@@ -187,7 +187,7 @@ manageActions:
       - if ({familiarName} == "Salamander"):
         - show salamander: WITH MOVE AT OUTLEFT
         - hide salamander: WITH CUT AT OUTLEFT
-      - if ({familiarName} == "Wolf Spider"):
+      - if ({familiarName} == "WolfSpider"):
         - show spider: WITH MOVE AT OUTLEFT
         - hide spider: WITH CUT AT OUTLEFT
 
@@ -219,7 +219,7 @@ manageActions:
           - call SpellCrafter: summonFamiliar cave
           - show spider: WITH FADE AT CENTER
           - play spider:
-          - text: You summon a (bold){familiarName}(end) into existence.
+          - text: You summon a (bold)Wolf Spider(end) into existence.
           - text: A dark and creepy creature that can forage in the Cave.
       - scene: approaching
 
@@ -293,7 +293,7 @@ sacrifice:
       - show cat: WITH FADE AT CENTER
     - if ({familiarName} == "Salamander"):
       - show salamander: WITH FADE AT CENTER
-    - if ({familiarName} == "Wolf Spider"):
+    - if ({familiarName} == "WolfSpider"):
       - show spider: WITH FADE AT CENTER
 
     - text: I'm sorry {familiarName}, but I really need your help.
@@ -305,7 +305,7 @@ sacrifice:
       - show cat: scared WITH CUT AT CENTER
     - if ({familiarName} == "Salamander"):
       - show salamander: scared WITH CUT AT CENTER
-    - if ({familiarName} == "Wolf Spider"):
+    - if ({familiarName} == "WolfSpider"):
       - show spider: scared WITH CUT AT CENTER
 
     - text: You place your {familiarName} on the altar.
@@ -320,7 +320,7 @@ sacrifice:
       - hide cat:
     - if ({familiarName} == "Salamander"):
       - hide salamander:
-    - if ({familiarName} == "Wolf Spider"):
+    - if ({familiarName} == "WolfSpider"):
       - hide spider:
 
     - text: You sacrifice your {familiarName} to the spell.
