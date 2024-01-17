@@ -248,7 +248,7 @@ approaching:
     - text: (color:#c40000)FAIL(end)
     - show altar: WITH FADE
     - text: The spell rushes past its final barrier and explodes outward.
-    -text: The last thing you see is a blinding flash of light... and then darkness.
+    - text: The last thing you see is a blinding flash of light... and then darkness.
     - scene: endGame
   - if ({barriersDelta} < 0):
     - effect SHAKE:
