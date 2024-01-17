@@ -21,7 +21,7 @@
 "19","Gypsum Flower","cave","1",,,,,"2",,,,"-1",,,,,,,"A delicate curved and coiled crystal.","TRUE"
 "20","Wolf Spider","cave_familiar","1",,,,,,,"1",,,,,,,,,"Once per turn you can send the Wolf Spider to collect 1 trinket from the Cave","FALSE"
 "21","Bone","forest","1",,,,,"2","1",,"-2",,,,,,,,"A crunchy little rat bone","TRUE"
-"22","Rat Heart","forest","1",,,,,"3","2",,"-3",,,,"-1",,,,"The still-beating heart of a rat","TRUE"
+"22","Rat Heart","forest","1",,,,,"3","2",,"-3",,,,,,,,"The still-beating heart of a rat","TRUE"
 "23","Quartz","forest","1",,,"2",,,"-3",,,,,,,,,,"A chunk of quartz. It feels stabilising in some way","TRUE"
 "24","Pine Resin","forest","1",,,,,"-1","-2",,"1",,,,,,,,"Sticky sap from a pine tree","TRUE"
 "25","Moss","forest","1",,,,,,"-2",,"-1",,,,,,,,"Soft green moss","TRUE"

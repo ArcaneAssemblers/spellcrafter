@@ -543,13 +543,13 @@
     "lightdark_delta": "",
     "power_delta_fallback": "",
     "chaos_delta_fallback": "",
-    "hotcold_delta_fallback": "-1",
+    "hotcold_delta_fallback": "",
     "lightdark_delta_fallback": "",
     "swaps_hotcold": "",
     "swaps_lightdark": "",
     "flavour": "The still-beating heart of a rat",
     "consumable": "TRUE",
-    "description": "+3 POWER\n+2 CHAOS\n+3 COLD\nElse:\n  +1 COLD\n"
+    "description": "+3 POWER\n+2 CHAOS\n+3 COLD\n"
   },
   {
     "card_id": "23",

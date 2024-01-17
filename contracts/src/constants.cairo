@@ -7,9 +7,9 @@ const FAMILIAR_LIMIT: u32 = 1;
 const BARRIERS_LIMIT: u32 = 3;
 
 // How many ticks each kind of action takes
-const TICKS_PER_FORAGE: u32 = 3;
+const TICKS_PER_FORAGE: u32 = 2;
 const TICKS_PER_SUMMON: u32 = 5;
-const TICKS_PER_SEND: u32 = 3;
+const TICKS_PER_SEND: u32 = 2;
 const CHAOS_PER_TICK: u32 = 1;
 
 /// Valid IDs ///

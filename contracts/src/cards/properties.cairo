@@ -10,7 +10,7 @@ mod hotcold_delta;
 mod lightdark_delta;
 mod power_delta_fallback;
 mod chaos_delta_fallback;
-mod hotcold_delta_fallback;
+// mod hotcold_delta_fallback;
 mod lightdark_delta_fallback;
 mod swaps_hotcold;
 mod swaps_lightdark;
