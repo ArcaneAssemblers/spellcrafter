@@ -6,7 +6,7 @@ use spellcrafter::types::{Action, Region};
 use spellcrafter::cards::properties::{
     consumable, chaos_delta, power_delta, hotcold_delta, lightdark_delta, requires_cold_gt,
     requires_hot_gt, requires_light_gt, requires_dark_gt, chaos_delta_fallback,
-    power_delta_fallback, hotcold_delta_fallback, lightdark_delta_fallback
+    power_delta_fallback, lightdark_delta_fallback, swaps_lightdark, swaps_hotcold,
 };
 use spellcrafter::cards::selection::random_card_from_region;
 use spellcrafter::constants::{CHAOS_STAT, POWER_STAT, HOTCOLD_STAT, LIGHTDARK_STAT, BARRIERS_STAT, POLAR_STAT_MIDPOINT, TICKS, CHAOS_PER_TICK, ITEM_LIMIT, ITEMS_HELD};
@@ -82,6 +82,26 @@ fn make_primary_stat_changes(world: IWorldDispatcher, game_id: u128, card_id: u1
         },
         Option::None => {},
     }
+    match swaps_hotcold::get(card_id) {
+        Option::Some(b) => {
+            let value = get!(world, (HOTCOLD_STAT, game_id), Valueingame).value;
+            set!(
+                world,
+                Valueingame { entity_id: HOTCOLD_STAT, game_id, value: 2*POLAR_STAT_MIDPOINT - value }
+            );
+        },
+        Option::None => {},
+    }
+    match swaps_lightdark::get(card_id) {
+        Option::Some(b) => {
+            let value = get!(world, (LIGHTDARK_STAT, game_id), Valueingame).value;
+            set!(
+                world,
+                Valueingame { entity_id: LIGHTDARK_STAT, game_id, value: 2*POLAR_STAT_MIDPOINT - value }
+            );
+        },
+        Option::None => {},
+    }
 }
 
 fn make_fallback_stat_changes(world: IWorldDispatcher, game_id: u128, card_id: u128) {
@@ -97,12 +117,12 @@ fn make_fallback_stat_changes(world: IWorldDispatcher, game_id: u128, card_id: u
         },
         Option::None => {},
     }
-    match hotcold_delta_fallback::get(card_id) {
-        Option::Some(delta) => {
-            alter_stat(world, game_id, HOTCOLD_STAT, delta);
-        },
-        Option::None => {},
-    }
+    // match hotcold_delta_fallback::get(card_id) {
+    //     Option::Some(delta) => {
+    //         alter_stat(world, game_id, HOTCOLD_STAT, delta);
+    //     },
+    //     Option::None => {},
+    // }
     match lightdark_delta_fallback::get(card_id) {
         Option::Some(delta) => {
             alter_stat(world, game_id, LIGHTDARK_STAT, delta);
