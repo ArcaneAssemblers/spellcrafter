@@ -99,6 +99,13 @@ export async function gameStateFromGameValuesQuery({ valueingameModels, familiar
     }
     )[0] || null;
 
+    let barriers;
+    if (gameValues.get(SpellStats.Barriers) == undefined) {
+        console.error("Barriers value not correct returned in query!!!")
+    } else {
+        barriers = gameValues.get(SpellStats.Barriers);
+    }
+
     // return a game object with all fields zero
     return {
         time,
@@ -107,7 +114,7 @@ export async function gameStateFromGameValuesQuery({ valueingameModels, familiar
             power: gameValues.get(SpellStats.Power) || 0,
             hotCold: (gameValues.get(SpellStats.HotCold) || POLAR_STAT_MIDPOINT) - POLAR_STAT_MIDPOINT,
             lightDark: (gameValues.get(SpellStats.LightDark) || POLAR_STAT_MIDPOINT) - POLAR_STAT_MIDPOINT,
-            barriers: gameValues.get(SpellStats.Barriers) || 0,
+            barriers,
         },
         cards,
         familiar,

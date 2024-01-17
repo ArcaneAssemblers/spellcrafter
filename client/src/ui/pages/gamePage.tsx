@@ -73,9 +73,9 @@ export const GamePage: React.FC = () => {
     const callThenUpdate = async (f, account, data) => {
         if (!currentGameId) return;
         await f(account, currentGameId, data);
-        setTimeout(() => {
+        setTimeout(() => { // TODO: Replace this with a subscription to the indexer
             fetchGameData(currentGameId)
-        }, 2000)
+        }, 3000)
     };
 
     useEffect(() => {
