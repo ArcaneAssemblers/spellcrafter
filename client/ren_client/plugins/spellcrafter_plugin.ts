@@ -181,6 +181,7 @@ export class SpellcrafterPlugin extends RenJS.Plugin {
                 this.game.managers.logic.vars["lastAddedItemName"] = "nothing";
                 this.game.managers.logic.vars["chaosDelta"] = 0;
                 this.game.managers.logic.vars["powerDelta"] = 0;
+                hideCardChoser();
                 returnToStory();
             }, this, 0);
 
