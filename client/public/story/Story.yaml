@@ -201,19 +201,26 @@ manageActions:
           - call SpellCrafter: summonFamiliar forest
           - show raven: WITH FADE AT CENTER
           - play raven:
+          - text: You summon a (bold){familiarName}(end) into existence.
+          - text: A cold and mysterious creature that can forage in the Forest.
         - "Cat":
           - call SpellCrafter: summonFamiliar meadow
           - show cat: WITH FADE AT CENTER
           - play cat:
+          - text: You summon a (bold){familiarName}(end) into existence.
+          - text: A bright and friendly creature that can forage in the Meadow.
         - "Salamander":
           - call SpellCrafter: summonFamiliar volcano
           - show salamander: WITH FADE AT CENTER
           - play salamander:
+          - text: You summon a (bold){familiarName}(end) into existence.
+          - text: A hot and fiery creature that can forage in the Volcano.
         - "Wolf Spider": 
           - call SpellCrafter: summonFamiliar cave
           - show spider: WITH FADE AT CENTER
           - play spider:
-      - text: You summon a (bold){familiarName}(end) into existence. It is a dark and mysterious creature that can forage in the Forest.
+          - text: You summon a (bold){familiarName}(end) into existence.
+          - text: A dark and creepy creature that can forage in the Cave.
       - scene: approaching
 
     - Sacrifice Familiar !if ({familiar} && {familiarIdle}):
@@ -240,7 +247,8 @@ approaching:
     - effect SHAKE:
     - text: (color:#c40000)FAIL(end)
     - show altar: WITH FADE
-    - text: The spell rushes past its final barrier and explodes outward. The last thing you see is a blinding flash of light... and then darkness.
+    - text: The spell rushes past its final barrier and explodes outward.
+    -text: The last thing you see is a blinding flash of light... and then darkness.
     - scene: endGame
   - if ({barriersDelta} < 0):
     - effect SHAKE:
@@ -358,7 +366,7 @@ cave:
   - scene: approaching
 
 endGame:
-  - text: And that is the story of an unknown mage who died in the pursuit of power greater than themselves...
+  - text: And that is the story of you.
   - hide ALL:
   - scene: deathScreen
 
